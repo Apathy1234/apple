@@ -1,0 +1,343 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+c++: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b3de7/fast"
+/usr/bin/make -f CMakeFiles/cmTC_b3de7.dir/build.make CMakeFiles/cmTC_b3de7.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b3de7.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_b3de7.dir/testCCompiler.c.o   -c /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/testCCompiler.c
+as：无法识别的选项“--64”
+CMakeFiles/cmTC_b3de7.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_b3de7.dir/testCCompiler.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_b3de7.dir/testCCompiler.c.o] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_b3de7/fast' failed
+make: *** [cmTC_b3de7/fast] Error 2
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+c++: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_09fa0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_09fa0.dir/build.make CMakeFiles/cmTC_09fa0.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_09fa0.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_09fa0.dir/testCCompiler.c.o   -c /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/testCCompiler.c
+as：无法识别的选项“--64”
+CMakeFiles/cmTC_09fa0.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_09fa0.dir/testCCompiler.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_09fa0.dir/testCCompiler.c.o] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_09fa0/fast' failed
+make: *** [cmTC_09fa0/fast] Error 2
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+c++: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_cc126/fast"
+/usr/bin/make -f CMakeFiles/cmTC_cc126.dir/build.make CMakeFiles/cmTC_cc126.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cc126.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_cc126.dir/testCCompiler.c.o   -c /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/testCCompiler.c
+as：无法识别的选项“--64”
+CMakeFiles/cmTC_cc126.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_cc126.dir/testCCompiler.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_cc126.dir/testCCompiler.c.o] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_cc126/fast' failed
+make: *** [cmTC_cc126/fast] Error 2
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: -Aa
+
+The output was:
+1
+<command-line>:0:1: error: missing '(' after predicate
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+cc: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+as：无法识别的选项“--64”
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+c++: fatal error: no input files
+compilation terminated.
+Determining if the C compiler works failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_82d12/fast"
+/usr/bin/make -f CMakeFiles/cmTC_82d12.dir/build.make CMakeFiles/cmTC_82d12.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_82d12.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_82d12.dir/testCCompiler.c.o   -c /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/testCCompiler.c
+as：无法识别的选项“--64”
+CMakeFiles/cmTC_82d12.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_82d12.dir/testCCompiler.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_82d12.dir/testCCompiler.c.o] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_82d12/fast' failed
+make: *** [cmTC_82d12/fast] Error 2
+
+
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_dfad5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_dfad5.dir/build.make CMakeFiles/cmTC_dfad5.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_dfad5.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_dfad5.dir/CheckSymbolExists.c.o   -c /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_dfad5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dfad5.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_dfad5.dir/CheckSymbolExists.c.o  -o cmTC_dfad5 -rdynamic 
+CMakeFiles/cmTC_dfad5.dir/CheckSymbolExists.c.o：在函数‘main’中：
+CheckSymbolExists.c:(.text+0x16)：对‘pthread_create’未定义的引用
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_dfad5.dir/build.make:97: recipe for target 'cmTC_dfad5' failed
+make[1]: *** [cmTC_dfad5] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_dfad5/fast' failed
+make: *** [cmTC_dfad5/fast] Error 2
+
+File /home/tg/slam_mono/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/tg/slam_mono/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d2958/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d2958.dir/build.make CMakeFiles/cmTC_d2958.dir/build
+make[1]: Entering directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d2958.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d2958.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d2958
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d2958.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_d2958.dir/CheckFunctionExists.c.o  -o cmTC_d2958 -rdynamic -lpthreads 
+/usr/bin/ld: 找不到 -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_d2958.dir/build.make:97: recipe for target 'cmTC_d2958' failed
+make[1]: *** [cmTC_d2958] Error 1
+make[1]: Leaving directory '/home/tg/slam_mono/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_d2958/fast' failed
+make: *** [cmTC_d2958/fast] Error 2
+
+

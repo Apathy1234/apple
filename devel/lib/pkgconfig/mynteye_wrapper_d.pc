@@ -1,0 +1,8 @@
+prefix=/home/tg/slam_mono/devel
+
+Name: mynteye_wrapper_d
+Description: Description of mynteye_wrapper_d
+Version: 0.0.0
+Cflags: -I/home/tg/slam_mono/devel/include
+Libs: -L/home/tg/slam_mono/devel/lib 
+Requires: cv_bridge image_transport message_runtime nodelet roscpp sensor_msgs std_msgs tf

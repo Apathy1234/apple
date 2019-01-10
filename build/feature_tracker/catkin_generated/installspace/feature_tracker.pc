@@ -1,0 +1,8 @@
+prefix=/home/tg/slam_mono/install
+
+Name: feature_tracker
+Description: Description of feature_tracker
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/tg/slam_mono/install/lib 
+Requires: 
