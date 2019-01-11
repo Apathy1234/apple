@@ -29,4 +29,4 @@ tracker_max_count: 100
 equalize: true
 pyramid_level: 3
 win_size: 21
-f_threshold: 2.0
+f_threshold: 1.0
