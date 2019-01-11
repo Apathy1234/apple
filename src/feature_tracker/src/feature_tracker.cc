@@ -2,7 +2,6 @@
 
 namespace slam_mono
 {
-
 FeatureTracker::FeatureTracker(ros::NodeHandle& nh):n(nh), state(FIRST_IMAGE), pubCnt(1), pubThisFrame(false), firstImageTime(0), currImageTime(0), stereoSub(1)
 {
     if( !Load_Parameters() ) return;
