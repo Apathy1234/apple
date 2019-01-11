@@ -6,7 +6,10 @@
 #include <sensor_msgs/image_encodings.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
+#include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
+#include <feature_tracker/CameraTrackerResult.h>
+#include <feature_tracker/FeatureTrackerResult.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>

@@ -22,8 +22,7 @@ T_left2right:
 
 frequence: 10
 board_size: 1
-show_tracker: true
-tracker_size: 30
+tracker_size: 10
 tracker_min_distance: 20
 tracker_max_count: 100
 equalize: true

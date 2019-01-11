@@ -33,7 +33,6 @@ namespace slam_mono
         double F_THRESHOLD;
         bool pubThisFrame;
         bool EQUALIZE;
-        bool SHOW_TRACKER;
         int pubCnt;
         int FREQ;
         int WIN_SIZE;
@@ -59,9 +58,9 @@ namespace slam_mono
 
         // ROS相关初始化
         ros::NodeHandle n;
-        ros::Publisher pubLeftMatchImage;
-        ros::Publisher pubRightMatchImage;
         ros::Subscriber imgSub;
+        ros::Publisher pubFeatures;
+        image_transport::Publisher pubMatchImage;
         message_filters::Subscriber<sensor_msgs::Image> leftSub;
         message_filters::Subscriber<sensor_msgs::Image> rightSub;
         message_filters::TimeSynchronizer<sensor_msgs::Image, sensor_msgs::Image> stereoSub;
@@ -103,6 +102,7 @@ namespace slam_mono
         void Set_Mask(void);
         void Tracker_Feature(void);
         void Delet_Point_With_F(void);
+        void Publish_Info(void);
 
         template <typename T>
         void Reduce_Vector(vector<T>& v, vector<unsigned char> status)

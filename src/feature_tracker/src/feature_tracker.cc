@@ -60,7 +60,6 @@ bool FeatureTracker:: Load_Parameters(void)
 
     n.param<int>("frequence", FREQ, 10);
     n.param<int>("board_size", BOARD_SIZE, 1);
-    n.param<bool>("show_tracker", SHOW_TRACKER, true);
     n.param<int>("tracker_size", TRACKER_SIZE, 30);
     n.param<int>("tracker_min_distance", TRACKER_DIS, 20);
     n.param<int>("tracker_max_count", TRACKER_NUM, 100);
@@ -97,6 +96,8 @@ bool FeatureTracker:: Load_Parameters(void)
     ROS_INFO("tracker_min_distance: %d", TRACKER_DIS);
     ROS_INFO("tracker_number: %d", TRACKER_NUM);
     ROS_INFO("pyramid_level: %d", PYRAMID_LEVEL);
+    ROS_INFO("win_size: %d", WIN_SIZE);
+    ROS_INFO("f_threshold: %f", F_THRESHOLD);
     cout << "left_topics: " << LEFT_TOPICS << endl;
     cout << "right_topics: " << RIGHT_TOPICS << endl;
     ROS_INFO("====================================================");
@@ -105,8 +106,9 @@ bool FeatureTracker:: Load_Parameters(void)
 
 bool FeatureTracker::Create_RosIO(void)
 {
-    pubLeftMatchImage = n.advertise<sensor_msgs::Image>("/featur_tracker/left/image", 1);
-    pubRightMatchImage = n.advertise<sensor_msgs::Image>("/featur_tracker/right/image", 1);
+    image_transport::ImageTransport it(n);
+    pubMatchImage = it.advertise("/featur_tracker/image", 1);
+    pubFeatures = n.advertise<feature_tracker::CameraTrackerResult>("feature_tracker/points", 1);
     leftSub.subscribe(n, LEFT_TOPICS, 1);
     rightSub.subscribe(n, RIGHT_TOPICS, 1);
     stereoSub.connectInput(leftSub, rightSub);
@@ -409,9 +411,53 @@ void FeatureTracker::Find_Image_Feature(void)
     rightKpsRef = rightKpsCurr;
 }
 
+void FeatureTracker::Publish_Info(void)
+{
+    feature_tracker::CameraTrackerResultPtr featurePoints(new feature_tracker::CameraTrackerResult);
+    featurePoints->header.stamp = leftImagePtr->header.stamp;
+    featurePoints->header.frame_id = "camera_normalized";
+
+    vector<Point2f> leftKpsUndistorted(0);
+    vector<Point2f> rightKpsUndistorted(0);
+    Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
+    Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
+
+    int featureNum = 0;
+    for (int i = 0; i < trackerID.size(); i++)
+    {
+        featureNum++;
+        featurePoints->features.push_back(feature_tracker::FeatureTrackerResult());
+        featurePoints->features[i].id = trackerID[i];
+        featurePoints->features[i].cnt = trackerCnt[i];
+        featurePoints->features[i].seq = featureNum;
+        featurePoints->features[i].u0 = leftKpsUndistorted[i].x;
+        featurePoints->features[i].v0 = leftKpsUndistorted[i].y;
+        featurePoints->features[i].u1 = rightKpsUndistorted[i].x;
+        featurePoints->features[i].v1 = rightKpsUndistorted[i].y; 
+    }
+    featurePoints->num_of_features = featureNum;
+    pubFeatures.publish(featurePoints);
+
+    if (pubMatchImage.getNumSubscribers() > 0)
+    {
+        Mat outImg(camResolution[1], camResolution[0]*2, CV_8UC3);
+        cvtColor(leftImagePtr->image, outImg.colRange(0, camResolution[0]), CV_GRAY2RGB);
+        cvtColor(rightImagePtr->image, outImg.colRange(camResolution[0], camResolution[0]*2), CV_GRAY2RGB);
+        for( unsigned int i = 0; i < trackerID.size(); i++)
+        {
+            double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
+            circle(outImg, leftKpsCurr[i], 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+            circle(outImg, rightKpsCurr[i]+ Point2f(camResolution[0], 0.0), 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+            line(outImg, leftKpsCurr[i], rightKpsCurr[i]+ Point2f(camResolution[0], 0.0), Scalar(255, 0, 0), 1, LINE_AA);
+        }
+        cv_bridge::CvImage debug_image(leftImagePtr->header, "bgr8", outImg);
+        pubMatchImage.publish(debug_image.toImageMsg());
+    }
+}
 
 void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg)
 {
+    uint64 timeBegin = ros::Time::now().toNSec();
     if ( state == FIRST_IMAGE )
     {
         state = NOT_FIRST_IMAGE;        // 状态转换
@@ -453,28 +499,10 @@ void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, 
     if( pubThisFrame )
     {
         pubCnt++;
-        if( SHOW_TRACKER )
-        {
-            leftImagePtr = cv_bridge::cvtColor(leftImagePtr, enc::BGR8);
-            Mat leftImgShow = leftImagePtr->image;
-            for( unsigned int i = 0; i < leftKpsCurr.size(); i++)
-            {
-                double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
-                circle(leftImgShow, leftKpsCurr[i], 3, Scalar(255*(1-cnt), 0, 255*cnt), -1);
-            }
-
-            rightImagePtr = cv_bridge::cvtColor(rightImagePtr, enc::BGR8);
-            Mat rightImgShow = rightImagePtr->image;
-            for( unsigned int i = 0; i < rightKpsCurr.size(); i++)
-            {
-                double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
-                circle(rightImgShow, rightKpsCurr[i], 3, Scalar(255*(1-cnt), 0, 255*cnt), -1);
-            }
-
-            pubLeftMatchImage.publish(leftImagePtr->toImageMsg());
-            pubRightMatchImage.publish(rightImagePtr->toImageMsg());
-        }
+        Publish_Info();
     }
+    uint64 timeEnd = ros::Time::now().toNSec();
+    ROS_INFO_STREAM("code cost time: " << (timeEnd - timeBegin) << " ns");
 }
 
 }

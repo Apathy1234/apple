@@ -255,11 +255,6 @@ mynteye_wrapper_d/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/build.make mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/build
 .PHONY : mynteye_wrapper_d/fast
 
-# Manual pre-install relink rule for target.
-mynteye_wrapper_d/preinstall:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/preinstall
-.PHONY : mynteye_wrapper_d/preinstall
-
 # Convenience name for target.
 mynteye_wrapper_d/CMakeFiles/tf_generate_messages_py.dir/rule:
 	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 mynteye_wrapper_d/CMakeFiles/tf_generate_messages_py.dir/rule
@@ -664,11 +659,6 @@ mynteye_wrapper_d_node: mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_node.dir/
 mynteye_wrapper_d_node/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_node.dir/build.make mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_node.dir/build
 .PHONY : mynteye_wrapper_d_node/fast
-
-# Manual pre-install relink rule for target.
-mynteye_wrapper_d_node/preinstall:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_node.dir/preinstall
-.PHONY : mynteye_wrapper_d_node/preinstall
 
 # Convenience name for target.
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_gencpp.dir/rule:
