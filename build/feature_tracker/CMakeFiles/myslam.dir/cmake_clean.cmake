@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
+  "CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
   "/home/tg/slam_mono/devel/lib/libmyslam.pdb"
   "/home/tg/slam_mono/devel/lib/libmyslam.so"
 )

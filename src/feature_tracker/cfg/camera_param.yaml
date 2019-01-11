@@ -4,7 +4,7 @@ left:
   distortion_model: radtan
   intrinsics: [351.23760986328125000, 351.96472167968750000, 315.27746582031250000, 243.18414306640625000]
   resolution: [640, 480]
-  topics: /mynteye/left/image_mono
+  topic: /mynteye/left/image_mono
 
 right:
   camera_model: pinhole
@@ -12,7 +12,7 @@ right:
   distortion_model: radtan
   intrinsics: [349.34893798828125000, 349.83663940429687500, 316.34359741210937500, 233.33279418945312500]
   resolution: [640, 480]
-  topics: /mynteye/right/image_mono
+  topic: /mynteye/right/image_mono
 
 T_left2right:
   [ 0.99994874000549316, -0.00500035285949707,  0.00879907608032227, -120.675537109375000,
@@ -20,6 +20,8 @@ T_left2right:
    -0.00879049301147461,  0.00172185897827148,  0.99995982646942139,  0.00000000000000000,
     0.00000000000000000,  0.00000000000000000,  0.00000000000000000,  1.00000000000000000]
 
+pub_match_image_topic: /feature_tracker/image
+pub_feature_topic: /feature_tracker/points
 frequence: 10
 board_size: 1
 tracker_size: 10

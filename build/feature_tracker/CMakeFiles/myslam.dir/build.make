@@ -81,14 +81,40 @@ feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o.provides: feature
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o.provides.build: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o
 
 
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: feature_tracker/CMakeFiles/myslam.dir/flags.make
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
+	cd /home/tg/slam_mono/build/feature_tracker && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o -c /home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc
+
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.i"
+	cd /home/tg/slam_mono/build/feature_tracker && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc > CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.i
+
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.s"
+	cd /home/tg/slam_mono/build/feature_tracker && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc -o CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.s
+
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.requires:
+
+.PHONY : feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.requires
+
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.provides: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.requires
+	$(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.provides.build
+.PHONY : feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.provides
+
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.provides.build: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o
+
+
 # Object files for target myslam
 myslam_OBJECTS = \
-"CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
+"CMakeFiles/myslam.dir/src/feature_tracker.cc.o" \
+"CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
 
 # External object files for target myslam
 myslam_EXTERNAL_OBJECTS =
 
 /home/tg/slam_mono/devel/lib/libmyslam.so: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o
+/home/tg/slam_mono/devel/lib/libmyslam.so: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o
 /home/tg/slam_mono/devel/lib/libmyslam.so: feature_tracker/CMakeFiles/myslam.dir/build.make
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libcv_bridge.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_core3.so.3.3.1
@@ -96,11 +122,20 @@ myslam_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgcodecs3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libimage_transport.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libmessage_filters.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libnodeletlib.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libuuid.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libbondcpp.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libclass_loader.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/libPocoFoundation.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libdl.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libroslib.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librospack.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libpython2.7.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libtinyxml.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libroscpp.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_signals.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librosconsole.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librosconsole_log4cxx.so
@@ -108,12 +143,6 @@ myslam_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libxmlrpcpp.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libroslib.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librospack.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libpython2.7.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
-/home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libtinyxml.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librostime.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libcpp_common.so
@@ -170,7 +199,7 @@ myslam_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgproc3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_core3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmyslam.so: feature_tracker/CMakeFiles/myslam.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/tg/slam_mono/devel/lib/libmyslam.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library /home/tg/slam_mono/devel/lib/libmyslam.so"
 	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/myslam.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -179,6 +208,7 @@ feature_tracker/CMakeFiles/myslam.dir/build: /home/tg/slam_mono/devel/lib/libmys
 .PHONY : feature_tracker/CMakeFiles/myslam.dir/build
 
 feature_tracker/CMakeFiles/myslam.dir/requires: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o.requires
+feature_tracker/CMakeFiles/myslam.dir/requires: feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o.requires
 
 .PHONY : feature_tracker/CMakeFiles/myslam.dir/requires
 

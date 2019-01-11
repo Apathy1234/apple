@@ -12,13 +12,6 @@ namespace slam_mono
     {    
     private:
         typedef long long int LONGTYPE;
-        struct Feature_Data
-        {
-            LONGTYPE id;
-            LONGTYPE lifeTime;
-            Point2f leftPoints;
-            Point2f rightPoints;
-        };
         
         enum FeatureState
         {
@@ -57,6 +50,8 @@ namespace slam_mono
         Vec3d t_left2right;
 
         // ROS相关初始化
+        string FEATURE_TOPICS;
+        string FEATURE_IMAGE_TOPICS;
         ros::NodeHandle n;
         ros::Subscriber imgSub;
         ros::Publisher pubFeatures;
@@ -92,8 +87,8 @@ namespace slam_mono
         bool Point_In_Border(const Point2f& pt);
         void Stereo_Match(const vector<Point2f>& leftPoints, vector<Point2f>& rightPoints, vector<unsigned char>& inlierMarkers);
         void Undistorted_Points(const vector<Point2f> ptsIn, vector<Point2f>& ptsOut, 
-                               const Vec4d& intrinsics, const Vec4d& distortionCoeffs, 
-                               const Matx33d& rotation = Matx33d::eye(), const Vec4d& newIntrinsics = Vec4d(1, 1, 0, 0));
+                                const Vec4d& intrinsics, const Vec4d& distortionCoeffs, 
+                                const Matx33d& rotation = Matx33d::eye(), const Vec4d& newIntrinsics = Vec4d(1, 1, 0, 0));
 
         void Distortion_Points(const vector<Point2f> ptsIn, vector<Point2f>& ptsOut, 
                                             const Vec4d& intrinsics, const Vec4d& distortionCoeffs);
@@ -124,7 +119,7 @@ namespace slam_mono
     public:
         typedef shared_ptr<FeatureTracker> ptr;
 
-        FeatureTracker(void);
+        FeatureTracker(ros::NodeHandle& nh);
          ~FeatureTracker(void);
          
         void Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg);

@@ -3,7 +3,7 @@
 namespace slam_mono
 {
 
-FeatureTracker::FeatureTracker(void):state(FIRST_IMAGE), pubCnt(1), pubThisFrame(false), firstImageTime(0), currImageTime(0), stereoSub(1)
+FeatureTracker::FeatureTracker(ros::NodeHandle& nh):n(nh), state(FIRST_IMAGE), pubCnt(1), pubThisFrame(false), firstImageTime(0), currImageTime(0), stereoSub(1)
 {
     if( !Load_Parameters() ) return;
     ROS_INFO(" load parameters success! ");
@@ -54,7 +54,14 @@ bool FeatureTracker:: Load_Parameters(void)
     rightDistortionCoeffs[2] = right_distortion_temp[2];
     rightDistortionCoeffs[3] = right_distortion_temp[3];
 
-    Mat T_left2right = config::Get_Vector16_Transform(n, "T_left2right");
+    vector<double> t_left2right_temp;
+    n.getParam("T_left2right", t_left2right_temp);
+    if (t_left2right_temp.size() != 16)
+    {
+        ROS_WARN(" invalid vector16! ");
+    }
+    T_left2right = Mat(t_left2right_temp).clone().reshape(1, 4);
+    
     r_left2right = T_left2right(Rect(0, 0, 3, 3));
     t_left2right = T_left2right(Rect(3, 0, 1, 3));
 
@@ -66,8 +73,10 @@ bool FeatureTracker:: Load_Parameters(void)
     n.param<int>("pyramid_level", PYRAMID_LEVEL, 3);
     n.param<int>("win_size", WIN_SIZE, 15);
     n.param<double>("f_threshold", F_THRESHOLD, 1.0);
-    n.getParam("left/topics", LEFT_TOPICS);
-    n.getParam("right/topics", RIGHT_TOPICS);
+    n.getParam("left/topic", LEFT_TOPICS);
+    n.getParam("right/topic", RIGHT_TOPICS);
+    n.getParam("pub_match_image_topic", FEATURE_IMAGE_TOPICS);
+    n.getParam("pub_feature_topic", FEATURE_TOPICS);
     n.getParam("equalize", EQUALIZE);
     
 
@@ -100,6 +109,8 @@ bool FeatureTracker:: Load_Parameters(void)
     ROS_INFO("f_threshold: %f", F_THRESHOLD);
     cout << "left_topics: " << LEFT_TOPICS << endl;
     cout << "right_topics: " << RIGHT_TOPICS << endl;
+    cout << "pub_match_image_topic: " << FEATURE_IMAGE_TOPICS << endl;
+    cout << "pub_feature_topic: " << FEATURE_TOPICS << endl;
     ROS_INFO("====================================================");
     return true;
 }
@@ -107,8 +118,8 @@ bool FeatureTracker:: Load_Parameters(void)
 bool FeatureTracker::Create_RosIO(void)
 {
     image_transport::ImageTransport it(n);
-    pubMatchImage = it.advertise("/featur_tracker/image", 1);
-    pubFeatures = n.advertise<feature_tracker::CameraTrackerResult>("feature_tracker/points", 1);
+    pubMatchImage = it.advertise(FEATURE_IMAGE_TOPICS, 1);
+    pubFeatures = n.advertise<feature_tracker::CameraTrackerResult>(FEATURE_TOPICS, 1);
     leftSub.subscribe(n, LEFT_TOPICS, 1);
     rightSub.subscribe(n, RIGHT_TOPICS, 1);
     stereoSub.connectInput(leftSub, rightSub);

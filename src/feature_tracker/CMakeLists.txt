@@ -5,7 +5,7 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport image_transport message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport image_transport message_generation nodelet)
 find_package(OpenCV 3 REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -100,7 +100,7 @@ find_package(OpenCV 3 REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES myslam
-  CATKIN_DEPENDS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport message_runtime
+  CATKIN_DEPENDS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport message_runtime nodelet
   DEPENDS OpenCV
 )
 
@@ -124,6 +124,7 @@ set(LINK_LIBRARIES
 ## Declare a C++ library
  add_library(myslam
    src/feature_tracker.cc
+   src/feature_tracker_nodelet.cc
  )
 
 ## Add cmake target dependencies of the library
@@ -136,7 +137,7 @@ set(LINK_LIBRARIES
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
- add_executable(feature_tracker src/main.cc)
+# add_executable(feature_tracker src/feature_tracker_nodelet.cc)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -146,13 +147,13 @@ set(LINK_LIBRARIES
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
- add_dependencies(feature_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(feature_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(feature_tracker
-   ${LINK_LIBRARIES}
-   myslam
- )
+# target_link_libraries(feature_tracker
+#   ${LINK_LIBRARIES}
+#   myslam
+# )
 
 #############
 ## Install ##

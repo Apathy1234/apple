@@ -39,7 +39,7 @@
   <buildtool_depend>catkin</buildtool_depend>  <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->
-
+    <nodelet plugin = "${prefix}/plugins.xml"/>
   </export>
 <build_depend>roscpp</build_depend>
 <exec_depend>roscpp</exec_depend>
@@ -62,10 +62,17 @@
 <build_export_depend>message_filters</build_export_depend>
 
 <build_depend>message_generation</build_depend>
-<exec_depend>message_runtime</exec_depend>
-<build_export_depend>message_generation</build_export_depend>
-<build_depend>image_transport</build_depend>
-<build_export_depend>image_transport</build_export_depend>
-<exec_depend>image_transport</exec_depend>
 <exec_depend>message_generation</exec_depend>
+<build_export_depend>message_generation</build_export_depend>
+
+<exec_depend>message_runtime</exec_depend>
+
+<build_depend>image_transport</build_depend>
+<exec_depend>image_transport</exec_depend>
+<build_export_depend>image_transport</build_export_depend>
+
+<build_depend>nodelet</build_depend>
+<exec_depend>nodelet</exec_depend>
+<build_export_depend>nodelet</build_export_depend>
+
 </package>

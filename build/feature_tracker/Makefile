@@ -56,16 +56,6 @@ CMAKE_BINARY_DIR = /home/tg/slam_mono/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -76,6 +66,39 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: install/local
+
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: install/strip
+
+.PHONY : install/strip/fast
 
 # Special rule for the target install
 install: preinstall
@@ -89,28 +112,6 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: install/strip
-
-.PHONY : install/strip/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: install/local
-
-.PHONY : install/local/fast
-
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -122,16 +123,15 @@ test/fast: test
 
 .PHONY : test/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
 
-.PHONY : edit_cache/fast
+.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -166,6 +166,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
+.PHONY : feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
+
+# Convenience name for target.
+feature_tracker_genpy: feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
+
+.PHONY : feature_tracker_genpy
+
+# fast build rule for target.
+feature_tracker_genpy/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build.make feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build
+.PHONY : feature_tracker_genpy/fast
+
+# Convenience name for target.
 feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
 	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
 .PHONY : feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
@@ -196,19 +211,34 @@ sensor_msgs_generate_messages_cpp/fast:
 .PHONY : sensor_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-.PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_lisp: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+std_msgs_generate_messages_lisp: feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_lisp
+.PHONY : std_msgs_generate_messages_lisp
 
 # fast build rule for target.
-geometry_msgs_generate_messages_lisp/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-.PHONY : geometry_msgs_generate_messages_lisp/fast
+std_msgs_generate_messages_lisp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+.PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_lisp: feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+
+.PHONY : nodelet_generate_messages_lisp
+
+# fast build rule for target.
+nodelet_generate_messages_lisp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/build
+.PHONY : nodelet_generate_messages_lisp/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
@@ -224,6 +254,21 @@ std_msgs_generate_messages_eus: feature_tracker/CMakeFiles/std_msgs_generate_mes
 std_msgs_generate_messages_eus/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make feature_tracker/CMakeFiles/std_msgs_generate_messages_eus.dir/build
 .PHONY : std_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_cpp: feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+
+.PHONY : nodelet_generate_messages_cpp
+
+# fast build rule for target.
+nodelet_generate_messages_cpp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/build
+.PHONY : nodelet_generate_messages_cpp/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/roscpp_generate_messages_nodejs.dir/rule:
@@ -271,19 +316,64 @@ rosgraph_msgs_generate_messages_py/fast:
 .PHONY : rosgraph_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-roscpp_generate_messages_eus: feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+geometry_msgs_generate_messages_lisp: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 
-.PHONY : roscpp_generate_messages_eus
+.PHONY : geometry_msgs_generate_messages_lisp
 
 # fast build rule for target.
-roscpp_generate_messages_eus/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/build
-.PHONY : roscpp_generate_messages_eus/fast
+geometry_msgs_generate_messages_lisp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+.PHONY : geometry_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/bond_generate_messages_py.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/bond_generate_messages_py.dir/rule
+.PHONY : feature_tracker/CMakeFiles/bond_generate_messages_py.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_py: feature_tracker/CMakeFiles/bond_generate_messages_py.dir/rule
+
+.PHONY : bond_generate_messages_py
+
+# fast build rule for target.
+bond_generate_messages_py/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/bond_generate_messages_py.dir/build.make feature_tracker/CMakeFiles/bond_generate_messages_py.dir/build
+.PHONY : bond_generate_messages_py/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/myslam.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/myslam.dir/rule
+.PHONY : feature_tracker/CMakeFiles/myslam.dir/rule
+
+# Convenience name for target.
+myslam: feature_tracker/CMakeFiles/myslam.dir/rule
+
+.PHONY : myslam
+
+# fast build rule for target.
+myslam/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/build
+.PHONY : myslam/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_cpp: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : geometry_msgs_generate_messages_cpp
+
+# fast build rule for target.
+geometry_msgs_generate_messages_cpp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
+.PHONY : geometry_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule:
@@ -361,21 +451,6 @@ rosgraph_msgs_generate_messages_cpp/fast:
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_cpp: feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
-
-.PHONY : roscpp_generate_messages_cpp
-
-# fast build rule for target.
-roscpp_generate_messages_cpp/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/build
-.PHONY : roscpp_generate_messages_cpp/fast
-
-# Convenience name for target.
 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule:
 	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
 .PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
@@ -406,6 +481,36 @@ rosgraph_msgs_generate_messages_nodejs/fast:
 .PHONY : rosgraph_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
+feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_cpp: feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+.PHONY : roscpp_generate_messages_cpp
+
+# fast build rule for target.
+roscpp_generate_messages_cpp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+.PHONY : roscpp_generate_messages_cpp/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/rule
+.PHONY : feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_py: feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/rule
+
+.PHONY : nodelet_generate_messages_py
+
+# fast build rule for target.
+nodelet_generate_messages_py/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/build.make feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/build
+.PHONY : nodelet_generate_messages_py/fast
+
+# Convenience name for target.
 feature_tracker/CMakeFiles/feature_tracker_gennodejs.dir/rule:
 	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker_gennodejs.dir/rule
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_gennodejs.dir/rule
@@ -434,21 +539,6 @@ feature_tracker_gencpp: feature_tracker/CMakeFiles/feature_tracker_gencpp.dir/ru
 feature_tracker_gencpp/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_gencpp.dir/build.make feature_tracker/CMakeFiles/feature_tracker_gencpp.dir/build
 .PHONY : feature_tracker_gencpp/fast
-
-# Convenience name for target.
-feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
-.PHONY : feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
-
-# Convenience name for target.
-feature_tracker_genpy: feature_tracker/CMakeFiles/feature_tracker_genpy.dir/rule
-
-.PHONY : feature_tracker_genpy
-
-# fast build rule for target.
-feature_tracker_genpy/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build.make feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build
-.PHONY : feature_tracker_genpy/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/roscpp_generate_messages_py.dir/rule:
@@ -556,19 +646,64 @@ geometry_msgs_generate_messages_py/fast:
 .PHONY : geometry_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-feature_tracker/CMakeFiles/feature_tracker.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker.dir/rule
-.PHONY : feature_tracker/CMakeFiles/feature_tracker.dir/rule
+feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
+.PHONY : feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-feature_tracker: feature_tracker/CMakeFiles/feature_tracker.dir/rule
+nodelet_generate_messages_nodejs: feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
 
-.PHONY : feature_tracker
+.PHONY : nodelet_generate_messages_nodejs
 
 # fast build rule for target.
-feature_tracker/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker.dir/build.make feature_tracker/CMakeFiles/feature_tracker.dir/build
-.PHONY : feature_tracker/fast
+nodelet_generate_messages_nodejs/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/build.make feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/build
+.PHONY : nodelet_generate_messages_nodejs/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_lisp: feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+.PHONY : roscpp_generate_messages_lisp
+
+# fast build rule for target.
+roscpp_generate_messages_lisp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
+.PHONY : feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+feature_tracker_generate_messages_nodejs: feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
+
+.PHONY : feature_tracker_generate_messages_nodejs
+
+# fast build rule for target.
+feature_tracker_generate_messages_nodejs/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/build.make feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/build
+.PHONY : feature_tracker_generate_messages_nodejs/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_cpp: feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/rule
+
+.PHONY : bond_generate_messages_cpp
+
+# fast build rule for target.
+bond_generate_messages_cpp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/build
+.PHONY : bond_generate_messages_cpp/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/feature_tracker_generate_messages.dir/rule:
@@ -586,19 +721,49 @@ feature_tracker_generate_messages/fast:
 .PHONY : feature_tracker_generate_messages/fast
 
 # Convenience name for target.
-feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
-.PHONY : feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
+feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-_feature_tracker_generate_messages_check_deps_FeatureTrackerResult: feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
+roscpp_generate_messages_eus: feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 
-.PHONY : _feature_tracker_generate_messages_check_deps_FeatureTrackerResult
+.PHONY : roscpp_generate_messages_eus
 
 # fast build rule for target.
-_feature_tracker_generate_messages_check_deps_FeatureTrackerResult/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/build.make feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/build
-.PHONY : _feature_tracker_generate_messages_check_deps_FeatureTrackerResult/fast
+roscpp_generate_messages_eus/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/build
+.PHONY : roscpp_generate_messages_eus/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/rule
+.PHONY : feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_eus: feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/rule
+
+.PHONY : bond_generate_messages_eus
+
+# fast build rule for target.
+bond_generate_messages_eus/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/build.make feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/build
+.PHONY : bond_generate_messages_eus/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/rule
+.PHONY : feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_lisp: feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/rule
+
+.PHONY : bond_generate_messages_lisp
+
+# fast build rule for target.
+bond_generate_messages_lisp/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/build
+.PHONY : bond_generate_messages_lisp/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/rule:
@@ -629,6 +794,51 @@ feature_tracker_geneus: feature_tracker/CMakeFiles/feature_tracker_geneus.dir/ru
 feature_tracker_geneus/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_geneus.dir/build.make feature_tracker/CMakeFiles/feature_tracker_geneus.dir/build
 .PHONY : feature_tracker_geneus/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/rule
+.PHONY : feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_eus: feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/rule
+
+.PHONY : nodelet_generate_messages_eus
+
+# fast build rule for target.
+nodelet_generate_messages_eus/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/build.make feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/build
+.PHONY : nodelet_generate_messages_eus/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/rule
+.PHONY : feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_nodejs: feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/rule
+
+.PHONY : bond_generate_messages_nodejs
+
+# fast build rule for target.
+bond_generate_messages_nodejs/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/build.make feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/build
+.PHONY : bond_generate_messages_nodejs/fast
+
+# Convenience name for target.
+feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule:
+	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
+.PHONY : feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
+
+# Convenience name for target.
+_feature_tracker_generate_messages_check_deps_FeatureTrackerResult: feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/rule
+
+.PHONY : _feature_tracker_generate_messages_check_deps_FeatureTrackerResult
+
+# fast build rule for target.
+_feature_tracker_generate_messages_check_deps_FeatureTrackerResult/fast:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/build.make feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_FeatureTrackerResult.dir/build
+.PHONY : _feature_tracker_generate_messages_check_deps_FeatureTrackerResult/fast
 
 # Convenience name for target.
 feature_tracker/CMakeFiles/feature_tracker_generate_messages_cpp.dir/rule:
@@ -690,81 +900,6 @@ feature_tracker_genlisp/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_genlisp.dir/build.make feature_tracker/CMakeFiles/feature_tracker_genlisp.dir/build
 .PHONY : feature_tracker_genlisp/fast
 
-# Convenience name for target.
-feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-.PHONY : feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_lisp: feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-.PHONY : roscpp_generate_messages_lisp
-
-# fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
-
-# Convenience name for target.
-feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
-.PHONY : feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-feature_tracker_generate_messages_nodejs: feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/rule
-
-.PHONY : feature_tracker_generate_messages_nodejs
-
-# fast build rule for target.
-feature_tracker_generate_messages_nodejs/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/build.make feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/build
-.PHONY : feature_tracker_generate_messages_nodejs/fast
-
-# Convenience name for target.
-feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : std_msgs_generate_messages_lisp
-
-# fast build rule for target.
-std_msgs_generate_messages_lisp/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
-.PHONY : std_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
-.PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-geometry_msgs_generate_messages_cpp: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : geometry_msgs_generate_messages_cpp
-
-# fast build rule for target.
-geometry_msgs_generate_messages_cpp/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
-.PHONY : geometry_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-feature_tracker/CMakeFiles/myslam.dir/rule:
-	cd /home/tg/slam_mono/build && $(MAKE) -f CMakeFiles/Makefile2 feature_tracker/CMakeFiles/myslam.dir/rule
-.PHONY : feature_tracker/CMakeFiles/myslam.dir/rule
-
-# Convenience name for target.
-myslam: feature_tracker/CMakeFiles/myslam.dir/rule
-
-.PHONY : myslam
-
-# fast build rule for target.
-myslam/fast:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/build
-.PHONY : myslam/fast
-
 src/feature_tracker.o: src/feature_tracker.cc.o
 
 .PHONY : src/feature_tracker.o
@@ -792,32 +927,32 @@ src/feature_tracker.cc.s:
 	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.s
 .PHONY : src/feature_tracker.cc.s
 
-src/main.o: src/main.cc.o
+src/feature_tracker_nodelet.o: src/feature_tracker_nodelet.cc.o
 
-.PHONY : src/main.o
+.PHONY : src/feature_tracker_nodelet.o
 
 # target to build an object file
-src/main.cc.o:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker.dir/build.make feature_tracker/CMakeFiles/feature_tracker.dir/src/main.cc.o
-.PHONY : src/main.cc.o
+src/feature_tracker_nodelet.cc.o:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o
+.PHONY : src/feature_tracker_nodelet.cc.o
 
-src/main.i: src/main.cc.i
+src/feature_tracker_nodelet.i: src/feature_tracker_nodelet.cc.i
 
-.PHONY : src/main.i
+.PHONY : src/feature_tracker_nodelet.i
 
 # target to preprocess a source file
-src/main.cc.i:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker.dir/build.make feature_tracker/CMakeFiles/feature_tracker.dir/src/main.cc.i
-.PHONY : src/main.cc.i
+src/feature_tracker_nodelet.cc.i:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.i
+.PHONY : src/feature_tracker_nodelet.cc.i
 
-src/main.s: src/main.cc.s
+src/feature_tracker_nodelet.s: src/feature_tracker_nodelet.cc.s
 
-.PHONY : src/main.s
+.PHONY : src/feature_tracker_nodelet.s
 
 # target to generate assembly for a file
-src/main.cc.s:
-	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/feature_tracker.dir/build.make feature_tracker/CMakeFiles/feature_tracker.dir/src/main.cc.s
-.PHONY : src/main.cc.s
+src/feature_tracker_nodelet.cc.s:
+	cd /home/tg/slam_mono/build && $(MAKE) -f feature_tracker/CMakeFiles/myslam.dir/build.make feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.s
+.PHONY : src/feature_tracker_nodelet.cc.s
 
 # Help Target
 help:
@@ -825,26 +960,37 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... rebuild_cache"
+	@echo "... edit_cache"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... feature_tracker_genpy"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_cpp"
-	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... install"
+	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... nodelet_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
+	@echo "... nodelet_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_py"
-	@echo "... list_install_components"
-	@echo "... roscpp_generate_messages_eus"
+	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... bond_generate_messages_py"
+	@echo "... test"
+	@echo "... myslam"
+	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... feature_tracker_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... roscpp_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
+	@echo "... roscpp_generate_messages_cpp"
+	@echo "... nodelet_generate_messages_py"
 	@echo "... feature_tracker_gennodejs"
 	@echo "... feature_tracker_gencpp"
-	@echo "... feature_tracker_genpy"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... std_msgs_generate_messages_py"
@@ -852,32 +998,30 @@ help:
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
-	@echo "... feature_tracker"
+	@echo "... nodelet_generate_messages_nodejs"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... feature_tracker_generate_messages_nodejs"
+	@echo "... bond_generate_messages_cpp"
 	@echo "... feature_tracker_generate_messages"
-	@echo "... _feature_tracker_generate_messages_check_deps_FeatureTrackerResult"
+	@echo "... list_install_components"
+	@echo "... roscpp_generate_messages_eus"
+	@echo "... bond_generate_messages_eus"
+	@echo "... bond_generate_messages_lisp"
 	@echo "... _feature_tracker_generate_messages_check_deps_CameraTrackerResult"
 	@echo "... feature_tracker_geneus"
+	@echo "... nodelet_generate_messages_eus"
+	@echo "... bond_generate_messages_nodejs"
+	@echo "... _feature_tracker_generate_messages_check_deps_FeatureTrackerResult"
 	@echo "... feature_tracker_generate_messages_cpp"
 	@echo "... feature_tracker_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... feature_tracker_genlisp"
-	@echo "... rebuild_cache"
-	@echo "... roscpp_generate_messages_lisp"
-	@echo "... feature_tracker_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_lisp"
-	@echo "... install"
-	@echo "... install/strip"
-	@echo "... install/local"
-	@echo "... geometry_msgs_generate_messages_cpp"
-	@echo "... myslam"
-	@echo "... test"
-	@echo "... edit_cache"
 	@echo "... src/feature_tracker.o"
 	@echo "... src/feature_tracker.i"
 	@echo "... src/feature_tracker.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/feature_tracker_nodelet.o"
+	@echo "... src/feature_tracker_nodelet.i"
+	@echo "... src/feature_tracker_nodelet.s"
 .PHONY : help
 
 

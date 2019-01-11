@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/tg/slam_mono/src/feature_tracker/src/feature_tracker.cc" "/home/tg/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
+  "/home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc" "/home/tg/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
