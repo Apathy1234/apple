@@ -142,7 +142,7 @@ void FeatureTracker::Create_Image_Pyramid(void)
 }
 
 void FeatureTracker::Undistorted_Points(const vector<Point2f> ptsIn, vector<Point2f>& ptsOut, const Vec4d& intrinsics, 
-                                       const Vec4d& distortionCoeffs, const Matx33d& rotation, const Vec4d& newIntrinsics)
+                                        const Vec4d& distortionCoeffs, const Matx33d& rotation, const Vec4d& newIntrinsics)
 {
     if ( ptsIn.size() == 0 ) return;
     
@@ -159,7 +159,7 @@ void FeatureTracker::Undistorted_Points(const vector<Point2f> ptsIn, vector<Poin
 }
 
 void FeatureTracker::Distortion_Points(const vector<Point2f> ptsIn, vector<Point2f>& ptsOut, 
-                                                    const Vec4d& intrinsics, const Vec4d& distortionCoeffs)
+                                       const Vec4d& intrinsics, const Vec4d& distortionCoeffs)
 {
     const Matx33d k(intrinsics[0],           0.0, intrinsics[2],
                               0.0, intrinsics[1], intrinsics[3],
@@ -378,6 +378,7 @@ void FeatureTracker::Find_Image_Feature(void)
 
     leftKpsCurr.clear();
     rightKpsCurr.clear();
+    cameraKps3d.clear();
 
     // 若左右目上一次特征点不为空，开始追踪特征点
     if (!leftKpsRef.empty() && !rightKpsRef.empty())
@@ -431,6 +432,8 @@ void FeatureTracker::Publish_Info(void)
     vector<Point2f> rightKpsUndistorted(0);
     Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
     Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
+    
+    Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
 
     int featureNum = 0;
     for (int i = 0; i < trackerID.size(); i++)
@@ -444,6 +447,9 @@ void FeatureTracker::Publish_Info(void)
         featurePoints->features[i].v0 = leftKpsUndistorted[i].y;
         featurePoints->features[i].u1 = rightKpsUndistorted[i].x;
         featurePoints->features[i].v1 = rightKpsUndistorted[i].y; 
+        featurePoints->features[i].x = cameraKps3d[i].x;
+        featurePoints->features[i].y = cameraKps3d[i].y;
+        featurePoints->features[i].z = cameraKps3d[i].z;
     }
     featurePoints->num_of_features = featureNum;
     pubFeatures.publish(featurePoints);
@@ -462,6 +468,33 @@ void FeatureTracker::Publish_Info(void)
         }
         cv_bridge::CvImage debug_image(leftImagePtr->header, "bgr8", outImg);
         pubMatchImage.publish(debug_image.toImageMsg());
+    }
+}
+
+void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts)  // 相机坐标系下无畸变归一化点
+{
+    Mat t1 = (Mat_<float>(3, 4) << 
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0 ,1 ,0);
+    Mat t2 = (Mat_<float>(3, 4) << 
+    T_left2right.at<double>(0, 0), T_left2right.at<double>(0, 1), T_left2right.at<double>(0, 2), T_left2right.at<double>(0, 3),
+    T_left2right.at<double>(1, 0), T_left2right.at<double>(1, 1), T_left2right.at<double>(1, 2), T_left2right.at<double>(1, 3),
+    T_left2right.at<double>(2, 0), T_left2right.at<double>(2, 1), T_left2right.at<double>(2, 2), T_left2right.at<double>(2, 3));
+
+    Mat pts4d;
+    triangulatePoints(t1, t2, leftPts, rightPts, pts4d);
+
+    // 归一化为3d点
+    for (int i = 0; i < pts4d.cols; i++)
+    {
+        Mat x = pts4d.col(i);
+        x /= x.at<float>(3, 0);
+        Point3f p (
+            x.at<float>(0, 0),
+            x.at<float>(1, 0),
+            x.at<float>(2, 0));
+        cameraKps3d.push_back( p );
     }
 }
 

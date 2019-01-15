@@ -126,12 +126,12 @@ struct MD5Sum< ::feature_tracker::CameraTrackerResult_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "588b69a3b8ad6dc432d4f61228bb89fd";
+    return "d039766b47fa8dfad093dc64535488f0";
   }
 
   static const char* value(const ::feature_tracker::CameraTrackerResult_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x588b69a3b8ad6dc4ULL;
-  static const uint64_t static_value2 = 0x32d4f61228bb89fdULL;
+  static const uint64_t static_value1 = 0xd039766b47fa8dfaULL;
+  static const uint64_t static_value2 = 0xd093dc64535488f0ULL;
 };
 
 template<class ContainerAllocator>
@@ -180,6 +180,9 @@ float64 u0\n\
 float64 v0\n\
 float64 u1\n\
 float64 v1\n\
+float64 x\n\
+float64 y\n\
+float64 z\n\
 ";
   }
 

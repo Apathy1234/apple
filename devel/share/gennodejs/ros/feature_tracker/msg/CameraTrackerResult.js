@@ -82,7 +82,7 @@ class CameraTrackerResult {
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    length += 56 * object.features.length;
+    length += 80 * object.features.length;
     return length + 12;
   }
 
@@ -93,7 +93,7 @@ class CameraTrackerResult {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '588b69a3b8ad6dc432d4f61228bb89fd';
+    return 'd039766b47fa8dfad093dc64535488f0';
   }
 
   static messageDefinition() {
@@ -129,6 +129,9 @@ class CameraTrackerResult {
     float64 v0
     float64 u1
     float64 v1
+    float64 x
+    float64 y
+    float64 z
     `;
   }
 

@@ -13,4 +13,10 @@
           U1
           V1-VAL
           V1
+          X-VAL
+          X
+          Y-VAL
+          Y
+          Z-VAL
+          Z
 ))

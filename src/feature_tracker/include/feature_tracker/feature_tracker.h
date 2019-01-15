@@ -78,6 +78,7 @@ namespace slam_mono
         vector<Point2f> rightKpsRef;
         vector<Point2f> leftKpsAdd;
         vector<Point2f> rightKpsAdd;
+        vector<Point3f> cameraKps3d;
 
         // 相关函数
         bool Load_Parameters(void);
@@ -98,6 +99,7 @@ namespace slam_mono
         void Tracker_Feature(void);
         void Delet_Point_With_F(void);
         void Publish_Info(void);
+        void Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts);
 
         template <typename T>
         void Reduce_Vector(vector<T>& v, vector<unsigned char> status)

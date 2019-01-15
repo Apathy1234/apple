@@ -5,3 +5,6 @@ float64 u0
 float64 v0
 float64 u1
 float64 v1
+float64 x
+float64 y
+float64 z

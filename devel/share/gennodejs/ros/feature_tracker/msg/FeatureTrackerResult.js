@@ -25,6 +25,9 @@ class FeatureTrackerResult {
       this.v0 = null;
       this.u1 = null;
       this.v1 = null;
+      this.x = null;
+      this.y = null;
+      this.z = null;
     }
     else {
       if (initObj.hasOwnProperty('id')) {
@@ -69,6 +72,24 @@ class FeatureTrackerResult {
       else {
         this.v1 = 0.0;
       }
+      if (initObj.hasOwnProperty('x')) {
+        this.x = initObj.x
+      }
+      else {
+        this.x = 0.0;
+      }
+      if (initObj.hasOwnProperty('y')) {
+        this.y = initObj.y
+      }
+      else {
+        this.y = 0.0;
+      }
+      if (initObj.hasOwnProperty('z')) {
+        this.z = initObj.z
+      }
+      else {
+        this.z = 0.0;
+      }
     }
   }
 
@@ -88,6 +109,12 @@ class FeatureTrackerResult {
     bufferOffset = _serializer.float64(obj.u1, buffer, bufferOffset);
     // Serialize message field [v1]
     bufferOffset = _serializer.float64(obj.v1, buffer, bufferOffset);
+    // Serialize message field [x]
+    bufferOffset = _serializer.float64(obj.x, buffer, bufferOffset);
+    // Serialize message field [y]
+    bufferOffset = _serializer.float64(obj.y, buffer, bufferOffset);
+    // Serialize message field [z]
+    bufferOffset = _serializer.float64(obj.z, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -109,11 +136,17 @@ class FeatureTrackerResult {
     data.u1 = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [v1]
     data.v1 = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [x]
+    data.x = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [y]
+    data.y = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [z]
+    data.z = _deserializer.float64(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 56;
+    return 80;
   }
 
   static datatype() {
@@ -123,7 +156,7 @@ class FeatureTrackerResult {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd0ed1f072b189a5a0771a879ec6816ba';
+    return 'ba9d4897b1e44abdddcf84f9f72d3eb6';
   }
 
   static messageDefinition() {
@@ -136,6 +169,9 @@ class FeatureTrackerResult {
     float64 v0
     float64 u1
     float64 v1
+    float64 x
+    float64 y
+    float64 z
     `;
   }
 
@@ -192,6 +228,27 @@ class FeatureTrackerResult {
     }
     else {
       resolved.v1 = 0.0
+    }
+
+    if (msg.x !== undefined) {
+      resolved.x = msg.x;
+    }
+    else {
+      resolved.x = 0.0
+    }
+
+    if (msg.y !== undefined) {
+      resolved.y = msg.y;
+    }
+    else {
+      resolved.y = 0.0
+    }
+
+    if (msg.z !== undefined) {
+      resolved.z = msg.z;
+    }
+    else {
+      resolved.z = 0.0
     }
 
     return resolved;

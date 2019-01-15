@@ -7,7 +7,7 @@ import struct
 
 
 class FeatureTrackerResult(genpy.Message):
-  _md5sum = "d0ed1f072b189a5a0771a879ec6816ba"
+  _md5sum = "ba9d4897b1e44abdddcf84f9f72d3eb6"
   _type = "feature_tracker/FeatureTrackerResult"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """int64 id
@@ -16,9 +16,12 @@ int64 seq
 float64 u0
 float64 v0
 float64 u1
-float64 v1"""
-  __slots__ = ['id','cnt','seq','u0','v0','u1','v1']
-  _slot_types = ['int64','int64','int64','float64','float64','float64','float64']
+float64 v1
+float64 x
+float64 y
+float64 z"""
+  __slots__ = ['id','cnt','seq','u0','v0','u1','v1','x','y','z']
+  _slot_types = ['int64','int64','int64','float64','float64','float64','float64','float64','float64','float64']
 
   def __init__(self, *args, **kwds):
     """
@@ -28,7 +31,7 @@ float64 v1"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,cnt,seq,u0,v0,u1,v1
+       id,cnt,seq,u0,v0,u1,v1,x,y,z
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -51,6 +54,12 @@ float64 v1"""
         self.u1 = 0.
       if self.v1 is None:
         self.v1 = 0.
+      if self.x is None:
+        self.x = 0.
+      if self.y is None:
+        self.y = 0.
+      if self.z is None:
+        self.z = 0.
     else:
       self.id = 0
       self.cnt = 0
@@ -59,6 +68,9 @@ float64 v1"""
       self.v0 = 0.
       self.u1 = 0.
       self.v1 = 0.
+      self.x = 0.
+      self.y = 0.
+      self.z = 0.
 
   def _get_types(self):
     """
@@ -73,7 +85,7 @@ float64 v1"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3q4d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1))
+      buff.write(_get_struct_3q7d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -86,8 +98,8 @@ float64 v1"""
       end = 0
       _x = self
       start = end
-      end += 56
-      (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1,) = _get_struct_3q4d().unpack(str[start:end])
+      end += 80
+      (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z,) = _get_struct_3q7d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -101,7 +113,7 @@ float64 v1"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3q4d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1))
+      buff.write(_get_struct_3q7d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -115,8 +127,8 @@ float64 v1"""
       end = 0
       _x = self
       start = end
-      end += 56
-      (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1,) = _get_struct_3q4d().unpack(str[start:end])
+      end += 80
+      (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z,) = _get_struct_3q7d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -125,9 +137,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3q4d = None
-def _get_struct_3q4d():
-    global _struct_3q4d
-    if _struct_3q4d is None:
-        _struct_3q4d = struct.Struct("<3q4d")
-    return _struct_3q4d
+_struct_3q7d = None
+def _get_struct_3q7d():
+    global _struct_3q7d
+    if _struct_3q7d is None:
+        _struct_3q7d = struct.Struct("<3q7d")
+    return _struct_3q7d

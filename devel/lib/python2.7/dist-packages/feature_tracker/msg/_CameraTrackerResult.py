@@ -9,7 +9,7 @@ import feature_tracker.msg
 import std_msgs.msg
 
 class CameraTrackerResult(genpy.Message):
-  _md5sum = "588b69a3b8ad6dc432d4f61228bb89fd"
+  _md5sum = "d039766b47fa8dfad093dc64535488f0"
   _type = "feature_tracker/CameraTrackerResult"
   _has_header = True #flag to mark the presence of a Header object
   _full_text = """std_msgs/Header header
@@ -41,7 +41,10 @@ int64 seq
 float64 u0
 float64 v0
 float64 u1
-float64 v1"""
+float64 v1
+float64 x
+float64 y
+float64 z"""
   __slots__ = ['header','num_of_features','features']
   _slot_types = ['std_msgs/Header','int64','feature_tracker/FeatureTrackerResult[]']
 
@@ -98,7 +101,7 @@ float64 v1"""
       buff.write(_struct_I.pack(length))
       for val1 in self.features:
         _x = val1
-        buff.write(_get_struct_3q4d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1))
+        buff.write(_get_struct_3q7d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -137,8 +140,8 @@ float64 v1"""
         val1 = feature_tracker.msg.FeatureTrackerResult()
         _x = val1
         start = end
-        end += 56
-        (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1,) = _get_struct_3q4d().unpack(str[start:end])
+        end += 80
+        (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z,) = _get_struct_3q7d().unpack(str[start:end])
         self.features.append(val1)
       return self
     except struct.error as e:
@@ -165,7 +168,7 @@ float64 v1"""
       buff.write(_struct_I.pack(length))
       for val1 in self.features:
         _x = val1
-        buff.write(_get_struct_3q4d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1))
+        buff.write(_get_struct_3q7d().pack(_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -205,8 +208,8 @@ float64 v1"""
         val1 = feature_tracker.msg.FeatureTrackerResult()
         _x = val1
         start = end
-        end += 56
-        (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1,) = _get_struct_3q4d().unpack(str[start:end])
+        end += 80
+        (_x.id, _x.cnt, _x.seq, _x.u0, _x.v0, _x.u1, _x.v1, _x.x, _x.y, _x.z,) = _get_struct_3q7d().unpack(str[start:end])
         self.features.append(val1)
       return self
     except struct.error as e:
@@ -228,9 +231,9 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
-_struct_3q4d = None
-def _get_struct_3q4d():
-    global _struct_3q4d
-    if _struct_3q4d is None:
-        _struct_3q4d = struct.Struct("<3q4d")
-    return _struct_3q4d
+_struct_3q7d = None
+def _get_struct_3q7d():
+    global _struct_3q7d
+    if _struct_3q7d is None:
+        _struct_3q7d = struct.Struct("<3q7d")
+    return _struct_3q7d

@@ -109,7 +109,7 @@
    self)
   )
 
-(setf (get feature_tracker::CameraTrackerResult :md5sum-) "588b69a3b8ad6dc432d4f61228bb89fd")
+(setf (get feature_tracker::CameraTrackerResult :md5sum-) "d039766b47fa8dfad093dc64535488f0")
 (setf (get feature_tracker::CameraTrackerResult :datatype-) "feature_tracker/CameraTrackerResult")
 (setf (get feature_tracker::CameraTrackerResult :definition-)
       "std_msgs/Header header
@@ -142,10 +142,13 @@ float64 u0
 float64 v0
 float64 u1
 float64 v1
+float64 x
+float64 y
+float64 z
 ")
 
 
 
-(provide :feature_tracker/CameraTrackerResult "588b69a3b8ad6dc432d4f61228bb89fd")
+(provide :feature_tracker/CameraTrackerResult "d039766b47fa8dfad093dc64535488f0")
 
 

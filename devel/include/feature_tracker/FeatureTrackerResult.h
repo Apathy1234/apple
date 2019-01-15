@@ -30,7 +30,10 @@ struct FeatureTrackerResult_
     , u0(0.0)
     , v0(0.0)
     , u1(0.0)
-    , v1(0.0)  {
+    , v1(0.0)
+    , x(0.0)
+    , y(0.0)
+    , z(0.0)  {
     }
   FeatureTrackerResult_(const ContainerAllocator& _alloc)
     : id(0)
@@ -39,7 +42,10 @@ struct FeatureTrackerResult_
     , u0(0.0)
     , v0(0.0)
     , u1(0.0)
-    , v1(0.0)  {
+    , v1(0.0)
+    , x(0.0)
+    , y(0.0)
+    , z(0.0)  {
   (void)_alloc;
     }
 
@@ -65,6 +71,15 @@ struct FeatureTrackerResult_
 
    typedef double _v1_type;
   _v1_type v1;
+
+   typedef double _x_type;
+  _x_type x;
+
+   typedef double _y_type;
+  _y_type y;
+
+   typedef double _z_type;
+  _z_type z;
 
 
 
@@ -144,12 +159,12 @@ struct MD5Sum< ::feature_tracker::FeatureTrackerResult_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d0ed1f072b189a5a0771a879ec6816ba";
+    return "ba9d4897b1e44abdddcf84f9f72d3eb6";
   }
 
   static const char* value(const ::feature_tracker::FeatureTrackerResult_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd0ed1f072b189a5aULL;
-  static const uint64_t static_value2 = 0x0771a879ec6816baULL;
+  static const uint64_t static_value1 = 0xba9d4897b1e44abdULL;
+  static const uint64_t static_value2 = 0xddcf84f9f72d3eb6ULL;
 };
 
 template<class ContainerAllocator>
@@ -175,6 +190,9 @@ float64 u0\n\
 float64 v0\n\
 float64 u1\n\
 float64 v1\n\
+float64 x\n\
+float64 y\n\
+float64 z\n\
 ";
   }
 
@@ -200,6 +218,9 @@ namespace serialization
       stream.next(m.v0);
       stream.next(m.u1);
       stream.next(m.v1);
+      stream.next(m.x);
+      stream.next(m.y);
+      stream.next(m.z);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -232,6 +253,12 @@ struct Printer< ::feature_tracker::FeatureTrackerResult_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.u1);
     s << indent << "v1: ";
     Printer<double>::stream(s, indent + "  ", v.v1);
+    s << indent << "x: ";
+    Printer<double>::stream(s, indent + "  ", v.x);
+    s << indent << "y: ";
+    Printer<double>::stream(s, indent + "  ", v.y);
+    s << indent << "z: ";
+    Printer<double>::stream(s, indent + "  ", v.z);
   }
 };
 
