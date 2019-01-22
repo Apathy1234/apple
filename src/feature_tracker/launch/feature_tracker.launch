@@ -6,7 +6,6 @@
 <node pkg = "nodelet" type = "nodelet" name = "nodelet_manager" args = "manager" output = "screen"/>
 <node pkg = "nodelet" type = "nodelet" name = "FeatureTrackerNodelet" args = "load feature_tracker/FeatureTrackerNodelet nodelet_manager" output = "screen">
 </node>
-<!--node pkg = "feature_tracker" type = "feature_tracker" name = "feature_tracker"/-->
 
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find feature_tracker)/rviz/feature_tracker.rviz"/>
 

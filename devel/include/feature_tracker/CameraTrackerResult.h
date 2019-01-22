@@ -153,6 +153,7 @@ struct Definition< ::feature_tracker::CameraTrackerResult_<ContainerAllocator> >
     return "std_msgs/Header header\n\
 int64 num_of_features\n\
 FeatureTrackerResult[] features\n\
+\n\
 ================================================================================\n\
 MSG: std_msgs/Header\n\
 # Standard metadata for higher-level stamped data types.\n\

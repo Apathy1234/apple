@@ -31,3 +31,4 @@ equalize: true
 pyramid_level: 3
 win_size: 21
 f_threshold: 1.0
+show_tracker: true

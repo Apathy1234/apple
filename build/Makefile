@@ -920,6 +920,32 @@ feature_tracker_genlisp/fast:
 .PHONY : feature_tracker_genlisp/fast
 
 #=============================================================================
+# Target rules for targets named pose_estimate
+
+# Build rule for target.
+pose_estimate: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pose_estimate
+.PHONY : pose_estimate
+
+# fast build rule for target.
+pose_estimate/fast:
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/build
+.PHONY : pose_estimate/fast
+
+#=============================================================================
+# Target rules for targets named pose_estimate_node
+
+# Build rule for target.
+pose_estimate_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pose_estimate_node
+.PHONY : pose_estimate_node
+
+# fast build rule for target.
+pose_estimate_node/fast:
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_node.dir/build.make pose_estimate/CMakeFiles/pose_estimate_node.dir/build
+.PHONY : pose_estimate_node/fast
+
+#=============================================================================
 # Target rules for targets named mynteye_listener_d
 
 # Build rule for target.
@@ -1445,6 +1471,8 @@ help:
 	@echo "... feature_tracker_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... feature_tracker_genlisp"
+	@echo "... pose_estimate"
+	@echo "... pose_estimate_node"
 	@echo "... mynteye_listener_d"
 	@echo "... mynteye_wrapper_d_genpy"
 	@echo "... mynteye_wrapper_d_generate_messages_py"

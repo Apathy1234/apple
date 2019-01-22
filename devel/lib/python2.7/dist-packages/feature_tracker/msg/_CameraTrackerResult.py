@@ -15,6 +15,7 @@ class CameraTrackerResult(genpy.Message):
   _full_text = """std_msgs/Header header
 int64 num_of_features
 FeatureTrackerResult[] features
+
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.

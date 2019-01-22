@@ -26,6 +26,7 @@ namespace slam_mono
         double F_THRESHOLD;
         bool pubThisFrame;
         bool EQUALIZE;
+        bool SHOW_TRACKER;
         int pubCnt;
         int FREQ;
         int WIN_SIZE;

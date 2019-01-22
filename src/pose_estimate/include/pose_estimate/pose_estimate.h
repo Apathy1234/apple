@@ -1,0 +1,56 @@
+#ifndef _POSE_ESTIMATE_H_
+#define _POSE_ESTIMATE_H_
+
+#include <pose_estimate/my_include.h>
+#include <pose_estimate/g2o_edge.h>
+
+namespace slam_mono
+{
+
+class PoseEstimate
+{
+public:
+    typedef shared_ptr<PoseEstimate> ptr;
+    PoseEstimate(void);
+    ~PoseEstimate(void);
+    void Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts);
+
+private:
+    typedef long long int LONGTYPE;
+
+    // ros相关
+    string FEATURE_TOPICS;
+    string IMU_TOPICS;
+    ros::NodeHandle n;
+    ros::Subscriber featureSub; 
+    // ros::Subscriber imuSub;
+    
+    
+    // 特征点相关
+    struct Features
+    {
+        std_msgs::Header header;
+        vector<LONGTYPE> id;
+        vector<LONGTYPE> cnt;
+        vector<Point3f> pts3d;
+        map<LONGTYPE, Point3f> pts3dMap;
+    };
+    
+    Features featuresRef;
+    Features featuresCurr;
+    vector<Point3f> ptsRefMatched;
+    vector<Point3f> ptsCurrMatched;
+    
+    // 姿态相关
+    Mat R;
+    Mat T;
+
+    void Clear_Points(Features& fet);
+    void Find_Feature_Matches(void);
+    void Bundle_Adjustment(const vector<Point3f>& pts1, const vector<Point3f>& pts2, Mat& R, Mat& t);
+};
+
+}
+
+
+#endif

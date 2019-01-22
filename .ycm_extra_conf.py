@@ -21,9 +21,13 @@ flags = [
 '-isystem',
 '/home/tg/slam_mono/devel/include',
 '-isystem',
-'/home/tg/slam_mono/src/CMakeLists.txt/include',
+'/home/tg/slam_mono/src/.idea/include',
 '-isystem',
-'/home/tg/slam_mono/src/feature_tracker/include'
+'/home/tg/slam_mono/src/feature_tracker/include',
+'-isystem',
+'/home/tg/slam_mono/src/mynteye_wrapper_d/include',
+'-isystem',
+'/home/tg/slam_mono/src/pose_estimate/include'
 ]
 
 compilation_database_folder = ''

@@ -2085,6 +2085,181 @@ clean: feature_tracker/CMakeFiles/feature_tracker_genlisp.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory pose_estimate
+
+# Convenience name for "all" pass in the directory.
+pose_estimate/all: pose_estimate/CMakeFiles/pose_estimate.dir/all
+pose_estimate/all: pose_estimate/CMakeFiles/pose_estimate_node.dir/all
+
+.PHONY : pose_estimate/all
+
+# Convenience name for "clean" pass in the directory.
+pose_estimate/clean: pose_estimate/CMakeFiles/pose_estimate.dir/clean
+pose_estimate/clean: pose_estimate/CMakeFiles/pose_estimate_node.dir/clean
+
+.PHONY : pose_estimate/clean
+
+# Convenience name for "preinstall" pass in the directory.
+pose_estimate/preinstall:
+
+.PHONY : pose_estimate/preinstall
+
+#=============================================================================
+# Target rules for target pose_estimate/CMakeFiles/pose_estimate.dir
+
+# All Build rule for target.
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/myslam.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/depend
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=41,42 "Built target pose_estimate"
+.PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/all
+
+# Include target in all.
+all: pose_estimate/CMakeFiles/pose_estimate.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pose_estimate/CMakeFiles/pose_estimate.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tg/slam_mono/build/CMakeFiles 17
+	$(MAKE) -f CMakeFiles/Makefile2 pose_estimate/CMakeFiles/pose_estimate.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tg/slam_mono/build/CMakeFiles 0
+.PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/rule
+
+# Convenience name for target.
+pose_estimate: pose_estimate/CMakeFiles/pose_estimate.dir/rule
+
+.PHONY : pose_estimate
+
+# clean rule for target.
+pose_estimate/CMakeFiles/pose_estimate.dir/clean:
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/clean
+.PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/clean
+
+# clean rule for target.
+clean: pose_estimate/CMakeFiles/pose_estimate.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target pose_estimate/CMakeFiles/pose_estimate_node.dir
+
+# All Build rule for target.
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/myslam.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/roscpp_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_lisp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/nodelet_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/bond_generate_messages_nodejs.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_cpp.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/feature_tracker_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: feature_tracker/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+pose_estimate/CMakeFiles/pose_estimate_node.dir/all: pose_estimate/CMakeFiles/pose_estimate.dir/all
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_node.dir/build.make pose_estimate/CMakeFiles/pose_estimate_node.dir/depend
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_node.dir/build.make pose_estimate/CMakeFiles/pose_estimate_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=43,44 "Built target pose_estimate_node"
+.PHONY : pose_estimate/CMakeFiles/pose_estimate_node.dir/all
+
+# Include target in all.
+all: pose_estimate/CMakeFiles/pose_estimate_node.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pose_estimate/CMakeFiles/pose_estimate_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tg/slam_mono/build/CMakeFiles 19
+	$(MAKE) -f CMakeFiles/Makefile2 pose_estimate/CMakeFiles/pose_estimate_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tg/slam_mono/build/CMakeFiles 0
+.PHONY : pose_estimate/CMakeFiles/pose_estimate_node.dir/rule
+
+# Convenience name for target.
+pose_estimate_node: pose_estimate/CMakeFiles/pose_estimate_node.dir/rule
+
+.PHONY : pose_estimate_node
+
+# clean rule for target.
+pose_estimate/CMakeFiles/pose_estimate_node.dir/clean:
+	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_node.dir/build.make pose_estimate/CMakeFiles/pose_estimate_node.dir/clean
+.PHONY : pose_estimate/CMakeFiles/pose_estimate_node.dir/clean
+
+# clean rule for target.
+clean: pose_estimate/CMakeFiles/pose_estimate_node.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory mynteye_wrapper_d
 
 # Convenience name for "all" pass in the directory.
