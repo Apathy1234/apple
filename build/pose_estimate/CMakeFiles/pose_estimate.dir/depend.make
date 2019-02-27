@@ -7,6 +7,8 @@ pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /home/tg/slam
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/my_include.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/pose_estimate.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc
+pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
+pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/geometry_msgs/Vector3.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv/cxcore.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/calib3d.hpp
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/calib3d/calib3d.hpp
@@ -195,6 +197,7 @@ pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kine
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/ros/wall_timer.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/ros/wall_timer_options.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
+pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/sensor_msgs/Imu.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/std_msgs/Header.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
 pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h

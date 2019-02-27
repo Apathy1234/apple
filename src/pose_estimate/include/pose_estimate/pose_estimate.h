@@ -14,7 +14,7 @@ public:
     PoseEstimate(void);
     ~PoseEstimate(void);
     void Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts);
-
+    void Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg);
 private:
     typedef long long int LONGTYPE;
 
@@ -23,8 +23,10 @@ private:
     string IMU_TOPICS;
     ros::NodeHandle n;
     ros::Subscriber featureSub; 
-    // ros::Subscriber imuSub;
+    ros::Subscriber imuSub;
     
+    // imu相关
+    bool isSensorCalib;
     
     // 特征点相关
     struct Features

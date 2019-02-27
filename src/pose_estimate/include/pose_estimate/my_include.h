@@ -2,6 +2,7 @@
 #define _MY_INCLUDE_H_
 
 #include <ros/ros.h>
+#include <sensor_msgs/Imu.h>
 #include <feature_tracker/FeatureTrackerResult.h>
 #include <feature_tracker/CameraTrackerResult.h>
 

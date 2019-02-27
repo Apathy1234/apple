@@ -3,16 +3,21 @@
 namespace slam_mono
 {
 
-PoseEstimate::PoseEstimate(void)
+PoseEstimate::PoseEstimate(void): isSensorCalib(false)
 {
     n.param<string>("imu_topics", IMU_TOPICS, string("/imu"));
     n.param<string>("pub_feature_topic", FEATURE_TOPICS, string("/feature_tracker/points"));
     featureSub = n.subscribe(FEATURE_TOPICS, 1, &PoseEstimate::Feature_Callback, this);
-    // imuSub.subscribe(n, IMU_TOPICS, 1);
+    imuSub = n.subscribe(IMU_TOPICS, 1, &PoseEstimate::Imu_Callback, this);
     ROS_INFO("pose estimate init success! ");
 }
 
 PoseEstimate::~PoseEstimate(void)
+{
+    
+}
+
+void PoseEstimate::Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg)
 {
     
 }
@@ -42,7 +47,7 @@ void PoseEstimate::Find_Feature_Matches(void)
             }
         }
     }
-    ROS_INFO_STREAM("The number of matching points found is: " << ptsRefMatched.size());
+    // ROS_INFO_STREAM("The number of matching points found is: " << ptsRefMatched.size());
 }
 
 void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<Point3f>& pts2, Mat& R, Mat& t)
@@ -73,11 +78,14 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
         index++;
         edges.push_back( edge );
     }
-    optimizer.setVerbose( true );
+    optimizer.setVerbose( false );
     optimizer.initializeOptimization();
     optimizer.optimize(20);
 
-    cout << (Eigen::Isometry3d( pose->estimate() ).matrix()) << endl;
+    Eigen::Quaterniond qDet = pose->estimate().rotation();
+    Eigen::Vector3d tDet = pose->estimate().translation();
+    ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
+    ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
 }
 
 void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts)
@@ -101,7 +109,7 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
     featuresRef = featuresCurr;
     uint64 timeEnd = ros::Time::now().toNSec();
 
-    cout<<(timeEnd - timeBegin)<< endl;
+    ROS_INFO_STREAM(timeEnd - timeBegin);
 }
 
 

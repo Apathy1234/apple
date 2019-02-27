@@ -157,7 +157,7 @@ mynteye_wrapper_d_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /usr/lib/x86_64-linux-gnu/libpthread.so
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
-/home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /usr/local/lib/libmynteye_depth.so.1.7.0
+/home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /usr/local/lib/libmynteye_depth.so.1.7.1
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_stitching3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_superres3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmynteye_wrapper_d.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_videostab3.so.3.3.1
