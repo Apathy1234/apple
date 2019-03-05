@@ -5,6 +5,7 @@
 #include <sensor_msgs/Imu.h>
 #include <feature_tracker/FeatureTrackerResult.h>
 #include <feature_tracker/CameraTrackerResult.h>
+#include <pose_estimate/PoseEstimateResult.h>
 
 #include <map>
 #include <string>

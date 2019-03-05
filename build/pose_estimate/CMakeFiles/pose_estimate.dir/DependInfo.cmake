@@ -17,8 +17,8 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/tg/slam_mono/src/pose_estimate/include"
   "/home/tg/slam_mono/devel/include"
+  "/home/tg/slam_mono/src/pose_estimate/include"
   "/home/tg/slam_mono/src/feature_tracker/include"
   "/opt/ros/kinetic/include"
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"

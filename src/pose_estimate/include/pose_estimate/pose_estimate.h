@@ -24,6 +24,7 @@ private:
     ros::NodeHandle n;
     ros::Subscriber featureSub; 
     ros::Subscriber imuSub;
+    ros::Publisher posePub;
     
     // imu相关
     bool isSensorCalib;
@@ -46,6 +47,8 @@ private:
     // 姿态相关
     Mat R;
     Mat T;
+    Eigen::Quaterniond qDet;
+    Eigen::Vector3d tDet;
 
     void Clear_Points(Features& fet);
     void Find_Feature_Matches(void);

@@ -9,6 +9,7 @@ PoseEstimate::PoseEstimate(void): isSensorCalib(false)
     n.param<string>("pub_feature_topic", FEATURE_TOPICS, string("/feature_tracker/points"));
     featureSub = n.subscribe(FEATURE_TOPICS, 1, &PoseEstimate::Feature_Callback, this);
     imuSub = n.subscribe(IMU_TOPICS, 1, &PoseEstimate::Imu_Callback, this);
+    posePub = n.advertise<pose_estimate::PoseEstimateResult>("/camera_pose", 1);
     ROS_INFO("pose estimate init success! ");
 }
 
@@ -80,12 +81,13 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     }
     optimizer.setVerbose( false );
     optimizer.initializeOptimization();
-    optimizer.optimize(20);
+    optimizer.optimize(15);
 
-    Eigen::Quaterniond qDet = pose->estimate().rotation();
-    Eigen::Vector3d tDet = pose->estimate().translation();
+    qDet = pose->estimate().rotation();
+    tDet = pose->estimate().translation();
     ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
     ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
+
 }
 
 void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts)
@@ -105,6 +107,24 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
     {
         Find_Feature_Matches();
         Bundle_Adjustment(ptsRefMatched, ptsCurrMatched, R, T);
+        /*******************************publish info************************************************/
+        pose_estimate::PoseEstimateResultPtr cameraPoseInfo(new pose_estimate::PoseEstimateResult);
+        cameraPoseInfo->header.stamp = pts->header.stamp;
+        cameraPoseInfo->header.frame_id = "camera";
+        
+        cameraPoseInfo->q0 = qDet.w();
+        cameraPoseInfo->q1 = qDet.x();
+        cameraPoseInfo->q2 = qDet.y();
+        cameraPoseInfo->q3 = qDet.z();
+        cameraPoseInfo->tx = tDet[0];
+        cameraPoseInfo->ty = tDet[1];
+        cameraPoseInfo->tz = tDet[2];
+        
+        posePub.publish(cameraPoseInfo);
+
+        //数据擦除
+        qDet = Eigen::Quaternion<double>(1, 0, 0, 0);
+        tDet << 0, 0, 0;
     }
     featuresRef = featuresCurr;
     uint64 timeEnd = ros::Time::now().toNSec();

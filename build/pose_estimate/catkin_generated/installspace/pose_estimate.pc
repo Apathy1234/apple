@@ -3,6 +3,6 @@ prefix=/home/tg/slam_mono/install
 Name: pose_estimate
 Description: Description of pose_estimate
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/tg/slam_mono/install/include
 Libs: -L/home/tg/slam_mono/install/lib 
-Requires: 
+Requires: message_runtime

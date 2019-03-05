@@ -42,6 +42,24 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
+/home/tg/slam_mono/devel/include/pose_estimate/PoseEstimateResult.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
 /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/g2o_edge.h
 pose_estimate/my_include.h
 -
@@ -54,6 +72,8 @@ sensor_msgs/Imu.h
 feature_tracker/FeatureTrackerResult.h
 -
 feature_tracker/CameraTrackerResult.h
+-
+pose_estimate/PoseEstimateResult.h
 -
 map
 -

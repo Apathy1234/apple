@@ -1,5 +1,5 @@
 <launch>
-<include file="$(find feature_tracker)/launch/feature_tracker_euroc.launch"/>
+<include file="$(find feature_tracker)/launch/feature_tracker.launch"/>
 <node pkg = "pose_estimate" type = "pose_estimate_node" name = "pose_estimate_node"/>
 
 </launch>

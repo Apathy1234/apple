@@ -25,7 +25,7 @@ pub_feature_topic: /feature_tracker/points
 frequence: 10
 board_size: 1
 tracker_size: 10
-tracker_min_distance: 20
+tracker_min_distance: 30
 tracker_max_count: 100
 equalize: false
 pyramid_level: 3
