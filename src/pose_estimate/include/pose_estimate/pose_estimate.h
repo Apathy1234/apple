@@ -45,6 +45,9 @@ private:
     vector<Point3f> ptsCurrMatched;
     
     // 姿态相关
+    Mat T_left2imu;
+    Matx33d r_left2imu;
+    Vec3d t_left2imu;
     Mat R;
     Mat T;
     Eigen::Quaterniond qDet;

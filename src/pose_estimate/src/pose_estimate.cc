@@ -7,6 +7,17 @@ PoseEstimate::PoseEstimate(void): isSensorCalib(false)
 {
     n.param<string>("imu_topics", IMU_TOPICS, string("/imu"));
     n.param<string>("pub_feature_topic", FEATURE_TOPICS, string("/feature_tracker/points"));
+    
+    vector<double> t_left2imu_temp;
+    n.getParam("T_left2imu", t_left2imu_temp);
+    if (t_left2imu_temp.size() != 16)
+    {
+        ROS_WARN(" invalid vector16!");
+    }
+    T_left2imu = Mat(t_left2imu_temp).clone().reshape(1, 4);
+    r_left2imu = T_left2imu(Rect(0, 0, 3, 3));
+    t_left2imu = T_left2imu(Rect(3, 0, 1, 3));
+
     featureSub = n.subscribe(FEATURE_TOPICS, 1, &PoseEstimate::Feature_Callback, this);
     imuSub = n.subscribe(IMU_TOPICS, 1, &PoseEstimate::Imu_Callback, this);
     posePub = n.advertise<pose_estimate::PoseEstimateResult>("/camera_pose", 1);
@@ -100,8 +111,12 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
     {
         featuresCurr.id.push_back(pts->features[i].id);
         featuresCurr.cnt.push_back(pts->features[i].cnt);
-        featuresCurr.pts3d.push_back(Point3f(pts->features[i].x, pts->features[i].y, pts->features[i].z));
-        featuresCurr.pts3dMap.insert(make_pair(pts->features[i].id, Point3f(pts->features[i].x, pts->features[i].y, pts->features[i].z)));
+        //　将相机下的点投影到IMU坐标系下
+        Vec3d pt0 = (pts->features[i].x, pts->features[i].y, pts->features[i].z);
+        Vec3d ptsTemp = r_left2imu * pt0 + t_left2imu;
+        //　投影完成
+        featuresCurr.pts3d.push_back(Point3f(ptsTemp[0], ptsTemp[1], ptsTemp[2]));
+        featuresCurr.pts3dMap.insert(make_pair(pts->features[i].id, Point3f(ptsTemp[0], ptsTemp[1], ptsTemp[2])));
     }
     if( !featuresRef.pts3dMap.empty() )
     {
@@ -122,9 +137,9 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
         
         posePub.publish(cameraPoseInfo);
 
-        //数据擦除
-        qDet = Eigen::Quaternion<double>(1, 0, 0, 0);
-        tDet << 0, 0, 0;
+        // //数据擦除
+        // qDet = Eigen::Quaternion<double>(1, 0, 0, 0);
+        // tDet << 0, 0, 0;
     }
     featuresRef = featuresCurr;
     uint64 timeEnd = ros::Time::now().toNSec();
