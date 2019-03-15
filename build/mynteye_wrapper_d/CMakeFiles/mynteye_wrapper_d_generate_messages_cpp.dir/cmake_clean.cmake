@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mynteye_wrapper_d_generate_messages_cpp"
   "/home/tg/slam_mono/devel/include/mynteye_wrapper_d/Temp.h"
+  "/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParams.h"
 )
 
 # Per-language clean rules from dependency scanning.

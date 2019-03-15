@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mynteye_wrapper_d_generate_messages_eus"
   "/home/tg/slam_mono/devel/share/roseus/ros/mynteye_wrapper_d/msg/Temp.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/mynteye_wrapper_d/srv/GetParams.l"
   "/home/tg/slam_mono/devel/share/roseus/ros/mynteye_wrapper_d/manifest.l"
 )
 

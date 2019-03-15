@@ -20,6 +20,7 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/tf.h>
 #include <tf2_ros/static_transform_broadcaster.h>
+#include <mynteye_wrapper_d/GetParams.h>
 
 #include <unistd.h>
 #include <vector>
@@ -38,6 +39,10 @@
 #include "mynteyed/utils.h"
 
 #include "pointcloud_generator.h" // NOLINT
+
+#define CONFIGURU_IMPLEMENTATION 1
+#include "configuru.hpp"
+using namespace configuru;  // NOLINT
 
 MYNTEYE_BEGIN_NAMESPACE
 
@@ -85,6 +90,7 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
   ros::Publisher pub_imu;
   ros::Publisher pub_temp;
   ros::Publisher pub_imu_processed;
+  ros::ServiceServer get_params_service_;
 
   sensor_msgs::CameraInfoPtr left_info_ptr;
   sensor_msgs::CameraInfoPtr right_info_ptr;
@@ -109,6 +115,8 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
   // MYNTEYE objects
   OpenParams params;
   std::unique_ptr<Camera> mynteye;
+  int depth_type = 0;
+  bool imu_timestamp_align = false;
 
   // Others
 
@@ -181,6 +189,8 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     nh_ns.getParam("state_awb", state_awb);
     nh_ns.getParam("ir_intensity", ir_intensity);
     nh_ns.getParam("ir_depth_only", ir_depth_only);
+    nh_ns.getParam("depth_type", depth_type);
+    nh_ns.getParam("imu_timestamp_align", imu_timestamp_align);
 
     points_frequency = DEFAULT_POINTS_FREQUENCE;
     points_factor = DEFAULT_POINTS_FACTOR;
@@ -278,6 +288,12 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
       }
       NODELET_INFO_STREAM(dashes);
     }
+
+    const std::string DEVICE_PARAMS_SERVICE = "get_params";
+    get_params_service_ = nh_ns.advertiseService(
+        DEVICE_PARAMS_SERVICE, &MYNTEYEWrapperNodelet::getParams, this);
+    NODELET_INFO_STREAM("Advertized service " << DEVICE_PARAMS_SERVICE);
+
     params.framerate = framerate;
     params.dev_mode = static_cast<DeviceMode>(dev_mode);
     params.color_mode = static_cast<ColorMode>(color_mode);
@@ -425,10 +441,18 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
                        sub_result.temp)) {
         if (data.imu->flag == MYNTEYE_IMU_ACCEL) {
           imu_accel = data.imu;
-          publishImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          if (imu_timestamp_align) {
+            publishAlignImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          } else {
+            publishImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          }
         } else if (data.imu->flag == MYNTEYE_IMU_GYRO) {
           imu_gyro = data.imu;
-          publishImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          if (imu_timestamp_align) {
+            publishAlignImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          } else {
+            publishImu(sub_result.imu, sub_result.imu_processed, sub_result.temp);
+          }
         }
       }
       pthread_mutex_unlock(&mutex_sub_result);
@@ -543,8 +567,13 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     if (info) info->header.stamp = header.stamp;
     if (params.depth_mode == DepthMode::DEPTH_RAW) {
       auto&& mat = data.img->To(ImageFormat::DEPTH_RAW)->ToMat();
-      pub_depth.publish(
-          cv_bridge::CvImage(header, enc::MONO16, mat).toImageMsg(), info);
+      if (depth_type == 0) {
+        pub_depth.publish(
+            cv_bridge::CvImage(header, enc::MONO16, mat).toImageMsg(), info);
+      } else if (depth_type == 1) {
+        pub_depth.publish(
+            cv_bridge::CvImage(header, enc::TYPE_16UC1, mat).toImageMsg(), info);
+      }
       if (sub_result.points) {
         points_depth = mat;
         publishPoints(header.stamp);
@@ -569,6 +598,108 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     pointcloud_generator->Push(points_color, points_depth, stamp);
     points_color.release();
     points_depth.release();
+  }
+
+  void timestampAlign() {
+    static bool get_first_acc = false;
+    static bool get_first_gyro = false;
+    static bool has_gyro = false;
+    static ImuData acc;
+    static ImuData gyro;
+
+    if (!get_first_acc && imu_accel != nullptr) {
+      acc = *imu_accel;
+      imu_accel = nullptr;
+      get_first_acc = true;
+      return;
+    }
+
+    if (!get_first_gyro && imu_gyro != nullptr) {
+      gyro = *imu_gyro;
+      imu_gyro = nullptr;
+      get_first_gyro = true;
+      return;
+    }
+
+    if (imu_accel != nullptr) {
+      if (!has_gyro) {
+        acc = *imu_accel;
+        imu_accel = nullptr;
+        return;
+      }
+
+      if (acc.timestamp <= gyro.timestamp) {
+        ImuData acc_temp;
+        acc_temp = *imu_accel;
+        acc_temp.timestamp = gyro.timestamp;
+
+        double k = static_cast<double>(imu_accel->timestamp - acc.timestamp);
+        k = static_cast<double>(gyro.timestamp - acc.timestamp) / k;
+
+        acc_temp.accel[0] = acc.accel[0] +
+          (imu_accel->accel[0] - acc.accel[0]) * k;
+        acc_temp.accel[1] = acc.accel[1] +
+          (imu_accel->accel[1] - acc.accel[1]) * k;
+        acc_temp.accel[2] = acc.accel[2] +
+          (imu_accel->accel[2] - acc.accel[2]) * k;
+
+        acc = *imu_accel;
+        *imu_accel = acc_temp;
+        imu_gyro.reset(new ImuData(gyro));
+        has_gyro = false;
+        return;
+      } else {
+        acc = *imu_accel;
+        imu_accel = nullptr;
+        return;
+      }
+    }
+
+    if (imu_gyro != nullptr) {
+      has_gyro = true;
+      gyro = *imu_gyro;
+      imu_gyro = nullptr;
+      return;
+    }
+  }
+
+  void publishAlignImu(bool imu_sub,
+      bool imu_processed_sub, bool temp_sub) {
+    timestampAlign();
+
+    if (imu_accel == nullptr || imu_gyro == nullptr) {
+      return;
+    }
+
+    ros::Time stamp = hardTimeToSoftTime(imu_accel->timestamp);
+
+    if (imu_sub) {
+      auto msg = getImuMsgFromData(ros::Time::now(),
+          imu_frame_id, *imu_accel, *imu_gyro);
+      msg.header.stamp = stamp;
+      pub_imu.publish(msg);
+    }
+
+    if (motion_intrinsics_enabled && imu_processed_sub) {
+      auto data_acc1 = ProcImuTempDrift(*imu_accel);
+      auto data_gyr1 = ProcImuTempDrift(*imu_gyro);
+      auto data_acc2 = ProcImuAssembly(data_acc1);
+      auto data_gyr2 = ProcImuAssembly(data_gyr1);
+      auto msg = getImuMsgFromData(ros::Time::now(), imu_frame_processed_id,
+          data_acc2, data_gyr2);
+      msg.header.stamp = stamp;
+      pub_imu_processed.publish(msg);
+    }
+
+    if (temp_sub) {
+      auto msg = getTempMsgFromData(ros::Time::now(), temp_frame_id,
+                                    *imu_accel);
+      msg.header.stamp = stamp;
+      pub_temp.publish(msg);
+    }
+
+    imu_accel = nullptr;
+    imu_gyro = nullptr;
   }
 
   void publishImu(bool imu_sub,
@@ -683,6 +814,12 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     //     [fx'  0  cx' Tx]
     // P = [ 0  fy' cy' Ty]
     //     [ 0   0   1   0]
+    camera_info->P.at(0) = in.p[0];
+    camera_info->P.at(2) = in.p[2];
+    camera_info->P.at(3) = in.p[3];
+    camera_info->P.at(5) = in.p[5];
+    camera_info->P.at(6) = in.p[6];
+    camera_info->P.at(10) = in.p[10];
 
     camera_info->distortion_model = "plumb_bob";
 
@@ -798,6 +935,209 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
       default:
         return {1280, 720, 979.8, 942.8, 682.3, 254.9 * 2, {0, 0, 0, 0, 0}};
     }
+  }
+
+  bool getParams(
+      mynteye_wrapper_d::GetParams::Request &req,     // NOLINT
+      mynteye_wrapper_d::GetParams::Response &res) {  // NOLINT
+    using Request = mynteye_wrapper_d::GetParams::Request;
+    bool in_ok_1, in_ok_2;
+    // left_info_ptr
+    // right_info_ptr
+    switch (req.key) {
+      case Request::IMG_INTRINSICS: {
+        bool in_ok;
+        auto&& in_vga = mynteye->GetStreamIntrinsics(StreamMode::STREAM_1280x480, &in_ok_1);  // NOLINT
+        auto&& in_hd = mynteye->GetStreamIntrinsics(StreamMode::STREAM_2560x720, &in_ok_2);  // NOLINT
+        if (params.stream_mode == StreamMode::STREAM_1280x480 && in_ok_1) {
+          Config intrinsics {
+            {"calib_model", "pinhole"},
+            {"left", {
+              {"width", in_vga.left.width},
+              {"height", in_vga.left.height},
+              {"fx", in_vga.left.fx},
+              {"fy", in_vga.left.fy},
+              {"cx", in_vga.left.cx},
+              {"cy", in_vga.left.cy},
+              {"coeffs", Config::array(
+                  {in_vga.left.coeffs[0],
+                  in_vga.left.coeffs[1],
+                  in_vga.left.coeffs[2],
+                  in_vga.left.coeffs[3],
+                  in_vga.left.coeffs[4]})},
+              {"p", Config::array(
+                  {in_vga.left.p[0],in_vga.left.p[1],in_vga.left.p[2],  // NOLINT
+                  in_vga.left.p[3],in_vga.left.p[4],in_vga.left.p[5],  // NOLINT
+                  in_vga.left.p[6],in_vga.left.p[7],in_vga.left.p[8],  // NOLINT
+                  in_vga.left.p[9],in_vga.left.p[10],in_vga.left.p[11]})}  // NOLINT
+            }},
+            {"right", {
+              {"width", in_vga.right.width},
+              {"height", in_vga.right.height},
+              {"fx", in_vga.right.fx},
+              {"fy", in_vga.right.fy},
+              {"cx", in_vga.right.cx},
+              {"cy", in_vga.right.cy},
+              {"coeffs", Config::array(
+                  {in_vga.right.coeffs[0],
+                  in_vga.right.coeffs[1],
+                  in_vga.right.coeffs[2],
+                  in_vga.right.coeffs[3],
+                  in_vga.right.coeffs[4]})},
+              {"p", Config::array(
+                  {in_vga.right.p[0],in_vga.right.p[1],in_vga.right.p[2],  // NOLINT
+                  in_vga.right.p[3],in_vga.right.p[4],in_vga.right.p[5],  // NOLINT
+                  in_vga.right.p[6],in_vga.right.p[7],in_vga.right.p[8],  // NOLINT
+                  in_vga.right.p[9],in_vga.right.p[10],in_vga.right.p[11]})}  // NOLINT
+            }}
+          };
+          std::string json = dump_string(intrinsics, JSON);
+          res.value = json;
+        } else if (params.stream_mode == StreamMode::STREAM_2560x720 &&
+            in_ok_2) {
+          Config intrinsics {
+            {"calib_model", "pinhole"},
+            {"left", {
+              {"width", in_hd.left.width},
+              {"height", in_hd.left.height},
+              {"fx", in_hd.left.fx},
+              {"fy", in_hd.left.fy},
+              {"cx", in_hd.left.cx},
+              {"cy", in_hd.left.cy},
+              {"coeffs", Config::array(
+                  {in_hd.left.coeffs[0],
+                  in_hd.left.coeffs[1],
+                  in_hd.left.coeffs[2],
+                  in_hd.left.coeffs[3],
+                  in_hd.left.coeffs[4]})},
+              {"p", Config::array(
+                  {in_hd.left.p[0],in_hd.left.p[1],in_hd.left.p[2],  // NOLINT
+                  in_hd.left.p[3],in_hd.left.p[4],in_hd.left.p[5],  // NOLINT
+                  in_hd.left.p[6],in_hd.left.p[7],in_hd.left.p[8],  // NOLINT
+                  in_hd.left.p[9],in_hd.left.p[10],in_hd.left.p[11]})}  // NOLINT
+            }},
+            {"right", {
+              {"width", in_hd.right.width},
+              {"height", in_hd.right.height},
+              {"fx", in_hd.right.fx},
+              {"fy", in_hd.right.fy},
+              {"cx", in_hd.right.cx},
+              {"cy", in_hd.right.cy},
+              {"coeffs", Config::array(
+                  {in_hd.right.coeffs[0],
+                  in_hd.right.coeffs[1],
+                  in_hd.right.coeffs[2],
+                  in_hd.right.coeffs[3],
+                  in_hd.right.coeffs[4]})},
+              {"p", Config::array(
+                  {in_hd.right.p[0],in_hd.right.p[1],in_hd.right.p[2],  // NOLINT
+                  in_hd.right.p[3],in_hd.right.p[4],in_hd.right.p[5],  // NOLINT
+                  in_hd.right.p[6],in_hd.right.p[7],in_hd.right.p[8],  // NOLINT
+                  in_hd.right.p[9],in_hd.right.p[10],in_hd.right.p[11]})}  // NOLINT
+            }}
+          };
+          std::string json = dump_string(intrinsics, JSON);
+          res.value = json;
+        } else {
+          res.value = "null";
+        }
+      }
+      break;
+      case Request::IMG_EXTRINSICS_RTOL: {
+        bool ex_ok_1, ex_ok_2;
+        auto vga_extrinsics = mynteye->GetStreamExtrinsics(StreamMode::STREAM_1280x480, &ex_ok_1);  // NOLINT
+        auto hd_extrinsics = mynteye->GetStreamExtrinsics(StreamMode::STREAM_2560x720, &ex_ok_2);  // NOLINT
+        if (params.stream_mode == StreamMode::STREAM_1280x480 && ex_ok_1) {
+          Config extrinsics{
+            {"rotation",     Config::array({vga_extrinsics.rotation[0][0], vga_extrinsics.rotation[0][1], vga_extrinsics.rotation[0][2],   // NOLINT
+                                            vga_extrinsics.rotation[1][0], vga_extrinsics.rotation[1][1], vga_extrinsics.rotation[1][2],   // NOLINT
+                                            vga_extrinsics.rotation[2][0], vga_extrinsics.rotation[2][1], vga_extrinsics.rotation[2][2]})},// NOLINT
+            {"translation",  Config::array({vga_extrinsics.translation[0], vga_extrinsics.translation[1], vga_extrinsics.translation[2]})} // NOLINT
+          };
+          std::string json = dump_string(extrinsics, configuru::JSON);
+          res.value = json;
+        } else if (params.stream_mode == StreamMode::STREAM_2560x720 &&
+            ex_ok_2) {
+          Config extrinsics{
+            {"rotation",     Config::array({hd_extrinsics.rotation[0][0], hd_extrinsics.rotation[0][1], hd_extrinsics.rotation[0][2],   // NOLINT
+                                            hd_extrinsics.rotation[1][0], hd_extrinsics.rotation[1][1], hd_extrinsics.rotation[1][2],   // NOLINT
+                                            hd_extrinsics.rotation[2][0], hd_extrinsics.rotation[2][1], hd_extrinsics.rotation[2][2]})},// NOLINT
+            {"translation",  Config::array({hd_extrinsics.translation[0], hd_extrinsics.translation[1], hd_extrinsics.translation[2]})} // NOLINT
+          };
+          std::string json = dump_string(extrinsics, configuru::JSON);
+          res.value = json;
+        } else {
+          res.value = "null";
+        }
+      }
+      break;
+      case Request::IMU_INTRINSICS:
+      {
+        bool is_ok;
+        auto intri = mynteye->GetMotionIntrinsics(&is_ok);
+        if (is_ok) {
+          Config intrinsics {
+            {"accel", {
+              {"scale",     Config::array({ intri.accel.scale[0][0], intri.accel.scale[0][1],  intri.accel.scale[0][2],   // NOLINT
+                                            intri.accel.scale[1][0], intri.accel.scale[1][1],  intri.accel.scale[1][2],   // NOLINT
+                                            intri.accel.scale[2][0], intri.accel.scale[2][1],  intri.accel.scale[2][2]})},// NOLINT
+              {"assembly",  Config::array({ intri.accel.assembly[0][0], intri.accel.assembly[0][1],  intri.accel.assembly[0][2],   // NOLINT
+                                            intri.accel.assembly[1][0], intri.accel.assembly[1][1],  intri.accel.assembly[1][2],   // NOLINT
+                                            intri.accel.assembly[2][0], intri.accel.assembly[2][1],  intri.accel.assembly[2][2]})},// NOLINT
+              {"drift",     Config::array({ intri.accel.drift[0],    intri.accel.drift[1],     intri.accel.drift[2]})}, // NOLINT
+              {"noise",     Config::array({ intri.accel.noise[0],    intri.accel.noise[1],     intri.accel.noise[2]})}, // NOLINT
+              {"bias",      Config::array({ intri.accel.bias[0],     intri.accel.bias[1],      intri.accel.bias[2]})}, // NOLINT
+              {"x",         Config::array({ intri.accel.x[0],        intri.accel.x[1]})}, // NOLINT
+              {"y",         Config::array({ intri.accel.y[0],        intri.accel.y[1]})}, // NOLINT
+              {"z",         Config::array({ intri.accel.z[0],        intri.accel.z[1]})} // NOLINT
+            }},
+            {"gyro", {
+              {"scale",     Config::array({ intri.gyro.scale[0][0], intri.gyro.scale[0][1],  intri.gyro.scale[0][2],   // NOLINT
+                                            intri.gyro.scale[1][0], intri.gyro.scale[1][1],  intri.gyro.scale[1][2],   // NOLINT
+                                            intri.gyro.scale[2][0], intri.gyro.scale[2][1],  intri.gyro.scale[2][2]})},// NOLINT
+              {"assembly",  Config::array({ intri.gyro.assembly[0][0], intri.gyro.assembly[0][1],  intri.gyro.assembly[0][2],   // NOLINT
+                                            intri.gyro.assembly[1][0], intri.gyro.assembly[1][1],  intri.gyro.assembly[1][2],   // NOLINT
+                                            intri.gyro.assembly[2][0], intri.gyro.assembly[2][1],  intri.gyro.assembly[2][2]})},// NOLINT
+              {"drift",     Config::array({ intri.gyro.drift[0],    intri.gyro.drift[1],     intri.gyro.drift[2]})}, // NOLINT
+              {"noise",     Config::array({ intri.gyro.noise[0],    intri.gyro.noise[1],     intri.gyro.noise[2]})}, // NOLINT
+              {"bias",      Config::array({ intri.gyro.bias[0],     intri.gyro.bias[1],      intri.gyro.bias[2]})}, // NOLINT
+              {"x",         Config::array({ intri.gyro.x[0],        intri.gyro.x[1]})}, // NOLINT
+              {"y",         Config::array({ intri.gyro.y[0],        intri.gyro.y[1]})}, // NOLINT
+              {"z",         Config::array({ intri.gyro.z[0],        intri.gyro.z[1]})} // NOLINT
+            }}
+          };
+          std::string json = dump_string(intrinsics, JSON);
+          res.value = json;
+        } else {
+          NODELET_INFO_STREAM("INVALID IMU INTRINSICS");
+          res.value = "null";
+        }
+      }
+      break;
+      case Request::IMU_EXTRINSICS:
+      {
+        bool is_ok;
+        auto extri = mynteye->GetMotionExtrinsics(&is_ok);
+        if (is_ok) {
+          Config extrinsics{
+            {"rotation",     Config::array({extri.rotation[0][0], extri.rotation[0][1], extri.rotation[0][2],   // NOLINT
+                                            extri.rotation[1][0], extri.rotation[1][1], extri.rotation[1][2],   // NOLINT
+                                            extri.rotation[2][0], extri.rotation[2][1], extri.rotation[2][2]})},// NOLINT
+            {"translation",  Config::array({extri.translation[0], extri.translation[1], extri.translation[2]})} // NOLINT
+          };
+          std::string json = dump_string(extrinsics, configuru::JSON);
+          res.value = json;
+        } else {
+          NODELET_INFO_STREAM("INVALID IMU EXTRINSICS");
+          res.value = "null";
+        }
+      }
+      break;
+      default:
+        res.value = "null";
+      break;
+    }
+    return true;
   }
 };
 

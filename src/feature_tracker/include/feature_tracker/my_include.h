@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/image_encodings.h>
+#include <sensor_msgs/Imu.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <image_transport/image_transport.h>
@@ -18,6 +19,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/calib3d/calib3d.hpp>
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 #include <string>
 #include <vector>

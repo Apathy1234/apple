@@ -2,7 +2,7 @@
 #define _FEATURE_TRACKER_H_
 
 #include <feature_tracker/my_include.h>
-#include <feature_tracker/config.h>
+
 
 namespace enc = sensor_msgs::image_encodings;
 
@@ -23,6 +23,7 @@ namespace slam_mono
         // 相关宏定义及参数
         double firstImageTime;
         double currImageTime;
+        double lastImageTime;
         double F_THRESHOLD;
         bool pubThisFrame;
         bool EQUALIZE;
@@ -49,12 +50,18 @@ namespace slam_mono
         Mat T_left2right;
         Matx33d r_left2right;
         Vec3d t_left2right;
-
+        Mat T_left2imu;
+        Matx33d r_left2imu;
+        Vec3d t_left2imu;
+        Matx33d r_right2imu;
+        Vec3d t_right2imu;
         // ROS相关初始化
         string FEATURE_TOPICS;
         string FEATURE_IMAGE_TOPICS;
+        string IMU_TOPICS;
         ros::NodeHandle n;
         ros::Subscriber imgSub;
+        ros::Subscriber imuSub;        
         ros::Publisher pubFeatures;
         image_transport::Publisher pubMatchImage;
         message_filters::Subscriber<sensor_msgs::Image> leftSub;
@@ -81,6 +88,10 @@ namespace slam_mono
         vector<Point2f> rightKpsAdd;
         vector<Point3f> cameraKps3d;
 
+        // IMU
+        vector<sensor_msgs::Imu> imuMsgBuffer;
+        
+
         // 相关函数
         bool Load_Parameters(void);
         bool Create_RosIO(void);
@@ -101,7 +112,9 @@ namespace slam_mono
         void Delet_Point_With_F(void);
         void Publish_Info(void);
         void Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts);
-
+        void Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Point2f>& ptsOut, const Vec4d& intrinsics, Matx33f& left_R_p_c, Matx33f& right_R_p_c);
+        void Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point2f>& pts2, const cv::Matx33f& R_p_c, const cv::Vec4d& intrinsics, const cv::Vec4d& distortionCoeffs, vector<unsigned char>& inlierMarkers);
+       
         template <typename T>
         void Reduce_Vector(vector<T>& v, vector<unsigned char> status)
         {
@@ -124,7 +137,8 @@ namespace slam_mono
 
         FeatureTracker(ros::NodeHandle& nh);
          ~FeatureTracker(void);
-         
+        
+        void Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg);
         void Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg);
 
     };

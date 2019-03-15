@@ -19,6 +19,14 @@
   <arg name="stream_mjpg"       default="0" />
   <arg name="stream_yuyv"       default="1" />
 
+  <!-- 0 --> MONO16 -->
+  <!-- 1 --> TYPE_16UC1 -->
+  <arg name="type_mono16"        default="0" />
+  <arg name="type_16uc1"         default="1" />
+
+  <!-- IMU timestamp align -->
+  <arg name="imu_timestamp_align" default="true" />
+
   <!-- Camera Params -->
 
   <!-- Device index -->
@@ -41,11 +49,12 @@
   <arg name="stream_mode" default="$(arg stream_1280x480)" />
   <arg name="color_stream_format" default="$(arg stream_yuyv)" />
   <arg name="depth_stream_format" default="$(arg stream_yuyv)" />
+  <arg name="depth_type" default="$(arg type_mono16)" />
 
   <!-- Auto-exposure -->
-  <arg name="state_ae" default="true" />
+  <arg name="state_ae" default="false" />
   <!-- Auto-white balance -->
-  <arg name="state_awb" default="true" />
+  <arg name="state_awb" default="false" />
   <!-- IR intensity -->
   <arg name="ir_intensity" default="4" />
   <!-- IR Depth Only -->
@@ -132,11 +141,14 @@
     <param name="state_awb"     value="$(arg state_awb)" />
     <param name="ir_intensity"  value="$(arg ir_intensity)" />
     <param name="ir_depth_only" value="$(arg ir_depth_only)" />
+    <param name="imu_timestamp_align" value="$(arg imu_timestamp_align)" />
 
     <param name="points_factor"    value="$(arg points_factor)" />
     <param name="points_frequency" value="$(arg points_frequency)" />
 
     <param name="gravity" value="$(arg gravity)" />
+
+    <param name="depth_type" value="$(arg type_mono16)" />
 
     <!-- Frame ids -->
     <param name="base_frame"   value="$(arg base_frame)" />

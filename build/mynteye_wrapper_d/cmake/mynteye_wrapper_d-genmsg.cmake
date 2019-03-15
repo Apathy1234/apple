@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "mynteye_wrapper_d: 1 messages, 0 services")
+message(STATUS "mynteye_wrapper_d: 1 messages, 1 services")
 
 set(MSG_I_FLAGS "-Imynteye_wrapper_d:/home/tg/slam_mono/src/mynteye_wrapper_d/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
 
@@ -16,6 +16,11 @@ add_custom_target(mynteye_wrapper_d_generate_messages ALL)
 # verify that message/service dependencies have not changed since configure
 
 
+
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_custom_target(_mynteye_wrapper_d_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "mynteye_wrapper_d" "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" ""
+)
 
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_custom_target(_mynteye_wrapper_d_generate_messages_check_deps_${_filename}
@@ -36,6 +41,12 @@ _generate_msg_cpp(mynteye_wrapper_d
 )
 
 ### Generating Services
+_generate_srv_cpp(mynteye_wrapper_d
+  "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/mynteye_wrapper_d
+)
 
 ### Generating Module File
 _generate_module_cpp(mynteye_wrapper_d
@@ -49,6 +60,8 @@ add_custom_target(mynteye_wrapper_d_generate_messages_cpp
 add_dependencies(mynteye_wrapper_d_generate_messages mynteye_wrapper_d_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_dependencies(mynteye_wrapper_d_generate_messages_cpp _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_dependencies(mynteye_wrapper_d_generate_messages_cpp _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 
@@ -69,6 +82,12 @@ _generate_msg_eus(mynteye_wrapper_d
 )
 
 ### Generating Services
+_generate_srv_eus(mynteye_wrapper_d
+  "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/mynteye_wrapper_d
+)
 
 ### Generating Module File
 _generate_module_eus(mynteye_wrapper_d
@@ -82,6 +101,8 @@ add_custom_target(mynteye_wrapper_d_generate_messages_eus
 add_dependencies(mynteye_wrapper_d_generate_messages mynteye_wrapper_d_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_dependencies(mynteye_wrapper_d_generate_messages_eus _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_dependencies(mynteye_wrapper_d_generate_messages_eus _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 
@@ -102,6 +123,12 @@ _generate_msg_lisp(mynteye_wrapper_d
 )
 
 ### Generating Services
+_generate_srv_lisp(mynteye_wrapper_d
+  "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/mynteye_wrapper_d
+)
 
 ### Generating Module File
 _generate_module_lisp(mynteye_wrapper_d
@@ -115,6 +142,8 @@ add_custom_target(mynteye_wrapper_d_generate_messages_lisp
 add_dependencies(mynteye_wrapper_d_generate_messages mynteye_wrapper_d_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_dependencies(mynteye_wrapper_d_generate_messages_lisp _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_dependencies(mynteye_wrapper_d_generate_messages_lisp _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 
@@ -135,6 +164,12 @@ _generate_msg_nodejs(mynteye_wrapper_d
 )
 
 ### Generating Services
+_generate_srv_nodejs(mynteye_wrapper_d
+  "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/mynteye_wrapper_d
+)
 
 ### Generating Module File
 _generate_module_nodejs(mynteye_wrapper_d
@@ -148,6 +183,8 @@ add_custom_target(mynteye_wrapper_d_generate_messages_nodejs
 add_dependencies(mynteye_wrapper_d_generate_messages mynteye_wrapper_d_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_dependencies(mynteye_wrapper_d_generate_messages_nodejs _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_dependencies(mynteye_wrapper_d_generate_messages_nodejs _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 
@@ -168,6 +205,12 @@ _generate_msg_py(mynteye_wrapper_d
 )
 
 ### Generating Services
+_generate_srv_py(mynteye_wrapper_d
+  "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/mynteye_wrapper_d
+)
 
 ### Generating Module File
 _generate_module_py(mynteye_wrapper_d
@@ -181,6 +224,8 @@ add_custom_target(mynteye_wrapper_d_generate_messages_py
 add_dependencies(mynteye_wrapper_d_generate_messages mynteye_wrapper_d_generate_messages_py)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv" NAME_WE)
+add_dependencies(mynteye_wrapper_d_generate_messages_py _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg" NAME_WE)
 add_dependencies(mynteye_wrapper_d_generate_messages_py _mynteye_wrapper_d_generate_messages_check_deps_${_filename})
 

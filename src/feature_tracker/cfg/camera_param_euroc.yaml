@@ -22,6 +22,7 @@ T_left2right:
 
 pub_match_image_topic: /feature_tracker/image
 pub_feature_topic: /feature_tracker/points
+imu_topics: /imu0
 frequence: 10
 board_size: 1
 tracker_size: 10

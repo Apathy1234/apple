@@ -5,7 +5,7 @@ namespace slam_mono
 
 PoseEstimate::PoseEstimate(void): isSensorCalib(false)
 {
-    n.param<string>("imu_topics", IMU_TOPICS, string("/imu"));
+    n.param<string>("imu_topics", IMU_TOPICS, string("/mynteye/imu/data_raw_processed"));
     n.param<string>("pub_feature_topic", FEATURE_TOPICS, string("/feature_tracker/points"));
     
     vector<double> t_left2imu_temp;

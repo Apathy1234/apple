@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/tg/slam_mono/build
 include mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs.dir/progress.make
 
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs: /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/msg/Temp.js
+mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs: /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/srv/GetParams.js
 
 
 /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/msg/Temp.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
@@ -62,8 +63,14 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs: /home/t
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from mynteye_wrapper_d/Temp.msg"
 	cd /home/tg/slam_mono/build/mynteye_wrapper_d && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg -Imynteye_wrapper_d:/home/tg/slam_mono/src/mynteye_wrapper_d/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p mynteye_wrapper_d -o /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/msg
 
+/home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/srv/GetParams.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
+/home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/srv/GetParams.js: /home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from mynteye_wrapper_d/GetParams.srv"
+	cd /home/tg/slam_mono/build/mynteye_wrapper_d && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv -Imynteye_wrapper_d:/home/tg/slam_mono/src/mynteye_wrapper_d/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p mynteye_wrapper_d -o /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/srv
+
 mynteye_wrapper_d_generate_messages_nodejs: mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs
 mynteye_wrapper_d_generate_messages_nodejs: /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/msg/Temp.js
+mynteye_wrapper_d_generate_messages_nodejs: /home/tg/slam_mono/devel/share/gennodejs/ros/mynteye_wrapper_d/srv/GetParams.js
 mynteye_wrapper_d_generate_messages_nodejs: mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_generate_messages_nodejs.dir/build.make
 
 .PHONY : mynteye_wrapper_d_generate_messages_nodejs

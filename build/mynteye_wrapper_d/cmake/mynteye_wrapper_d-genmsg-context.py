@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = "/home/tg/slam_mono/src/mynteye_wrapper_d/msg/Temp.msg"
-services_str = ""
+services_str = "/home/tg/slam_mono/src/mynteye_wrapper_d/srv/GetParams.srv"
 pkg_name = "mynteye_wrapper_d"
 dependencies_str = "std_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"
