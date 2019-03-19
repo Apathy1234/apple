@@ -564,7 +564,7 @@ void FeatureTracker::Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Poi
         else
             break;
     }
-
+    // ROS_INFO_STREAM((endIter - beginIter));
     Vec3f meanAngleVel(0.0, 0.0, 0.0);
     for (auto iter = beginIter; iter < endIter; iter++)
     {
@@ -579,6 +579,7 @@ void FeatureTracker::Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Poi
     Vec3f rightMeanAngleVel = r_right2imu.t() * meanAngleVel;
 
     double dTime = currImageTime - lastImageTime;
+    // ROS_INFO_STREAM(meanAngleVel * dTime);
     Rodrigues(leftMeanAngleVel*dTime, left_R_p_c);
     Rodrigues(rightMeanAngleVel*dTime, right_R_p_c);
     left_R_p_c = left_R_p_c.t();
@@ -706,8 +707,41 @@ void FeatureTracker::Publish_Info(void)
     if (pubMatchImage.getNumSubscribers() > 0 && SHOW_TRACKER)
     {
         Mat outImg(camResolution[1], camResolution[0]*2, CV_8UC3);
-        cvtColor(leftImagePtr->image, outImg.colRange(0, camResolution[0]), CV_GRAY2RGB);
-        cvtColor(rightImagePtr->image, outImg.colRange(camResolution[0], camResolution[0]*2), CV_GRAY2RGB);
+        cvtColor(leftShow, outImg.colRange(0, camResolution[0]), CV_GRAY2RGB);
+        cvtColor(rightShow, outImg.colRange(camResolution[0], camResolution[0]*2), CV_GRAY2RGB);
+
+        // if(lastLeftMap.size() != 0)
+        // {
+        //     for(int i = 0; i < trackerID.size(); i++)
+        //     {
+        //         if(lastLeftMap.find(trackerID[i]) != lastLeftMap.end() && lastRightMap.find(trackerID[i]) != lastRightMap.end())
+        //         {
+        //             Point2f prev_pt0 = lastLeftMap[trackerID[i]];
+        //             Point2f prev_pt1 = lastRightMap[trackerID[i]] + Point2f(camResolution[0], 0.0);
+        //             Point2f curr_pt0 = leftKpsCurr[i];
+        //             Point2f curr_pt1 = rightKpsCurr[i] + Point2f(camResolution[0], 0.0);
+        //             double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
+        //             circle(outImg, curr_pt0, 4, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+        //             circle(outImg, curr_pt1, 4, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+        //             line(outImg, prev_pt0, curr_pt0, Scalar(0, 225, 255), 4, LINE_AA);
+        //             // arrowedLine(outImg, prev_pt0, curr_pt0, Scalar(0, 255, 255), 1, 8, 0, 0.2);
+        //             // arrowedLine(outImg, prev_pt1, curr_pt1, Scalar(0, 255, 255), 1, 8, 0, 0.2);
+        //             string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
+        //             int baseLine;
+        //             Size textSize = getTextSize(textShow, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+        //             putText(outImg, textShow, leftKpsCurr[i], FONT_HERSHEY_SIMPLEX, 0.5,  Scalar(255, 0, 0), 1, LINE_AA);
+        //         }
+        //     }
+        // }
+
+        // lastLeftMap.clear();
+        // lastRightMap.clear();
+        // for (int i = 0; i < trackerID.size(); i++)
+        // {
+        //     lastLeftMap[trackerID[i]] = leftKpsCurr[i];
+        //     lastRightMap[trackerID[i]] = rightKpsCurr[i];
+        // }
+
         for( unsigned int i = 0; i < trackerID.size(); i++)
         {
             if(trackerCnt[i] != 1)
@@ -715,7 +749,7 @@ void FeatureTracker::Publish_Info(void)
                 double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
                 circle(outImg, leftKpsCurr[i], 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
                 circle(outImg, rightKpsCurr[i]+ Point2f(camResolution[0], 0.0), 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
-                line(outImg, leftKpsCurr[i], rightKpsCurr[i]+ Point2f(camResolution[0], 0.0), Scalar(0, 225, 255), 1, LINE_AA);
+                // line(outImg, leftKpsCurr[i], rightKpsCurr[i]+ Point2f(camResolution[0], 0.0), Scalar(0, 225, 255), 1, LINE_AA);
                 string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
                 int baseLine;
                 Size textSize = getTextSize(textShow, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
@@ -801,6 +835,13 @@ void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, 
     
     leftImagePtr = cv_bridge::toCvCopy(leftImg, enc::MONO8);
     rightImagePtr = cv_bridge::toCvCopy(rightImg, enc::MONO8);
+    
+    if (pubMatchImage.getNumSubscribers() > 0 && SHOW_TRACKER)
+    {
+        leftShow = leftImagePtr->image.clone();
+        rightShow = rightImagePtr->image.clone();
+    }
+
 
     if ( EQUALIZE )
     {

@@ -13,12 +13,12 @@
 #include <memory>
 #include <cmath>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/calib3d/calib3d.hpp>
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/core/eigen.hpp>
 
 #include <g2o/core/base_vertex.h>
 #include <g2o/core/base_unary_edge.h>

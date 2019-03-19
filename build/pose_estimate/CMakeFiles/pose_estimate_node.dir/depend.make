@@ -28,6 +28,7 @@ pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvdef.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.hpp
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.inl.hpp
+pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/eigen.hpp
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/fast_math.hpp
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/hal/interface.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/mat.hpp

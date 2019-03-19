@@ -3,7 +3,7 @@
 namespace slam_mono
 {
 
-PoseEstimate::PoseEstimate(void): isSensorCalib(false)
+PoseEstimate::PoseEstimate(void): isSensorCalib(false), lastTime(0)
 {
     n.param<string>("imu_topics", IMU_TOPICS, string("/mynteye/imu/data_raw_processed"));
     n.param<string>("pub_feature_topic", FEATURE_TOPICS, string("/feature_tracker/points"));
@@ -19,19 +19,21 @@ PoseEstimate::PoseEstimate(void): isSensorCalib(false)
     t_left2imu = T_left2imu(Rect(3, 0, 1, 3));
 
     featureSub = n.subscribe(FEATURE_TOPICS, 1, &PoseEstimate::Feature_Callback, this);
-    imuSub = n.subscribe(IMU_TOPICS, 1, &PoseEstimate::Imu_Callback, this);
+    imuSub = n.subscribe(IMU_TOPICS, 50, &PoseEstimate::Imu_Callback, this);
     posePub = n.advertise<pose_estimate::PoseEstimateResult>("/camera_pose", 1);
     ROS_INFO("pose estimate init success! ");
 }
 
 PoseEstimate::~PoseEstimate(void)
 {
-    
+
 }
 
 void PoseEstimate::Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg)
 {
-    
+    // ROS_INFO_STREAM(lastTime);
+    if (lastTime == 0) return;
+    imuMsgBuffer.push_back(*imuMsg); 
 }
 
 void PoseEstimate::Clear_Points(Features& fet)
@@ -54,12 +56,15 @@ void PoseEstimate::Find_Feature_Matches(void)
             it = featuresRef.pts3dMap.find(featuresCurr.id[i]);
             if( it != featuresRef.pts3dMap.end() )
             {
-                ptsRefMatched.push_back(it->second);
-                ptsCurrMatched.push_back(featuresCurr.pts3d[i]);
+                if(featuresCurr.pts3d[i].z >=0 && it->second.z >=0 )
+                {
+                    ptsRefMatched.push_back(it->second);
+                    ptsCurrMatched.push_back(featuresCurr.pts3d[i]);
+                }
             }
         }
     }
-    // ROS_INFO_STREAM("The number of matching points found is: " << ptsRefMatched.size());
+    ROS_INFO_STREAM("The number of matching points found is: " << ptsRefMatched.size());
 }
 
 void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<Point3f>& pts2, Mat& R, Mat& t)
@@ -73,7 +78,8 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     // vertex
     g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
     pose->setId(0);
-    pose->setEstimate( g2o::SE3Quat(Eigen::Matrix3d::Identity(), Eigen::Vector3d(0, 0, 0)));
+    pose->setEstimate( g2o::SE3Quat(eigenR, Eigen::Vector3d(estT[0], estT[1], estT[2])));
+    // pose->setEstimate( g2o::SE3Quat(Eigen::Matrix3d::Identity(), Eigen::Vector3d(0, 0, 0)));
     optimizer.addVertex( pose );
 
     // edges
@@ -92,20 +98,73 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     }
     optimizer.setVerbose( false );
     optimizer.initializeOptimization();
-    optimizer.optimize(15);
+    optimizer.optimize(8);
 
     qDet = pose->estimate().rotation();
     tDet = pose->estimate().translation();
-    ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
-    ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
+    ROS_INFO_STREAM("the resule from camera: " << pose->estimate());
+    // ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
+    // ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
 
+}
+
+void PoseEstimate::Predict_With_IMU(void)
+{
+    // ROS_INFO_STREAM("the size of imu: " << imuMsgBuffer.size());
+    auto beginIter = imuMsgBuffer.begin();
+    while(beginIter != imuMsgBuffer.end())
+    {
+        if (beginIter->header.stamp.toNSec() < lastTime)
+        {
+            beginIter++;
+        }
+        else
+            break;
+    }
+    auto endIter = beginIter;
+    while(endIter != imuMsgBuffer.end())
+    {
+        if(endIter->header.stamp.toNSec() < currentTime )
+        {
+            endIter++;
+        }
+        else
+            break;
+    }
+    // ROS_INFO_STREAM(endIter - beginIter);
+    Vec3f meanAngleVel(0.0, 0.0, 0.0);
+    Vec3f meanLinearVel(0.0, 0.0, 0.0);
+    for (auto iter = beginIter; iter < endIter; iter++)
+    {
+        meanAngleVel += Vec3f(iter->angular_velocity.x, iter->angular_velocity.y, iter->angular_velocity.z);
+        meanLinearVel += Vec3f(iter->linear_acceleration.x, iter->linear_acceleration.y, iter->linear_acceleration.z);
+    }
+    if (endIter - beginIter > 0)
+    {
+        meanAngleVel *= 1.0f / (endIter - beginIter);
+        meanLinearVel *= 1.0f / (endIter - beginIter);
+    }
+
+    double dTime = (currentTime - lastTime) / 1000000000.0f;
+    // ROS_INFO_STREAM(meanAngleVel * dTime);
+    Rodrigues(meanAngleVel*dTime, estR);
+    // estR = estR.t();
+    cv2eigen(estR, eigenR);
+    ROS_INFO_STREAM("the initial resule: " << eigenR);
+    estT = meanLinearVel * dTime;
+    // ROS_INFO_STREAM(estR);
+    // ROS_INFO_STREAM(estT);
+    // erase data
+    imuMsgBuffer.erase(imuMsgBuffer.begin(), endIter);
 }
 
 void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts)
 {
     uint64 timeBegin = ros::Time::now().toNSec();
     Clear_Points(featuresCurr);
+    currentTime = pts->header.stamp.toNSec();
 
+    // ROS_INFO_STREAM("the time: " << (currentTime - lastTime));
     featuresCurr.header = pts->header;
     for(int i = 0; i < pts->num_of_features; i++)
     {
@@ -120,6 +179,7 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
     }
     if( !featuresRef.pts3dMap.empty() )
     {
+        Predict_With_IMU();
         Find_Feature_Matches();
         Bundle_Adjustment(ptsRefMatched, ptsCurrMatched, R, T);
         /*******************************publish info************************************************/
@@ -142,9 +202,11 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
         // tDet << 0, 0, 0;
     }
     featuresRef = featuresCurr;
+    lastTime = currentTime;
+    // ROS_INFO_STREAM(lastTime);
     uint64 timeEnd = ros::Time::now().toNSec();
 
-    ROS_INFO_STREAM(timeEnd - timeBegin);
+    ROS_INFO_STREAM((timeEnd - timeBegin) << " ns");
 }
 
 

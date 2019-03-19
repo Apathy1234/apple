@@ -69,6 +69,10 @@ namespace slam_mono
         message_filters::TimeSynchronizer<sensor_msgs::Image, sensor_msgs::Image> stereoSub;
 
         // 图像获取与图像金字塔
+        Mat leftShow;
+        Mat rightShow;
+        map<LONGTYPE, Point2f> lastLeftMap;
+        map<LONGTYPE, Point2f> lastRightMap;
         cv_bridge::CvImageConstPtr leftImagePtr;
         cv_bridge::CvImageConstPtr rightImagePtr;
         vector<Mat> leftPyramid;

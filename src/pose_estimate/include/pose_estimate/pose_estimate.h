@@ -28,6 +28,7 @@ private:
     
     // imu相关
     bool isSensorCalib;
+    vector<sensor_msgs::Imu> imuMsgBuffer;
     
     // 特征点相关
     struct Features
@@ -48,14 +49,21 @@ private:
     Mat T_left2imu;
     Matx33d r_left2imu;
     Vec3d t_left2imu;
+    Eigen::Matrix3d eigenR;
+    Mat estR;
+    Vec3d estT;
     Mat R;
     Mat T;
     Eigen::Quaterniond qDet;
     Eigen::Vector3d tDet;
 
+
+    uint64 currentTime;
+    uint64 lastTime;
     void Clear_Points(Features& fet);
     void Find_Feature_Matches(void);
     void Bundle_Adjustment(const vector<Point3f>& pts1, const vector<Point3f>& pts2, Mat& R, Mat& t);
+    void Predict_With_IMU(void);
 };
 
 }
