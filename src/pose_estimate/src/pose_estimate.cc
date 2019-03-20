@@ -87,10 +87,10 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     vector<EdgeProjectXYZPose*> edges;
     for ( int i = 0; i < ptsRefMatched.size(); i++ )
     {
-        EdgeProjectXYZPose* edge = new EdgeProjectXYZPose(Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
+        EdgeProjectXYZPose* edge = new EdgeProjectXYZPose(Eigen::Vector3d(ptsRefMatched[i].x, ptsRefMatched[i].y, ptsRefMatched[i].z));
         edge->setId( index );
         edge->setVertex( 0, dynamic_cast<g2o::VertexSE3Expmap*>(pose) );
-        edge->setMeasurement(Eigen::Vector3d(ptsRefMatched[i].x, ptsRefMatched[i].y, ptsRefMatched[i].z));
+        edge->setMeasurement(Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
         edge->setInformation(Eigen::Matrix3d::Identity()*1e4);
         optimizer.addEdge( edge );
         index++;
@@ -98,13 +98,13 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     }
     optimizer.setVerbose( false );
     optimizer.initializeOptimization();
-    optimizer.optimize(8);
+    optimizer.optimize(15);
 
     qDet = pose->estimate().rotation();
     tDet = pose->estimate().translation();
-    ROS_INFO_STREAM("the resule from camera: " << pose->estimate());
-    // ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
-    // ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
+    // ROS_INFO_STREAM("the resule from camera: " << pose->estimate());
+    ROS_INFO_STREAM("q0: " << qDet.w() << " q1: " << qDet.x() << " q2: "<< qDet.y() << " q3: " << qDet.z());
+    ROS_INFO_STREAM("x: " << tDet[0] << " y: " << tDet[1] << " z: " << tDet[2]);
 
 }
 

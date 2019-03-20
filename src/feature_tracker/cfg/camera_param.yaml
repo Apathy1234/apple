@@ -32,7 +32,7 @@ frequence: 10
 board_size: 1
 tracker_size: 10
 tracker_min_distance: 30
-tracker_max_count: 100
+tracker_max_count: 50
 equalize: true
 pyramid_level: 3
 win_size: 21
