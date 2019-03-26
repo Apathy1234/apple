@@ -160,7 +160,7 @@ foreach(t ${feature_tracker_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;std_msgs;cv_bridge;sensor_msgs;message_filters;image_transport;message_runtime;nodelet")
+set(depends "roscpp;std_msgs;cv_bridge;sensor_msgs;message_filters;image_transport;message_runtime;random_numbers;nodelet")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(pose_estimate)
 
+#set( CMAKE_BUILD_TYPE "Release" )
+set( CMAKE_CXX_FLAGS "-std=c++11 -O3" )
+
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
-list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+#add_compile_options(-std=c++11)
+list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -118,15 +121,18 @@ include_directories(
  include
  ${catkin_INCLUDE_DIRS}
  ${OpenCV_INCLUDE_DIRS}
- "/usr/include/eigen3"
  ${G2O_INCLUDE_DIRS}
  ${CSPARSE_INCLUDE_DIR}
+  "/usr/include/eigen3/"
 )
 set(LINK_LIBRARIES
  ${catkin_LIBRARIES}
  ${OpenCV_LIBS}
+ g2o_core 
+ g2o_stuff 
+ g2o_types_sba 
+ g2o_csparse_extension
  ${CSPARSE_LIBRARY}
- g2o_core g2o_types_sba g2o_solver_eigen
 )
 ## Declare a C++ library
  add_library(${PROJECT_NAME}

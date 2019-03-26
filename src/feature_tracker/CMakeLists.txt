@@ -5,7 +5,7 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport image_transport message_generation nodelet)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport message_generation random_numbers nodelet)
 find_package(OpenCV 3 REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -100,7 +100,7 @@ find_package(OpenCV 3 REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES myslam
-  CATKIN_DEPENDS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport message_runtime nodelet
+  CATKIN_DEPENDS roscpp std_msgs cv_bridge sensor_msgs message_filters image_transport message_runtime random_numbers nodelet
   DEPENDS OpenCV
 )
 

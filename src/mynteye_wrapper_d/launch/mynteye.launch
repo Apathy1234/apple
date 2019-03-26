@@ -54,9 +54,9 @@
   <!-- Auto-exposure -->
   <arg name="state_ae" default="true" />
   <!-- Auto-white balance -->
-  <arg name="state_awb" default="true" />
+  <arg name="state_awb" default="false" />
   <!-- IR intensity -->
-  <arg name="ir_intensity" default="4" />
+  <arg name="ir_intensity" default="8" />
   <!-- IR Depth Only -->
   <arg name="ir_depth_only" default="false" />
 

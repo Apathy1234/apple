@@ -9,6 +9,7 @@
 #include <message_filters/time_synchronizer.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
+#include <random_numbers/random_numbers.h>
 #include <feature_tracker/CameraTrackerResult.h>
 #include <feature_tracker/FeatureTrackerResult.h>
 
@@ -21,6 +22,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <Eigen/Dense>
 
 #include <string>
 #include <vector>

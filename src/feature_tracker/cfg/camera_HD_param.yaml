@@ -31,10 +31,10 @@ imu_topics: /mynteye/imu/data_raw_processed
 frequence: 10
 board_size: 1
 tracker_size: 10
-tracker_min_distance: 40
-tracker_max_count: 100
+tracker_min_distance: 80
+tracker_max_count: 150
 equalize: false
 pyramid_level: 3
-win_size: 21
-f_threshold: 1.0
+win_size: 15
 show_tracker: true
+ransac_threshold: 3

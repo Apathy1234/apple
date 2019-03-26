@@ -122,6 +122,7 @@ myslam_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgcodecs3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libimage_transport.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libmessage_filters.so
+/home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/librandom_numbers.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libnodeletlib.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /usr/lib/x86_64-linux-gnu/libuuid.so
 /home/tg/slam_mono/devel/lib/libmyslam.so: /opt/ros/kinetic/lib/libbondcpp.so

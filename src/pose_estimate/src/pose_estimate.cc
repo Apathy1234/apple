@@ -56,7 +56,7 @@ void PoseEstimate::Find_Feature_Matches(void)
             it = featuresRef.pts3dMap.find(featuresCurr.id[i]);
             if( it != featuresRef.pts3dMap.end() )
             {
-                if(featuresCurr.pts3d[i].z >=0 && it->second.z >=0 )
+                if(featuresCurr.pts3d[i].z <=0 && it->second.z <=0 )
                 {
                     ptsRefMatched.push_back(it->second);
                     ptsCurrMatched.push_back(featuresCurr.pts3d[i]);
@@ -69,6 +69,7 @@ void PoseEstimate::Find_Feature_Matches(void)
 
 void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<Point3f>& pts2, Mat& R, Mat& t)
 {
+
     typedef g2o::BlockSolver< g2o::BlockSolverTraits<6, 3> > Block;  // pose 6, landmark 3
     typedef g2o::LinearSolverEigen<Block::PoseMatrixType> linerSolver;
     g2o::SparseOptimizer optimizer;
@@ -78,7 +79,8 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     // vertex
     g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
     pose->setId(0);
-    pose->setEstimate( g2o::SE3Quat(eigenR, Eigen::Vector3d(estT[0], estT[1], estT[2])));
+    pose->setEstimate( g2o::SE3Quat(eigenR, Eigen::Vector3d(0, 0, 0)));
+    ROS_INFO_STREAM("the initial result: " << g2o::SE3Quat(eigenR, Eigen::Vector3d(0, 0, 0)));
     // pose->setEstimate( g2o::SE3Quat(Eigen::Matrix3d::Identity(), Eigen::Vector3d(0, 0, 0)));
     optimizer.addVertex( pose );
 
@@ -88,17 +90,21 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
     for ( int i = 0; i < ptsRefMatched.size(); i++ )
     {
         EdgeProjectXYZPose* edge = new EdgeProjectXYZPose(Eigen::Vector3d(ptsRefMatched[i].x, ptsRefMatched[i].y, ptsRefMatched[i].z));
-        edge->setId( index );
+        // ROS_INFO_STREAM("Ref: " << Eigen::Vector3d(ptsRefMatched[i].x, ptsRefMatched[i].y, ptsRefMatched[i].z));
+        edge->setId( index++ );
         edge->setVertex( 0, dynamic_cast<g2o::VertexSE3Expmap*>(pose) );
         edge->setMeasurement(Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
+        // ROS_INFO_STREAM("Curr: " << Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
         edge->setInformation(Eigen::Matrix3d::Identity()*1e4);
+        edge->setRobustKernel( new g2o::RobustKernelHuber() );
         optimizer.addEdge( edge );
-        index++;
         edges.push_back( edge );
     }
-    optimizer.setVerbose( false );
+
+    optimizer.setVerbose( true );
     optimizer.initializeOptimization();
-    optimizer.optimize(15);
+    optimizer.optimize(30);
+
 
     qDet = pose->estimate().rotation();
     tDet = pose->estimate().translation();
@@ -146,14 +152,11 @@ void PoseEstimate::Predict_With_IMU(void)
     }
 
     double dTime = (currentTime - lastTime) / 1000000000.0f;
-    // ROS_INFO_STREAM(meanAngleVel * dTime);
+
     Rodrigues(meanAngleVel*dTime, estR);
-    // estR = estR.t();
+    estR = estR.t();
     cv2eigen(estR, eigenR);
-    ROS_INFO_STREAM("the initial resule: " << eigenR);
-    estT = meanLinearVel * dTime;
-    // ROS_INFO_STREAM(estR);
-    // ROS_INFO_STREAM(estT);
+    // estT = meanLinearVel * dTime;
     // erase data
     imuMsgBuffer.erase(imuMsgBuffer.begin(), endIter);
 }
@@ -171,10 +174,11 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
         featuresCurr.id.push_back(pts->features[i].id);
         featuresCurr.cnt.push_back(pts->features[i].cnt);
         //　将相机下的点投影到IMU坐标系下
-        Vec3d pt0 = (pts->features[i].x, pts->features[i].y, pts->features[i].z);
-        Vec3d ptsTemp = r_left2imu * pt0 + t_left2imu;
+        Vec3f pt0(pts->features[i].x, pts->features[i].y, pts->features[i].z);
+        Vec3f ptsTemp = (r_left2imu * pt0 + t_left2imu) / 1000.0f;
         //　投影完成
         featuresCurr.pts3d.push_back(Point3f(ptsTemp[0], ptsTemp[1], ptsTemp[2]));
+        // ROS_INFO_STREAM("Point Used: " << Point3f(ptsTemp[0], ptsTemp[1], ptsTemp[2]));
         featuresCurr.pts3dMap.insert(make_pair(pts->features[i].id, Point3f(ptsTemp[0], ptsTemp[1], ptsTemp[2])));
     }
     if( !featuresRef.pts3dMap.empty() )
@@ -207,6 +211,7 @@ void PoseEstimate::Feature_Callback(const feature_tracker::CameraTrackerResultPt
     uint64 timeEnd = ros::Time::now().toNSec();
 
     ROS_INFO_STREAM((timeEnd - timeBegin) << " ns");
+
 }
 
 

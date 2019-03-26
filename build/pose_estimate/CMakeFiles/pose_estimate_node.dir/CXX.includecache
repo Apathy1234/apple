@@ -107,6 +107,10 @@ g2o/solvers/eigen/linear_solver_eigen.h
 -
 g2o/types/sba/types_six_dof_expmap.h
 -
+g2o/core/robust_kernel.h
+-
+g2o/core/robust_kernel_impl.h
+-
 
 /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/pose_estimate.h
 pose_estimate/my_include.h

@@ -89,7 +89,8 @@ bool FeatureTracker:: Load_Parameters(void)
     n.param<int>("tracker_max_count", TRACKER_NUM, 100);
     n.param<int>("pyramid_level", PYRAMID_LEVEL, 3);
     n.param<int>("win_size", WIN_SIZE, 15);
-    n.param<double>("f_threshold", F_THRESHOLD, 1.0);
+    n.param<double>("ransac_threshold", RANSAC_THRESHOLD, 3.0);
+    n.param<double>("stereo_threshold", STEREO_THRESHOLD, 5.0);
     n.getParam("left/topic", LEFT_TOPICS);
     n.getParam("right/topic", RIGHT_TOPICS);
     n.getParam("imu_topics", IMU_TOPICS);
@@ -125,7 +126,7 @@ bool FeatureTracker:: Load_Parameters(void)
     ROS_INFO("tracker_number: %d", TRACKER_NUM);
     ROS_INFO("pyramid_level: %d", PYRAMID_LEVEL);
     ROS_INFO("win_size: %d", WIN_SIZE);
-    ROS_INFO("f_threshold: %f", F_THRESHOLD);
+    ROS_INFO("ransac_threshold: %f", RANSAC_THRESHOLD);
     cout << "left_topics: " << LEFT_TOPICS << endl;
     cout << "right_topics: " << RIGHT_TOPICS << endl;
     cout << "imu_topics: " << IMU_TOPICS << endl;
@@ -255,7 +256,7 @@ void FeatureTracker::Stereo_Match(const vector<Point2f>& leftPoints, vector<Poin
             Vec3d pt1( rightKpsUndistorted[i].x, rightKpsUndistorted[i].y, 1);
             Vec3d epipolar = E * pt0;
             double error = fabs((pt1.t() * epipolar)[0]) / sqrt( epipolar[0]*epipolar[0] + epipolar[1]*epipolar[1]);
-            if (error > 3 * normPixelUnit)
+            if (error > STEREO_THRESHOLD * normPixelUnit)
             {
                 inlierMarkers[i] = 0;
             }
@@ -342,9 +343,10 @@ void FeatureTracker::Tracker_Feature(void)
     calcOpticalFlowPyrLK(leftPyramidRef, leftPyramid, leftKpsRef, leftKpsCurr, 
                          trackerInlier, noArray(),Size(WIN_SIZE, WIN_SIZE), PYRAMID_LEVEL, 
                          TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01), OPTFLOW_USE_INITIAL_FLOW);
-    
+
     for( int i = 0; i < int(leftKpsCurr.size()); i++)
     {
+        // ROS_INFO_STREAM("the position of feature: " << leftKpsCurr[i]);
         if ( trackerInlier[i] && !Point_In_Border(leftKpsCurr[i]) )
         {
             trackerInlier[i] = 0;
@@ -370,10 +372,10 @@ void FeatureTracker::Tracker_Feature(void)
     // ROS_INFO_STREAM("the number of features after matching: " << leftKpsCurr.size());
     
     vector<unsigned char> leftInlierMarkers(0);
-    Delet_Point_With_RANSAC(leftKpsRef, leftKpsCurr, left_R_p_c, leftIntrinsics, leftDistortionCoeffs, leftInlierMarkers);
+    Delet_Point_With_RANSAC(leftKpsRef, leftKpsCurr, left_R_p_c, leftIntrinsics, leftDistortionCoeffs, 0.99, leftInlierMarkers);
     
     vector<unsigned char> rightInlierMarkers(0);
-    Delet_Point_With_RANSAC(rightKpsRef, rightKpsCurr, right_R_p_c, rightIntrinsics, rightDistortionCoeffs, rightInlierMarkers);
+    Delet_Point_With_RANSAC(rightKpsRef, rightKpsCurr, right_R_p_c, rightIntrinsics, rightDistortionCoeffs, 0.99, rightInlierMarkers);
 
     vector<unsigned char> ransacMarker(leftInlierMarkers.size(), 0);
     // if (leftInlierMarkers.size() != rightInlierMarkers.size())
@@ -392,7 +394,7 @@ void FeatureTracker::Tracker_Feature(void)
             ransacMarker[i] = 0;
         }
     }
-    
+    // float n1 = leftKpsCurr.size();
     // ROS_INFO_STREAM("----------------------------");
     // ROS_INFO_STREAM("the number of features before matching: " << leftKpsCurr.size());
     Reduce_Vector(leftKpsRef, ransacMarker);
@@ -401,9 +403,12 @@ void FeatureTracker::Tracker_Feature(void)
     Reduce_Vector(rightKpsCurr, ransacMarker);
     Reduce_Vector(trackerID, ransacMarker);
     Reduce_Vector(trackerCnt, ransacMarker);
+    // float n2 = leftKpsCurr.size();
+    // ROS_INFO_STREAM("the number of features after ransac: " << n2);
+    // ROS_INFO_STREAM("the ratio of features after ransac: " << n2 / n1);
     // ROS_INFO_STREAM("the number of features after matching: " << leftKpsCurr.size());
 }
-void FeatureTracker::Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point2f>& pts2, const cv::Matx33f& R_p_c, const cv::Vec4d& intrinsics, const cv::Vec4d& distortionCoeffs, vector<unsigned char>& inlierMarkers)
+void FeatureTracker::Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point2f>& pts2, const cv::Matx33f& R_p_c, const cv::Vec4d& intrinsics, const cv::Vec4d& distortionCoeffs, const float& success, vector<unsigned char>& inlierMarkers)
 {
     if(pts1.size() != pts2.size())
     {
@@ -438,7 +443,7 @@ void FeatureTracker::Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point
         scale += sqrt(pts1Undistorted[i].dot(pts1Undistorted[i]));    //　这样做是为了避免里面有负数
         scale += sqrt(pts2Undistorted[i].dot(pts2Undistorted[i]));
     }
-    scale = (pts1Undistorted.size() + pts2Undistorted.size()) / scale * sqrt(2.0f);
+    scale = (pts1Undistorted.size() + pts2Undistorted.size()) / scale /** sqrt(2.0f)*/;
 
     for (int i = 0; i < pts1Undistorted.size(); i++)
     {
@@ -487,62 +492,212 @@ void FeatureTracker::Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point
         for (int i = 0; i < ptsDiff.size(); i++) 
         {
             if (inlierMarkers[i] == 0) continue;
-            if (sqrt(ptsDiff[i].dot(ptsDiff[i])) > 2*normPixelUnit)
+            // ROS_INFO_STREAM("mean distance: " << meanDist);
+            // ROS_INFO_STREAM("norm pixelUnit: " << normPixelUnit);
+            // ROS_INFO_STREAM("ptsDiff: " << sqrt(ptsDiff[i].dot(ptsDiff[i])));
+            // ROS_INFO_STREAM("trackerID: " << trackerID[i]);
+            if (sqrt(ptsDiff[i].dot(ptsDiff[i])) > RANSAC_THRESHOLD*normPixelUnit)
+            {
                 inlierMarkers[i] = 0;
+                // ROS_INFO_STREAM("Yes");
+            }
+
         }
-        // for(int i = 0; i < inlierMarkers.size(); i++)
-        // {
-        //     cout << int(inlierMarkers[i]) << endl;
-        // }
-        // cout << "----------------" << endl;
         return;
     }
 
-}
-
-
-
-void FeatureTracker::Delet_Point_With_F(void)
-{
-    if (leftKpsCurr.size() >= 8 && rightKpsCurr.size() >= 8)
+    int iterNumber = static_cast<int> (ceil(log(1 - success) / log(1 - 0.7 * 0.7)));
+    vector<int> rawInlierID;
+    for (int i = 0; i < inlierMarkers.size(); i++)
     {
-        vector<Point2f> leftUndistortedRef;
-        vector<Point2f> leftUndistortedCurr;
-        vector<Point2f> rightUndistortedRef;
-        vector<Point2f> rightUndistortedCurr;
-        Undistorted_Points(leftKpsRef, leftUndistortedRef, leftIntrinsics, leftDistortionCoeffs);
-        Undistorted_Points(leftKpsCurr, leftUndistortedCurr, leftIntrinsics, leftDistortionCoeffs);
-        Undistorted_Points(rightKpsRef, rightUndistortedRef, rightIntrinsics, rightDistortionCoeffs);
-        Undistorted_Points(rightKpsCurr, rightUndistortedCurr, rightIntrinsics, rightDistortionCoeffs);
-
-        vector<unsigned char> leftInlierMarkers(0);
-        findFundamentalMat(leftUndistortedRef, leftUndistortedCurr, FM_RANSAC, F_THRESHOLD, 0.99, leftInlierMarkers);
-
-        vector<unsigned char> rightInlierMarkers(0);
-        findFundamentalMat(rightUndistortedRef, rightUndistortedCurr, FM_RANSAC, F_THRESHOLD, 0.99, rightInlierMarkers);
-
-        if ( leftInlierMarkers.size() != rightInlierMarkers.size())
+        if (inlierMarkers[i])
         {
-            ROS_WARN("the leftInlierMarkers(%lu) and the rightInlierMarkers(%lu) does not match!", leftInlierMarkers.size(), rightInlierMarkers.size());
+            rawInlierID.push_back(i);
         }
-        vector<unsigned char> inlierMarkers(leftInlierMarkers.size(), 0);
-        for (int i = 0; i < leftInlierMarkers.size(); i++)
+    }
+
+    Eigen::MatrixXd equationT(ptsDiff.size(), 3);
+    for (int i = 0; i < ptsDiff.size(); ++i) 
+    {
+        equationT(i, 0) = ptsDiff[i].y;
+        equationT(i, 1) = -ptsDiff[i].x;
+        equationT(i, 2) = pts1Undistorted[i].x * pts2Undistorted[i].y - pts1Undistorted[i].y * pts2Undistorted[i].x;
+    }
+
+    vector<int> bestInlier;
+    double modelError = 1e10;
+    random_numbers::RandomNumberGenerator randomGen;
+
+    for(int iterCnt = 0; iterCnt < iterNumber; iterCnt++)
+    {
+        int selectID1 = randomGen.uniformInteger(0, rawInlierID.size()-1);
+        int selectDistance = randomGen.uniformInteger(1, rawInlierID.size()-1);
+        int selectID2 = (selectID1 + selectDistance) < rawInlierID.size() ? (selectID1 + selectDistance) : (selectID1 + selectDistance - rawInlierID.size());
+
+        int selectPoint1 = rawInlierID[selectID1];
+        int selectPoint2 = rawInlierID[selectID2];
+
+        Eigen::Vector2d equation_tx(equationT(selectPoint1, 0), equationT(selectPoint2, 0));
+        Eigen::Vector2d equation_ty(equationT(selectPoint1, 1), equationT(selectPoint2, 1));
+        Eigen::Vector2d equation_tz(equationT(selectPoint1, 2), equationT(selectPoint2, 2));
+        vector<double> equationNorm(3);
+        equationNorm[0] = equation_tx.lpNorm<1>();
+        equationNorm[1] = equation_ty.lpNorm<1>();
+        equationNorm[2] = equation_tz.lpNorm<1>();
+        int indicator = min_element(equationNorm.begin(), equationNorm.end()) - equationNorm.begin();
+
+        Eigen::Vector3d modelParam(0.0, 0.0, 0.0);
+        if (indicator == 0) 
         {
-            if ( leftInlierMarkers[i] == 1 && rightInlierMarkers[i] == 1)
+            Eigen::Matrix2d A;
+            A << equation_ty, equation_tz;
+            Eigen::Vector2d solution = A.inverse() * (-equation_tx);
+            modelParam(0) = 1.0;
+            modelParam(1) = solution(0);
+            modelParam(2) = solution(1);
+        } 
+        else if (indicator ==1) 
+        {
+            Eigen::Matrix2d A;
+            A << equation_tx, equation_tz;
+            Eigen::Vector2d solution = A.inverse() * (-equation_ty);
+            modelParam(0) = solution(0);
+            modelParam(1) = 1.0;
+            modelParam(2) = solution(1);
+        } 
+        else 
+        {
+            Eigen::Matrix2d A;
+            A << equation_tx, equation_ty;
+            Eigen::Vector2d solution = A.inverse() * (-equation_tz);
+            modelParam(0) = solution(0);
+            modelParam(1) = solution(1);
+            modelParam(2) = 1.0;
+        }
+
+        Eigen::VectorXd err = equationT * modelParam;
+
+        vector<int> inlierID;
+        for (int i = 0; i < err.rows(); i++)
+        {
+            if (inlierMarkers[i] == 0) continue;
+            if (abs(err[i]) < RANSAC_THRESHOLD*normPixelUnit)
             {
-                inlierMarkers[i] = 1;
+                inlierID.push_back(i);
             }
         }
-        // ROS_INFO_STREAM("the number of features before delet point with f: " << leftKpsCurr.size());
-        Reduce_Vector(leftKpsRef, inlierMarkers);
-        Reduce_Vector(leftKpsCurr, inlierMarkers);
-        Reduce_Vector(rightKpsRef, inlierMarkers);
-        Reduce_Vector(rightKpsCurr, inlierMarkers);
-        Reduce_Vector(trackerID, inlierMarkers);
-        Reduce_Vector(trackerCnt, inlierMarkers);
-        // ROS_INFO_STREAM("the number of features after delet point with f: " << leftKpsCurr.size());
+
+        // the model is bad. reject!
+        if (inlierID.size() < 0.2*pts1Undistorted.size()) continue;
+
+        Eigen::VectorXd equationBetter_tx(inlierID.size());
+        Eigen::VectorXd equationBetter_ty(inlierID.size());
+        Eigen::VectorXd equationBetter_tz(inlierID.size());
+
+        for (int i = 0; i < inlierID.size(); ++i) 
+        {
+            equationBetter_tx(i) = equationT(inlierID[i], 0);
+            equationBetter_ty(i) = equationT(inlierID[i], 1);
+            equationBetter_tz(i) = equationT(inlierID[i], 2);
+        }
+
+        Eigen::Vector3d modelParamBetter(0.0, 0.0, 0.0);
+        if (indicator == 0) 
+        {
+            Eigen::MatrixXd A(inlierID.size(), 2);
+            A << equationBetter_ty, equationBetter_tz;
+            Eigen::Vector2d solution = (A.transpose() * A).inverse() * A.transpose() * (-equationBetter_tx);
+            modelParamBetter(0) = 1.0;
+            modelParamBetter(1) = solution(0);
+            modelParamBetter(2) = solution(1);
+        } 
+        else if (indicator == 1) 
+        {
+            Eigen::MatrixXd A(inlierID.size(), 2);
+            A << equationBetter_tx, equationBetter_tz;
+            Eigen::Vector2d solution = (A.transpose() * A).inverse() * A.transpose() * (-equationBetter_ty);
+            modelParamBetter(0) = solution(0);
+            modelParamBetter(1) = 1.0;
+            modelParamBetter(2) = solution(1);
+        } 
+        else 
+        {
+            Eigen::MatrixXd A(inlierID.size(), 2);
+            A << equationBetter_tx, equationBetter_ty;
+            Eigen::Vector2d solution = (A.transpose() * A).inverse() * A.transpose() * (-equationBetter_tz);
+            modelParamBetter(0) = solution(0);
+            modelParamBetter(1) = solution(1);
+            modelParamBetter(2) = 1.0;
+        }
+
+        Eigen::VectorXd newErr = equationT * modelParamBetter;
+        
+        double meanError = 0;
+        for (const auto& id : inlierID)
+        {
+            meanError += abs(newErr(id));
+        }
+        meanError /= inlierID.size();
+
+        if( inlierID.size() > bestInlier.size())
+        {
+            modelError = meanError;
+            bestInlier = inlierID;
+        }
+    }
+
+    //  fill the inlierMarkers vector.
+    inlierMarkers.clear();
+    inlierMarkers.resize(pts1.size(), 0);
+    for (const auto& id : bestInlier)
+    {
+        inlierMarkers[id] = 1;
     }
 }
+
+
+
+// void FeatureTracker::Delet_Point_With_F(void)
+// {
+//     if (leftKpsCurr.size() >= 8 && rightKpsCurr.size() >= 8)
+//     {
+//         vector<Point2f> leftUndistortedRef;
+//         vector<Point2f> leftUndistortedCurr;
+//         vector<Point2f> rightUndistortedRef;
+//         vector<Point2f> rightUndistortedCurr;
+//         Undistorted_Points(leftKpsRef, leftUndistortedRef, leftIntrinsics, leftDistortionCoeffs);
+//         Undistorted_Points(leftKpsCurr, leftUndistortedCurr, leftIntrinsics, leftDistortionCoeffs);
+//         Undistorted_Points(rightKpsRef, rightUndistortedRef, rightIntrinsics, rightDistortionCoeffs);
+//         Undistorted_Points(rightKpsCurr, rightUndistortedCurr, rightIntrinsics, rightDistortionCoeffs);
+
+//         vector<unsigned char> leftInlierMarkers(0);
+//         findFundamentalMat(leftUndistortedRef, leftUndistortedCurr, FM_RANSAC, F_THRESHOLD, 0.99, leftInlierMarkers);
+
+//         vector<unsigned char> rightInlierMarkers(0);
+//         findFundamentalMat(rightUndistortedRef, rightUndistortedCurr, FM_RANSAC, F_THRESHOLD, 0.99, rightInlierMarkers);
+
+//         if ( leftInlierMarkers.size() != rightInlierMarkers.size())
+//         {
+//             ROS_WARN("the leftInlierMarkers(%lu) and the rightInlierMarkers(%lu) does not match!", leftInlierMarkers.size(), rightInlierMarkers.size());
+//         }
+//         vector<unsigned char> inlierMarkers(leftInlierMarkers.size(), 0);
+//         for (int i = 0; i < leftInlierMarkers.size(); i++)
+//         {
+//             if ( leftInlierMarkers[i] == 1 && rightInlierMarkers[i] == 1)
+//             {
+//                 inlierMarkers[i] = 1;
+//             }
+//         }
+//         // ROS_INFO_STREAM("the number of features before delet point with f: " << leftKpsCurr.size());
+//         Reduce_Vector(leftKpsRef, inlierMarkers);
+//         Reduce_Vector(leftKpsCurr, inlierMarkers);
+//         Reduce_Vector(rightKpsRef, inlierMarkers);
+//         Reduce_Vector(rightKpsCurr, inlierMarkers);
+//         Reduce_Vector(trackerID, inlierMarkers);
+//         Reduce_Vector(trackerCnt, inlierMarkers);
+//         // ROS_INFO_STREAM("the number of features after delet point with f: " << leftKpsCurr.size());
+//     }
+// }
 
 void FeatureTracker::Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Point2f>& ptsOut, const Vec4d& intrinsics, Matx33f& left_R_p_c, Matx33f& right_R_p_c)
 {
@@ -615,6 +770,7 @@ void FeatureTracker::Find_Image_Feature(void)
     if (!leftKpsRef.empty() && !rightKpsRef.empty())
     {
         Tracker_Feature();
+        // Delet_Point_With_F();
     }
     for ( auto& num : trackerCnt)           
         num++;
@@ -622,10 +778,10 @@ void FeatureTracker::Find_Image_Feature(void)
     // 如果需要发布数据，则删除帧间误匹配，增补新的特征点
     if ( pubThisFrame )
     {
-        Delet_Point_With_F();
         Set_Mask();
         leftKpsAdd.clear();
         rightKpsAdd.clear();
+        // ROS_INFO_STREAM("the max number of feature: " << TRACKER_NUM);
         int featureMaxCnt = TRACKER_NUM - static_cast<int>(leftKpsCurr.size());
         if ( featureMaxCnt > 0)
         {
@@ -635,8 +791,12 @@ void FeatureTracker::Find_Image_Feature(void)
                 ROS_INFO_STREAM("mask type wrong ");
             if (mask.size() != leftImgCurr.size())
                 ROS_INFO_STREAM("mask wrong size " << mask.size() << "image size: " << leftImgCurr.size());
-            goodFeaturesToTrack(leftImgCurr, leftKpsAdd, featureMaxCnt, 0.01, TRACKER_DIS, mask);
-
+            goodFeaturesToTrack(leftImgCurr, leftKpsAdd, featureMaxCnt, 0.05, TRACKER_DIS, mask);
+            cornerSubPix(leftImgCurr, leftKpsAdd, Size(5, 5), Size(-1, -1), TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.001));
+            // for (int i = 1; i < leftKpsAdd.size(); i++)
+            // {
+            //     ROS_INFO_STREAM("the position of feature: " << leftKpsAdd[i]);
+            // }
             vector<unsigned char> inlierMarkers(0);
             Stereo_Match(leftKpsAdd, rightKpsAdd, inlierMarkers);
 
@@ -644,21 +804,48 @@ void FeatureTracker::Find_Image_Feature(void)
             Reduce_Vector(rightKpsAdd, inlierMarkers);
         }
         Add_Points(); 
+
         vector<Point2f> leftKpsUndistorted(0);
-        // vector<Point2f> rightKpsUndistorted(0);
-        // Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
-        // Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
+        vector<Point2f> rightKpsUndistorted(0);
+        Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
+        Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
+    
+        Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
+        vector<unsigned char> inlierMarkers(0);
+        inlierMarkers.resize(cameraKps3d.size(), 1);
+        for( int i = 0; i < cameraKps3d.size(); i++)
+        {
+            if (cameraKps3d[i].z <= 0)
+            {
+                inlierMarkers[i] = 0;
+            }
+        }
+        Reduce_Vector(leftKpsCurr, inlierMarkers);
+        Reduce_Vector(rightKpsCurr, inlierMarkers);
+        Reduce_Vector(trackerID, inlierMarkers);
+        Reduce_Vector(trackerCnt, inlierMarkers);
+        Reduce_Vector(cameraKps3d, inlierMarkers);
         
-        // vector<unsigned char> inlierMarkers(0);
-        // Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted, inlierMarkers);  
-        
-        // Reduce_Vector(leftKpsRef, inlierMarkers);
-        // Reduce_Vector(leftKpsCurr, inlierMarkers);
-        // Reduce_Vector(rightKpsRef, inlierMarkers);
-        // Reduce_Vector(rightKpsCurr, inlierMarkers);
-        // Reduce_Vector(trackerID, inlierMarkers);
-        // Reduce_Vector(trackerCnt, inlierMarkers);
-        // Reduce_Vector(cameraKps3d, inlierMarkers);
+        inlierMarkers.resize(cameraKps3d.size(), 1);
+        float meanDistance = 0;
+        for (int i = 0; i < cameraKps3d.size(); i++)
+        {
+            meanDistance += cameraKps3d[i].z;
+        }
+        meanDistance /= cameraKps3d.size();
+        // ROS_INFO_STREAM(meanDistance); 
+        for (int i = 0; i < cameraKps3d.size(); i++)
+        {
+            if(cameraKps3d[i].z > 4 * meanDistance)
+            {
+                inlierMarkers[i] = 0;
+            }
+        }
+        Reduce_Vector(leftKpsCurr, inlierMarkers);
+        Reduce_Vector(rightKpsCurr, inlierMarkers);
+        Reduce_Vector(trackerID, inlierMarkers);
+        Reduce_Vector(trackerCnt, inlierMarkers);
+        Reduce_Vector(cameraKps3d, inlierMarkers);
     }
     
     for( unsigned int i = 0;; i++ )
@@ -686,7 +873,7 @@ void FeatureTracker::Publish_Info(void)
     Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
     Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
     
-    Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
+    // Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
 
     int featureNum = 0;
     for (int i = 0; i < trackerID.size(); i++)
@@ -724,12 +911,22 @@ void FeatureTracker::Publish_Info(void)
                     Point2f curr_pt0 = leftKpsCurr[i];
                     Point2f curr_pt1 = rightKpsCurr[i] + Point2f(camResolution[0], 0.0);
                     double cnt = min(1.0, 1.0*trackerCnt[i]/TRACKER_SIZE);
-                    circle(outImg, curr_pt0, 4, Scalar(0, 255*(1-cnt), 255*cnt), -1);
-                    circle(outImg, curr_pt1, 4, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+                    // circle(outImg, curr_pt0, 8, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+                    // circle(outImg, curr_pt1, 8, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+                    // // line(outImg, prev_pt0, curr_pt0, Scalar(0, 225, 255), 4, LINE_AA);
+                    // arrowedLine(outImg, prev_pt0, curr_pt0, Scalar(0, 255, 255), 2, LINE_AA, 0, 0.3);
+                    // arrowedLine(outImg, prev_pt1, curr_pt1, Scalar(0, 255, 255), 2, LINE_AA, 0, 0.3);
+                    // string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
+                    // int baseLine;
+                    // Size textSize = getTextSize(textShow, FONT_HERSHEY_SIMPLEX, 1, 1, &baseLine);
+                    // putText(outImg, textShow, leftKpsCurr[i], FONT_HERSHEY_SIMPLEX, 1,  Scalar(255, 0, 0), 1, LINE_AA);
+
+                    circle(outImg, curr_pt0, 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
+                    circle(outImg, curr_pt1, 3, Scalar(0, 255*(1-cnt), 255*cnt), -1);
                     // line(outImg, prev_pt0, curr_pt0, Scalar(0, 225, 255), 4, LINE_AA);
-                    arrowedLine(outImg, prev_pt0, curr_pt0, Scalar(0, 255, 255), 1, 8, 0, 0.2);
-                    arrowedLine(outImg, prev_pt1, curr_pt1, Scalar(0, 255, 255), 1, 8, 0, 0.2);
-                    string textShow = to_string(static_cast<int>(trackerID[i]));
+                    arrowedLine(outImg, prev_pt0, curr_pt0, Scalar(0, 255, 255), 1, LINE_AA, 0, 0.2);
+                    arrowedLine(outImg, prev_pt1, curr_pt1, Scalar(0, 255, 255), 1, LINE_AA, 0, 0.2);
+                    string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
                     int baseLine;
                     Size textSize = getTextSize(textShow, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
                     putText(outImg, textShow, leftKpsCurr[i], FONT_HERSHEY_SIMPLEX, 0.5,  Scalar(255, 0, 0), 1, LINE_AA);
@@ -803,10 +1000,15 @@ void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f>
 
 void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg)
 {
+    static char imageCnt = 0;
     uint64 timeBegin = ros::Time::now().toNSec();
+    // ROS_INFO_STREAM("The image time: " << leftImg->header.stamp.toSec());
     if ( state == FIRST_IMAGE )
     {
-        state = NOT_FIRST_IMAGE;        // 状态转换
+        if(++imageCnt > 5)
+        {
+            state = NOT_FIRST_IMAGE;        // 状态转换
+        }
         currImageTime = firstImageTime = leftImg->header.stamp.toSec();
         lastImageTime = currImageTime;
         return;

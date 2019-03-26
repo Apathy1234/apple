@@ -24,7 +24,8 @@ namespace slam_mono
         double firstImageTime;
         double currImageTime;
         double lastImageTime;
-        double F_THRESHOLD;
+        double RANSAC_THRESHOLD;
+        double STEREO_THRESHOLD;
         bool pubThisFrame;
         bool EQUALIZE;
         bool SHOW_TRACKER;
@@ -113,11 +114,11 @@ namespace slam_mono
         bool Update_Tracker_ID(int i);
         void Set_Mask(void);
         void Tracker_Feature(void);
-        void Delet_Point_With_F(void);
+        // void Delet_Point_With_F(void);
         void Publish_Info(void);
         void Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts);
         void Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Point2f>& ptsOut, const Vec4d& intrinsics, Matx33f& left_R_p_c, Matx33f& right_R_p_c);
-        void Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point2f>& pts2, const cv::Matx33f& R_p_c, const cv::Vec4d& intrinsics, const cv::Vec4d& distortionCoeffs, vector<unsigned char>& inlierMarkers);
+        void Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point2f>& pts2, const cv::Matx33f& R_p_c, const cv::Vec4d& intrinsics, const cv::Vec4d& distortionCoeffs, const float& success, vector<unsigned char>& inlierMarkers);
        
         template <typename T>
         void Reduce_Vector(vector<T>& v, vector<unsigned char> status)
