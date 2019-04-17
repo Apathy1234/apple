@@ -2,7 +2,7 @@
 
 namespace slam_mono
 {
-FeatureTracker::FeatureTracker(ros::NodeHandle& nh):n(nh), state(FIRST_IMAGE), pubCnt(1), pubThisFrame(false), firstImageTime(0), currImageTime(0), stereoSub(10)
+FeatureTracker::FeatureTracker(ros::NodeHandle& nh):n(nh), state(FIRST_IMAGE), pubCnt(1), pubThisFrame(false), firstImageTime(0), currImageTime(0), stereoSub(10), isSensorCalibr(false)
 {
     if( !Load_Parameters() ) return;
     ROS_INFO(" feature_tracker load parameters success! ");
@@ -77,6 +77,9 @@ bool FeatureTracker:: Load_Parameters(void)
 
     Mat T_right2left;
     invert(T_left2right, T_right2left);
+    cv2eigen(T_right2left(Rect(0, 0, 3, 3)), r_right2left);
+    cv2eigen(T_right2left(Rect(3, 0, 1, 3)), t_right2left);
+
     Mat T_right2imu = T_left2imu * T_right2left;
 
     r_right2imu = T_right2imu(Rect(0, 0, 3, 3));
@@ -153,8 +156,24 @@ bool FeatureTracker::Create_RosIO(void)
 
 void FeatureTracker::Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg)
 {
-    if (state == FIRST_IMAGE) return;
+
     imuMsgBuffer.push_back(*imuMsg);
+    if(!isSensorCalibr)
+    {
+        if(imuMsgBuffer.size() <1000 ) return;
+        
+        Vec3f gyro_sum(0.0, 0.0, 0.0);
+        for(const auto& msg : imuMsgBuffer)
+        {
+            gyro_sum += Vec3f(msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z);
+        }
+        gyro_sum = gyro_sum / static_cast<float>(imuMsgBuffer.size());
+        gyroParam.bwx = gyro_sum(0);
+        gyroParam.bwy = gyro_sum(1);
+        gyroParam.bwz = gyro_sum(2);
+        imuMsgBuffer.clear();
+        isSensorCalibr = true;
+    }
 }
 
 void FeatureTracker::Create_Image_Pyramid(void)
@@ -702,6 +721,7 @@ void FeatureTracker::Delet_Point_With_RANSAC(vector<Point2f>& pts1, vector<Point
 void FeatureTracker::Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Point2f>& ptsOut, const Vec4d& intrinsics, Matx33f& left_R_p_c, Matx33f& right_R_p_c)
 {
     auto beginIter = imuMsgBuffer.begin();
+    // ROS_INFO_STREAM("gyro: " << gyroParam.bwx << " " << gyroParam.bwy << " " << gyroParam.bwz);
     while(beginIter != imuMsgBuffer.end())
     {
         if (beginIter->header.stamp.toSec() < lastImageTime)
@@ -725,7 +745,7 @@ void FeatureTracker::Predict_Feature_With_IMU(vector<Point2f>& ptsIn, vector<Poi
     Vec3f meanAngleVel(0.0, 0.0, 0.0);
     for (auto iter = beginIter; iter < endIter; iter++)
     {
-        meanAngleVel += Vec3f(iter->angular_velocity.x, iter->angular_velocity.y, iter->angular_velocity.z);
+        meanAngleVel += Vec3f(iter->angular_velocity.x - gyroParam.bwx, iter->angular_velocity.y - gyroParam.bwy, iter->angular_velocity.z - gyroParam.bwz);
     }
     if (endIter - beginIter > 0)
     {
@@ -805,47 +825,7 @@ void FeatureTracker::Find_Image_Feature(void)
         }
         Add_Points(); 
 
-        vector<Point2f> leftKpsUndistorted(0);
-        vector<Point2f> rightKpsUndistorted(0);
-        Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
-        Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
-    
-        Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
-        vector<unsigned char> inlierMarkers(0);
-        inlierMarkers.resize(cameraKps3d.size(), 1);
-        for( int i = 0; i < cameraKps3d.size(); i++)
-        {
-            if (cameraKps3d[i].z <= 0)
-            {
-                inlierMarkers[i] = 0;
-            }
-        }
-        Reduce_Vector(leftKpsCurr, inlierMarkers);
-        Reduce_Vector(rightKpsCurr, inlierMarkers);
-        Reduce_Vector(trackerID, inlierMarkers);
-        Reduce_Vector(trackerCnt, inlierMarkers);
-        Reduce_Vector(cameraKps3d, inlierMarkers);
-        
-        inlierMarkers.resize(cameraKps3d.size(), 1);
-        float meanDistance = 0;
-        for (int i = 0; i < cameraKps3d.size(); i++)
-        {
-            meanDistance += cameraKps3d[i].z;
-        }
-        meanDistance /= cameraKps3d.size();
-        // ROS_INFO_STREAM(meanDistance); 
-        for (int i = 0; i < cameraKps3d.size(); i++)
-        {
-            if(cameraKps3d[i].z > 4 * meanDistance)
-            {
-                inlierMarkers[i] = 0;
-            }
-        }
-        Reduce_Vector(leftKpsCurr, inlierMarkers);
-        Reduce_Vector(rightKpsCurr, inlierMarkers);
-        Reduce_Vector(trackerID, inlierMarkers);
-        Reduce_Vector(trackerCnt, inlierMarkers);
-        Reduce_Vector(cameraKps3d, inlierMarkers);
+        // Triangulate_Points(leftKpsCurr, rightKpsCurr);
     }
     
     for( unsigned int i = 0;; i++ )
@@ -873,7 +853,7 @@ void FeatureTracker::Publish_Info(void)
     Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
     Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
     
-    // Triangulate_Points(leftKpsUndistorted, rightKpsUndistorted);
+    Triangulate_Points(leftKpsCurr, rightKpsCurr);
 
     int featureNum = 0;
     for (int i = 0; i < trackerID.size(); i++)
@@ -926,7 +906,8 @@ void FeatureTracker::Publish_Info(void)
                     // line(outImg, prev_pt0, curr_pt0, Scalar(0, 225, 255), 4, LINE_AA);
                     arrowedLine(outImg, prev_pt0, curr_pt0, Scalar(0, 255, 255), 1, LINE_AA, 0, 0.2);
                     arrowedLine(outImg, prev_pt1, curr_pt1, Scalar(0, 255, 255), 1, LINE_AA, 0, 0.2);
-                    string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
+                    // string textShow = to_string(static_cast<int>(cameraKps3d[i].z));
+                    string textShow = to_string(static_cast<int>(trackerID[i]));
                     int baseLine;
                     Size textSize = getTextSize(textShow, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
                     putText(outImg, textShow, leftKpsCurr[i], FONT_HERSHEY_SIMPLEX, 0.5,  Scalar(255, 0, 0), 1, LINE_AA);
@@ -963,8 +944,36 @@ void FeatureTracker::Publish_Info(void)
     }
 }
 
-void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts)  // 相机坐标系下无畸变归一化点
+void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f> rightPts)  
 {
+    if (leftPts.size() == 0 || rightPts.size() == 0)
+    {
+        ROS_INFO_STREAM("There is no feature! ");
+        return;
+    }
+    vector<Point2f> leftKpsUndistorted(0);
+    vector<Point2f> rightKpsUndistorted(0);
+    Undistorted_Points(leftPts, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
+    Undistorted_Points(rightPts, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
+    // Eigen::Vector2f B;
+    // Eigen::Matrix2f A;
+    // for (int i = 0; i < leftKpsUndistorted.size(); i++)
+    // {
+    //     Eigen::Vector3f left(leftKpsUndistorted[i].x, leftKpsUndistorted[i].y, 1.0f);
+    //     Eigen::Vector3f right(rightKpsUndistorted[i].x, rightKpsUndistorted[i].y, 1.0f);
+    //     A(0, 0) = left.transpose() * left;
+    //     A(0, 1) = -left.transpose() * r_right2left * right;
+    //     A(1, 0) = right.transpose() * r_right2left.transpose() * left;
+    //     A(1, 1) = -right.transpose() * right;
+    //     B(0) = left.transpose() * t_right2left;
+    //     B(1) = right.transpose() * r_right2left.transpose() * t_right2left;
+    //     Eigen::Vector2f x = A.fullPivHouseholderQr().solve(B);
+    //     right = r_right2left * right * x(1) + t_right2left;
+    //     left = left * x(0);
+    //     left(2) = (left(2) + right(2)) * 0.5;
+    //     cameraKps3d.push_back(Point3f(left(0), left(1), left(2)));
+    // }
+
     Mat t1 = (Mat_<float>(3, 4) << 
         1, 0, 0, 0,
         0, 1, 0, 0,
@@ -974,14 +983,15 @@ void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f>
     T_left2right.at<double>(1, 0), T_left2right.at<double>(1, 1), T_left2right.at<double>(1, 2), T_left2right.at<double>(1, 3),
     T_left2right.at<double>(2, 0), T_left2right.at<double>(2, 1), T_left2right.at<double>(2, 2), T_left2right.at<double>(2, 3));
 
+    // Mat t2 =(Mat_<float>(3, 4) << 
+    // r_right2left(0, 0), r_right2left(0, 1), r_right2left(0, 2), t_right2left(0), 
+    // r_right2left(1, 0), r_right2left(1, 1), r_right2left(1, 2), t_right2left(1), 
+    // r_right2left(2, 0), r_right2left(2, 1), r_right2left(2, 2), t_right2left(2));
+
     Mat pts4d;
-    if (leftPts.size() == 0 || rightPts.size() == 0)
-    {
-        ROS_INFO_STREAM("There is no feature! ");
-        return;
-    }
+
         
-    triangulatePoints(t1, t2, leftPts, rightPts, pts4d);
+    triangulatePoints(t1, t2, leftKpsUndistorted, rightKpsUndistorted, pts4d);
 
     // 归一化为3d点
     for (int i = 0; i < pts4d.cols; i++)
@@ -994,14 +1004,49 @@ void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f>
             x.at<float>(2, 0));
 
         cameraKps3d.push_back( p );
-        
     }
+    // vector<unsigned char> inlierMarkers(0);
+    // inlierMarkers.resize(cameraKps3d.size(), 1);
+    // for( int i = 0; i < cameraKps3d.size(); i++)
+    // {
+    //     if (cameraKps3d[i].z <= 0)
+    //     {
+    //         inlierMarkers[i] = 0;
+    //     }
+    // }
+    // Reduce_Vector(leftKpsCurr, inlierMarkers);
+    // Reduce_Vector(rightKpsCurr, inlierMarkers);
+    // Reduce_Vector(trackerID, inlierMarkers);
+    // Reduce_Vector(trackerCnt, inlierMarkers);
+    // Reduce_Vector(cameraKps3d, inlierMarkers);
+        
+    // inlierMarkers.resize(cameraKps3d.size(), 1);
+    // float meanDistance = 0;
+    // for (int i = 0; i < cameraKps3d.size(); i++)
+    // {
+    //     meanDistance += cameraKps3d[i].z;
+    // }
+    // meanDistance /= cameraKps3d.size();
+    // // ROS_INFO_STREAM(meanDistance); 
+    // for (int i = 0; i < cameraKps3d.size(); i++)
+    // {
+    //     if(cameraKps3d[i].z > 4 * meanDistance)
+    //     {
+    //         inlierMarkers[i] = 0;
+    //     }
+    // }
+    // Reduce_Vector(leftKpsCurr, inlierMarkers);
+    // Reduce_Vector(rightKpsCurr, inlierMarkers);
+    // Reduce_Vector(trackerID, inlierMarkers);
+    // Reduce_Vector(trackerCnt, inlierMarkers);
+    // Reduce_Vector(cameraKps3d, inlierMarkers);
 }
 
 void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg)
 {
+    if (!isSensorCalibr) return;
     static char imageCnt = 0;
-    uint64 timeBegin = ros::Time::now().toNSec();
+    // uint64 timeBegin = ros::Time::now().toNSec();
     // ROS_INFO_STREAM("The image time: " << leftImg->header.stamp.toSec());
     if ( state == FIRST_IMAGE )
     {
@@ -1068,7 +1113,7 @@ void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, 
         Publish_Info();
     }
     lastImageTime = currImageTime;
-    uint64 timeEnd = ros::Time::now().toNSec();
+    // uint64 timeEnd = ros::Time::now().toNSec();
     // ROS_INFO_STREAM("code cost time: " << (timeEnd - timeBegin) << " ns");
 }
 

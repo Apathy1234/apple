@@ -51,6 +51,8 @@ namespace slam_mono
         Mat T_left2right;
         Matx33d r_left2right;
         Vec3d t_left2right;
+        Eigen::Matrix3f r_right2left;
+        Eigen::Vector3f t_right2left;
         Mat T_left2imu;
         Matx33d r_left2imu;
         Vec3d t_left2imu;
@@ -95,6 +97,14 @@ namespace slam_mono
 
         // IMU
         vector<sensor_msgs::Imu> imuMsgBuffer;
+        bool isSensorCalibr;
+        struct GyroParam
+        {
+            float bwx;
+            float bwy;
+            float bwz;
+        };
+        GyroParam gyroParam;
         
 
         // 相关函数

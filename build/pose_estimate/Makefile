@@ -375,6 +375,33 @@ pose_estimate_gennodejs/fast:
 	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/build.make pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/build
 .PHONY : pose_estimate_gennodejs/fast
 
+src/loosely_vio.o: src/loosely_vio.cc.o
+
+.PHONY : src/loosely_vio.o
+
+# target to build an object file
+src/loosely_vio.cc.o:
+	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o
+.PHONY : src/loosely_vio.cc.o
+
+src/loosely_vio.i: src/loosely_vio.cc.i
+
+.PHONY : src/loosely_vio.i
+
+# target to preprocess a source file
+src/loosely_vio.cc.i:
+	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.i
+.PHONY : src/loosely_vio.cc.i
+
+src/loosely_vio.s: src/loosely_vio.cc.s
+
+.PHONY : src/loosely_vio.s
+
+# target to generate assembly for a file
+src/loosely_vio.cc.s:
+	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.s
+.PHONY : src/loosely_vio.cc.s
+
 src/main.o: src/main.cc.o
 
 .PHONY : src/main.o
@@ -456,6 +483,9 @@ help:
 	@echo "... pose_estimate_generate_messages_nodejs"
 	@echo "... install"
 	@echo "... pose_estimate_gennodejs"
+	@echo "... src/loosely_vio.o"
+	@echo "... src/loosely_vio.i"
+	@echo "... src/loosely_vio.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

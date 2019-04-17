@@ -4,7 +4,11 @@
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/devel/include/pose_estimate/PoseEstimateResult.h
+pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/camera_state.h
+pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/feature.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/g2o_edge.h
+pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/loosely_vio.h
+pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/math_utils.hpp
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/my_include.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/pose_estimate.h
 pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.o: /home/tg/slam_mono/src/pose_estimate/src/main.cc

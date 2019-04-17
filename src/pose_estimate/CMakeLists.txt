@@ -137,6 +137,7 @@ set(LINK_LIBRARIES
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
    src/pose_estimate.cc
+   src/loosely_vio.cc
  )
 
 ## Add cmake target dependencies of the library

@@ -27,15 +27,15 @@ T_left2imu:
     
 pub_match_image_topic: /feature_tracker/image
 pub_feature_topic: /feature_tracker/points
-imu_topics: /mynteye/imu/data_raw_processed
+imu_topics: /mynteye/imu/data_raw
 frequence: 10
 board_size: 1
 tracker_size: 10
-tracker_min_distance: 40
+tracker_min_distance: 30
 tracker_max_count: 100
 equalize: false
 pyramid_level: 3
-win_size: 21
+win_size: 15
 show_tracker: true
 ransac_threshold: 2.0
 stereo_threshold: 3.0

@@ -46,6 +46,7 @@ feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvdef.h
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.inl.hpp
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/eigen.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/fast_math.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/hal/interface.h
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/mat.hpp
@@ -479,6 +480,7 @@ feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvdef.h
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/cvstd.inl.hpp
+feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/eigen.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/fast_math.hpp
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/hal/interface.h
 feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o: /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv2/core/mat.hpp

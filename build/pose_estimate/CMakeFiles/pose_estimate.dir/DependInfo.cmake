@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/tg/slam_mono/src/pose_estimate/src/loosely_vio.cc" "/home/tg/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
   "/home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc" "/home/tg/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

@@ -60,7 +60,31 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 
+/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/camera_state.h
+pose_estimate/my_include.h
+-
+
+/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/feature.h
+pose_estimate/my_include.h
+-
+
 /home/tg/slam_mono/src/pose_estimate/include/pose_estimate/g2o_edge.h
+pose_estimate/my_include.h
+-
+
+/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/loosely_vio.h
+pose_estimate/my_include.h
+-
+pose_estimate/g2o_edge.h
+-
+pose_estimate/camera_state.h
+-
+pose_estimate/feature.h
+-
+pose_estimate/math_utils.hpp
+-
+
+/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/math_utils.hpp
 pose_estimate/my_include.h
 -
 
@@ -116,6 +140,10 @@ g2o/core/robust_kernel_impl.h
 pose_estimate/my_include.h
 -
 pose_estimate/g2o_edge.h
+-
+
+/home/tg/slam_mono/src/pose_estimate/src/loosely_vio.cc
+pose_estimate/loosely_vio.h
 -
 
 /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc

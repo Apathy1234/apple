@@ -95,15 +95,19 @@ void PoseEstimate::Bundle_Adjustment(const vector<Point3f>& pts1, const vector<P
         edge->setVertex( 0, dynamic_cast<g2o::VertexSE3Expmap*>(pose) );
         edge->setMeasurement(Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
         // ROS_INFO_STREAM("Curr: " << Eigen::Vector3d(ptsCurrMatched[i].x, ptsCurrMatched[i].y, ptsCurrMatched[i].z));
-        edge->setInformation(Eigen::Matrix3d::Identity()*1e4);
+
+        Eigen::Matrix<double, 3, 3> information = Eigen::Matrix< double, 3, 3 >::Identity();
+        information(0, 0) = information(1, 1) = information(2, 2) = 1;
+        edge->setInformation(information);
         edge->setRobustKernel( new g2o::RobustKernelHuber() );
         optimizer.addEdge( edge );
         edges.push_back( edge );
     }
-
-    optimizer.setVerbose( true );
+    optimizer.save("../data/before.g2o");
+    optimizer.setVerbose( false );
     optimizer.initializeOptimization();
     optimizer.optimize(30);
+    optimizer.save("../data/after.g2o");
 
 
     qDet = pose->estimate().rotation();
