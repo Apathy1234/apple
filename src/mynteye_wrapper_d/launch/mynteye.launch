@@ -41,7 +41,7 @@
     device_all:   left_color ✓ right_color ? depth ✓
   Note: ✓: available, x: unavailable, ?: depends on #stream_mode
   -->
-  <arg name="dev_mode" default="$(arg device_all)" />
+  <arg name="dev_mode" default="$(arg device_color)" />
 
   <arg name="color_mode" default="$(arg color_raw)" />
   <!-- Note: must set DEPTH_RAW to get raw depth values for points -->
@@ -54,9 +54,9 @@
   <!-- Auto-exposure -->
   <arg name="state_ae" default="true" />
   <!-- Auto-white balance -->
-  <arg name="state_awb" default="false" />
+  <arg name="state_awb" default="true" />
   <!-- IR intensity -->
-  <arg name="ir_intensity" default="0" />
+  <arg name="ir_intensity" default="4" />
   <!-- IR Depth Only -->
   <arg name="ir_depth_only" default="false" />
 
@@ -125,6 +125,8 @@
       args="0 0 0 $(arg pi/2) 0 $(arg pi) $(arg base_frame) $(arg temp_frame) 50" />
   <node pkg="tf" type="static_transform_publisher" name="b2imu_processed_broadcaster"
       args="0 0 0 $(arg pi/2) 0 $(arg pi) $(arg base_frame) $(arg imu_frame_processed) 50" />
+  
+  <arg name="mesh_file" default="D-0315.obj" />
 
   <node name="mynteye_wrapper_d_node" pkg="mynteye_wrapper_d" type="mynteye_wrapper_d_node" output="screen">
 
@@ -173,6 +175,8 @@
     <param name="imu_topic"         value="$(arg imu_topic)" />
     <param name="temp_topic"        value="$(arg temp_topic)" />
     <param name="imu_processed_topic"         value="$(arg imu_processed_topic)" />
+
+    <param name="mesh_file" value="$(arg mesh_file)" />
   </node>
 
   <!-- disable compressed depth plugin for image topics -->

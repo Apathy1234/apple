@@ -27,7 +27,7 @@ T_left2imu:
     
 pub_match_image_topic: /feature_tracker/image
 pub_feature_topic: /feature_tracker/points
-imu_topics: /mynteye/imu/data_raw
+imu_topics: /mynteye/imu/data_raw_processed
 frequence: 10
 board_size: 1
 tracker_size: 10

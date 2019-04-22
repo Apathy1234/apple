@@ -18,6 +18,7 @@
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
 #include <sensor_msgs/Imu.h>
+#include <visualization_msgs/Marker.h>
 #include <tf/tf.h>
 #include <tf2_ros/static_transform_broadcaster.h>
 #include <mynteye_wrapper_d/GetParams.h>
@@ -80,16 +81,20 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
   ros::NodeHandle nh_ns;
 
   pthread_mutex_t mutex_sub_result;
+  pthread_mutex_t mutex_color;
 
-  image_transport::CameraPublisher pub_left_mono;
+  image_transport::Publisher pub_left_mono;
   image_transport::CameraPublisher pub_left_color;
-  image_transport::CameraPublisher pub_right_mono;
+  image_transport::Publisher pub_right_mono;
   image_transport::CameraPublisher pub_right_color;
   image_transport::CameraPublisher pub_depth;
   ros::Publisher pub_points;
   ros::Publisher pub_imu;
   ros::Publisher pub_temp;
   ros::Publisher pub_imu_processed;
+  ros::Publisher pub_mesh_;  // < The publisher for camera mesh.
+
+  visualization_msgs::Marker mesh_msg_;  // < Mesh message.
   ros::ServiceServer get_params_service_;
 
   sensor_msgs::CameraInfoPtr left_info_ptr;
@@ -99,7 +104,7 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
 
   std::int32_t points_frequency;
   double points_factor;
-  int gravity;
+  double gravity;
 
   std::string base_frame_id;
   std::string left_mono_frame_id;
@@ -149,6 +154,7 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
 
   MYNTEYEWrapperNodelet() {
     pthread_mutex_init(&mutex_sub_result, nullptr);
+    pthread_mutex_init(&mutex_color, nullptr);
   }
 
   ~MYNTEYEWrapperNodelet() {
@@ -177,27 +183,27 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     bool state_awb = true;
     int ir_intensity = 0;
     bool ir_depth_only = true;
-    nh_ns.getParam("dev_index", dev_index);
-    nh_ns.getParam("framerate", framerate);
-    nh_ns.getParam("dev_mode", dev_mode);
-    nh_ns.getParam("color_mode", color_mode);
-    nh_ns.getParam("depth_mode", depth_mode);
-    nh_ns.getParam("stream_mode", stream_mode);
-    nh_ns.getParam("color_stream_format", color_stream_format);
-    nh_ns.getParam("depth_stream_format", depth_stream_format);
-    nh_ns.getParam("state_ae", state_ae);
-    nh_ns.getParam("state_awb", state_awb);
-    nh_ns.getParam("ir_intensity", ir_intensity);
-    nh_ns.getParam("ir_depth_only", ir_depth_only);
-    nh_ns.getParam("depth_type", depth_type);
-    nh_ns.getParam("imu_timestamp_align", imu_timestamp_align);
+    nh_ns.getParamCached("dev_index", dev_index);
+    nh_ns.getParamCached("framerate", framerate);
+    nh_ns.getParamCached("dev_mode", dev_mode);
+    nh_ns.getParamCached("color_mode", color_mode);
+    nh_ns.getParamCached("depth_mode", depth_mode);
+    nh_ns.getParamCached("stream_mode", stream_mode);
+    nh_ns.getParamCached("color_stream_format", color_stream_format);
+    nh_ns.getParamCached("depth_stream_format", depth_stream_format);
+    nh_ns.getParamCached("state_ae", state_ae);
+    nh_ns.getParamCached("state_awb", state_awb);
+    nh_ns.getParamCached("ir_intensity", ir_intensity);
+    nh_ns.getParamCached("ir_depth_only", ir_depth_only);
+    nh_ns.getParamCached("depth_type", depth_type);
+    nh_ns.getParamCached("imu_timestamp_align", imu_timestamp_align);
 
     points_frequency = DEFAULT_POINTS_FREQUENCE;
     points_factor = DEFAULT_POINTS_FACTOR;
     gravity = 9.8;
-    nh_ns.getParam("points_frequency", points_frequency);
-    nh_ns.getParam("points_factor", points_factor);
-    nh_ns.getParam("gravity", gravity);
+    nh_ns.getParamCached("points_frequency", points_frequency);
+    nh_ns.getParamCached("points_factor", points_factor);
+    nh_ns.getParamCached("gravity", gravity);
 
     base_frame_id = "mynteye_link";
     left_mono_frame_id = "mynteye_left_mono_frame";
@@ -209,16 +215,16 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     imu_frame_id = "mynteye_imu_frame";
     temp_frame_id = "mynteye_temp_frame";
     imu_frame_processed_id = "mynteye_imu_frame_processed";
-    nh_ns.getParam("base_frame_id", base_frame_id);
-    nh_ns.getParam("left_mono_frame", left_mono_frame_id);
-    nh_ns.getParam("left_color_frame", left_color_frame_id);
-    nh_ns.getParam("right_mono_frame", right_mono_frame_id);
-    nh_ns.getParam("right_color_frame", right_color_frame_id);
-    nh_ns.getParam("depth_frame", depth_frame_id);
-    nh_ns.getParam("points_frame", points_frame_id);
-    nh_ns.getParam("imu_frame", imu_frame_id);
-    nh_ns.getParam("temp_frame", temp_frame_id);
-    nh_ns.getParam("imu_frame_processed", imu_frame_processed_id);
+    nh_ns.getParamCached("base_frame_id", base_frame_id);
+    nh_ns.getParamCached("left_mono_frame", left_mono_frame_id);
+    nh_ns.getParamCached("left_color_frame", left_color_frame_id);
+    nh_ns.getParamCached("right_mono_frame", right_mono_frame_id);
+    nh_ns.getParamCached("right_color_frame", right_color_frame_id);
+    nh_ns.getParamCached("depth_frame", depth_frame_id);
+    nh_ns.getParamCached("points_frame", points_frame_id);
+    nh_ns.getParamCached("imu_frame", imu_frame_id);
+    nh_ns.getParamCached("temp_frame", temp_frame_id);
+    nh_ns.getParamCached("imu_frame_processed", imu_frame_processed_id);
     NODELET_INFO_STREAM("base_frame: " << base_frame_id);
     NODELET_INFO_STREAM("left_mono_frame: " << left_mono_frame_id);
     NODELET_INFO_STREAM("left_color_frame: " << left_color_frame_id);
@@ -239,15 +245,15 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     std::string imu_topic = "mynteye/imu";
     std::string temp_topic = "mynteye/temp";
     std::string imu_processed_topic = "mynteye/imu_processed";
-    nh_ns.getParam("left_mono_topic", left_mono_topic);
-    nh_ns.getParam("left_color_topic", left_color_topic);
-    nh_ns.getParam("right_mono_topic", right_mono_topic);
-    nh_ns.getParam("right_color_topic", right_color_topic);
-    nh_ns.getParam("depth_topic", depth_topic);
-    nh_ns.getParam("points_topic", points_topic);
-    nh_ns.getParam("imu_topic", imu_topic);
-    nh_ns.getParam("temp_topic", temp_topic);
-    nh_ns.getParam("imu_processed_topic", imu_processed_topic);
+    nh_ns.getParamCached("left_mono_topic", left_mono_topic);
+    nh_ns.getParamCached("left_color_topic", left_color_topic);
+    nh_ns.getParamCached("right_mono_topic", right_mono_topic);
+    nh_ns.getParamCached("right_color_topic", right_color_topic);
+    nh_ns.getParamCached("depth_topic", depth_topic);
+    nh_ns.getParamCached("points_topic", points_topic);
+    nh_ns.getParamCached("imu_topic", imu_topic);
+    nh_ns.getParamCached("temp_topic", temp_topic);
+    nh_ns.getParamCached("imu_processed_topic", imu_processed_topic);
 
     // MYNTEYE objects
     mynteye.reset(new Camera);
@@ -289,6 +295,16 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
       NODELET_INFO_STREAM(dashes);
     }
 
+    pub_mesh_ = nh.advertise<visualization_msgs::Marker>("camera_mesh", 0 );
+    // where to get the mesh from
+    std::string mesh_file;
+    if (nh_ns.getParamCached("mesh_file", mesh_file)) {
+      mesh_msg_.mesh_resource = "package://mynteye_wrapper_d/mesh/"+mesh_file;
+    } else {
+      NODELET_INFO_STREAM("no mesh found for visualisation, set ros param mesh_file, if desired");
+      mesh_msg_.mesh_resource = "";
+    }
+
     const std::string DEVICE_PARAMS_SERVICE = "get_params";
     get_params_service_ = nh_ns.advertiseService(
         DEVICE_PARAMS_SERVICE, &MYNTEYEWrapperNodelet::getParams, this);
@@ -314,12 +330,12 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
 
     image_transport::ImageTransport it_mynteye(nh);
     // left
-    pub_left_mono = it_mynteye.advertiseCamera(left_mono_topic, 1);
+    pub_left_mono = it_mynteye.advertise(left_mono_topic, 1);
     NODELET_INFO_STREAM("Advertized on topic " << left_mono_topic);
     pub_left_color = it_mynteye.advertiseCamera(left_color_topic, 1);
     NODELET_INFO_STREAM("Advertized on topic " << left_color_topic);
     // right
-    pub_right_mono = it_mynteye.advertiseCamera(right_mono_topic, 1);
+    pub_right_mono = it_mynteye.advertise(right_mono_topic, 1);
     NODELET_INFO_STREAM("Advertized on topic " << right_mono_topic);
     pub_right_color = it_mynteye.advertiseCamera(right_color_topic, 1);
     NODELET_INFO_STREAM("Advertized on topic " << right_color_topic);
@@ -346,6 +362,7 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     // loop
     ros::Rate loop_rate(framerate);
     while (nh_ns.ok()) {
+      publishMesh();
       detectSubscribers();
       loop_rate.sleep();
     }
@@ -470,20 +487,19 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     auto&& in = mynteye->GetStreamIntrinsics(params.stream_mode, &in_ok);
     if (in_ok) {
       NODELET_INFO_STREAM("Camera info is created");
-      left_info_ptr = createCameraInfo(in.left);
-      right_info_ptr = createCameraInfo(in.right);
     } else {
-      NODELET_WARN_STREAM("Camera info is null");
-      left_info_ptr = nullptr;
-      right_info_ptr = nullptr;
+      NODELET_WARN_STREAM("Camera info is null, use default parameters.");
     }
+    left_info_ptr = createCameraInfo(in.left);
+    right_info_ptr = createCameraInfo(in.right);
 
     // motion intrinsics
+    bool motion_ok;
     if (motion_intrinsics == nullptr) {
       motion_intrinsics = std::make_shared<MotionIntrinsics>();
     }
-    *motion_intrinsics = mynteye->GetMotionIntrinsics(&in_ok);
-    if (in_ok) {
+    *motion_intrinsics = mynteye->GetMotionIntrinsics(&motion_ok);
+    if (motion_ok) {
       motion_intrinsics_enabled = true;
     } else {
       motion_intrinsics_enabled = false;
@@ -492,8 +508,7 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     }
 
     // pointcloud generator
-    pointcloud_generator.reset(new PointCloudGenerator(
-        in_ok ? in.left : getDefaultCameraIntrinsics(params.stream_mode),
+    pointcloud_generator.reset(new PointCloudGenerator(in.left,
         [this](sensor_msgs::PointCloud2 msg) {
           msg.header.frame_id = points_frame_id;
           pub_points.publish(msg);
@@ -522,19 +537,19 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
       const sensor_msgs::CameraInfoPtr& info,
       const image_transport::CameraPublisher& pub_color, bool color_sub,
       const std::string color_frame_id,
-      const image_transport::CameraPublisher& pub_mono, bool mono_sub,
+      const image_transport::Publisher& pub_mono, bool mono_sub,
       const std::string mono_frame_id, bool is_left) {
     auto timestamp = data.img_info
           ? hardTimeToSoftTime(data.img_info->timestamp)
           : ros::Time().now();
-    auto&& mat = data.img->To(ImageFormat::COLOR_RGB)->ToMat();
+    auto&& mat = data.img->To(ImageFormat::COLOR_BGR)->ToMat();
 
     if (color_sub) {
       std_msgs::Header header;
       header.stamp = timestamp;
       header.frame_id = color_frame_id;
 
-      auto&& msg = cv_bridge::CvImage(header, enc::RGB8, mat).toImageMsg();
+      auto&& msg = cv_bridge::CvImage(header, enc::BGR8, mat).toImageMsg();
       if (info) info->header.stamp = msg->header.stamp;
       pub_color.publish(msg, info);
     }
@@ -544,15 +559,16 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
       header.frame_id = mono_frame_id;
 
       cv::Mat dst;
-      cv::cvtColor(mat, dst, CV_RGB2GRAY);
+      cv::cvtColor(mat, dst, CV_BGR2GRAY);
       auto&& msg = cv_bridge::CvImage(header, enc::MONO8, dst).toImageMsg();
-      if (info) info->header.stamp = msg->header.stamp;
-      pub_mono.publish(msg, info);
+      pub_mono.publish(msg);
     }
 
     if (is_left && sub_result.points) {
+      pthread_mutex_lock(&mutex_color);
       points_color = mat;
       publishPoints(timestamp);
+      pthread_mutex_unlock(&mutex_color);
     }
   }
 
@@ -581,11 +597,11 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     } else if (params.depth_mode == DepthMode::DEPTH_GRAY) {
       auto&& mat = data.img->To(ImageFormat::DEPTH_GRAY_24)->ToMat();
       pub_depth.publish(
-          cv_bridge::CvImage(header, enc::RGB8, mat).toImageMsg(), info);
+          cv_bridge::CvImage(header, enc::BGR8, mat).toImageMsg(), info);
     } else if (params.depth_mode == DepthMode::DEPTH_COLORFUL) {
-      auto&& mat = data.img->To(ImageFormat::DEPTH_RGB)->ToMat();
+      auto&& mat = data.img->To(ImageFormat::DEPTH_BGR)->ToMat();
       pub_depth.publish(
-          cv_bridge::CvImage(header, enc::RGB8, mat).toImageMsg(), info);
+          cv_bridge::CvImage(header, enc::BGR8, mat).toImageMsg(), info);
     } else {
       NODELET_ERROR_STREAM("Depth mode unsupported");
     }
@@ -829,15 +845,15 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     }
 
     // R to identity matrix
-    camera_info->R.at(0) = 1.0;
-    camera_info->R.at(1) = 0.0;
-    camera_info->R.at(2) = 0.0;
-    camera_info->R.at(3) = 0.0;
-    camera_info->R.at(4) = 1.0;
-    camera_info->R.at(5) = 0.0;
-    camera_info->R.at(6) = 0.0;
-    camera_info->R.at(7) = 0.0;
-    camera_info->R.at(8) = 1.0;
+    camera_info->R.at(0) = in.r[0];
+    camera_info->R.at(1) = in.r[1];
+    camera_info->R.at(2) = in.r[2];
+    camera_info->R.at(3) = in.r[3];
+    camera_info->R.at(4) = in.r[4];
+    camera_info->R.at(5) = in.r[5];
+    camera_info->R.at(6) = in.r[6];
+    camera_info->R.at(7) = in.r[7];
+    camera_info->R.at(8) = in.r[8];
 
     return camera_info_ptr;
   }
@@ -921,20 +937,36 @@ class MYNTEYEWrapperNodelet : public nodelet::Nodelet {
     return res;
   }
 
-  CameraIntrinsics getDefaultCameraIntrinsics(const StreamMode& mode) {
-    // {w, h, fx, fy, cx, cy, coeffs[5]{k1,k2,p1,p2,k3}}
-    switch (mode) {
-      case StreamMode::STREAM_640x480:
-        return {640, 480, 979.8, 942.8, 682.3 / 2, 254.9, {0, 0, 0, 0, 0}};
-      case StreamMode::STREAM_1280x480:
-        return {640, 480, 979.8, 942.8, 682.3, 254.9, {0, 0, 0, 0, 0}};
-      case StreamMode::STREAM_1280x720:
-        return {1280, 720, 979.8, 942.8, 682.3, 254.9 * 2, {0, 0, 0, 0, 0}};
-      case StreamMode::STREAM_2560x720:
-        return {1280, 720, 979.8, 942.8, 682.3 * 2, 254.9 * 2, {0, 0, 0, 0, 0}};
-      default:
-        return {1280, 720, 979.8, 942.8, 682.3, 254.9 * 2, {0, 0, 0, 0, 0}};
-    }
+  void publishMesh() {
+    mesh_msg_.header.frame_id = temp_frame_id;
+    mesh_msg_.header.stamp = ros::Time::now();
+    mesh_msg_.type = visualization_msgs::Marker::MESH_RESOURCE;
+    // fill orientation
+    mesh_msg_.pose.orientation.x = -1;
+    mesh_msg_.pose.orientation.y = 0;
+    mesh_msg_.pose.orientation.z = 0;
+    mesh_msg_.pose.orientation.w = 1;
+
+    // fill position
+    mesh_msg_.pose.position.x = 0;
+    mesh_msg_.pose.position.y = 0;
+    mesh_msg_.pose.position.z = 0;
+
+    // scale -- needed
+    mesh_msg_.scale.x = 0.003;
+    mesh_msg_.scale.y = 0.003;
+    mesh_msg_.scale.z = 0.003;
+
+    mesh_msg_.action = visualization_msgs::Marker::ADD;
+    mesh_msg_.color.a = 1.0;  // Don't forget to set the alpha!
+    mesh_msg_.color.r = 1.0;
+    mesh_msg_.color.g = 1.0;
+    mesh_msg_.color.b = 1.0;
+
+    // embedded material / colour
+    // mesh_msg_.mesh_use_embedded_materials = true;
+    if (!mesh_msg_.mesh_resource.empty())
+      pub_mesh_.publish(mesh_msg_);  // publish stamped mesh
   }
 
   bool getParams(
