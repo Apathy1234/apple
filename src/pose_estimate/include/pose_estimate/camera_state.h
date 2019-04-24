@@ -22,10 +22,6 @@ struct CameraState
 
 };
 
-typedef map<StateIDType, CameraState, less<StateIDType>,
-        Eigen::aligned_allocator<
-        pair<const StateIDType, CameraState> > > CameraStateServer;
-
 /*namespace end*/
 }
 

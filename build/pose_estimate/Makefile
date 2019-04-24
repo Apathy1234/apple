@@ -429,33 +429,6 @@ src/main.cc.s:
 	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate_node.dir/build.make pose_estimate/CMakeFiles/pose_estimate_node.dir/src/main.cc.s
 .PHONY : src/main.cc.s
 
-src/pose_estimate.o: src/pose_estimate.cc.o
-
-.PHONY : src/pose_estimate.o
-
-# target to build an object file
-src/pose_estimate.cc.o:
-	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o
-.PHONY : src/pose_estimate.cc.o
-
-src/pose_estimate.i: src/pose_estimate.cc.i
-
-.PHONY : src/pose_estimate.i
-
-# target to preprocess a source file
-src/pose_estimate.cc.i:
-	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.i
-.PHONY : src/pose_estimate.cc.i
-
-src/pose_estimate.s: src/pose_estimate.cc.s
-
-.PHONY : src/pose_estimate.s
-
-# target to generate assembly for a file
-src/pose_estimate.cc.s:
-	cd /home/tg/slam_mono/build && $(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.s
-.PHONY : src/pose_estimate.cc.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -489,9 +462,6 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/pose_estimate.o"
-	@echo "... src/pose_estimate.i"
-	@echo "... src/pose_estimate.s"
 .PHONY : help
 
 

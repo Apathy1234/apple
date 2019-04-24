@@ -83,7 +83,7 @@ namespace slam_mono
  *    The input quaternion should be in the form
  *      [q1, q2, q3, q4(scalar)]^T
  */
-  inline Eigen::Vector4d rotationToQuaternion(const Eigen::Matrix3d& R) 
+  inline Eigen::Quaterniond rotationToQuaternion(const Eigen::Matrix3d& R) 
   {
     Eigen::Vector4d score;
     score(0) = R(0, 0);
@@ -119,7 +119,8 @@ namespace slam_mono
 
     if (q(3) < 0) q = -q;
     quaternionNormalize(q);
-    return q;
+
+    return Eigen::Quaterniond(q(3), q(0), q(1), q(2));
   }
   
   /*namespace end*/

@@ -6,6 +6,7 @@
 #include <feature_tracker/FeatureTrackerResult.h>
 #include <feature_tracker/CameraTrackerResult.h>
 #include <pose_estimate/PoseEstimateResult.h>
+#include <eigen_conversions/eigen_msg.h>
 
 #include <map>
 #include <string>

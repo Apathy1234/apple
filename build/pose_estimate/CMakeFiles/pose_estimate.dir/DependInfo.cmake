@@ -5,7 +5,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/tg/slam_mono/src/pose_estimate/src/loosely_vio.cc" "/home/tg/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
-  "/home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc" "/home/tg/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -25,8 +24,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"
-  "/usr/include/suitesparse"
   "/usr/include/eigen3"
+  "/usr/include/suitesparse"
   )
 
 # Targets to which this target links.

@@ -160,6 +160,8 @@ pose_estimate_node_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libxmlrpcpp.so
+/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libeigen_conversions.so
+/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/librostime.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libcpp_common.so
@@ -243,6 +245,8 @@ pose_estimate_node_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libxmlrpcpp.so
+/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libeigen_conversions.so
+/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/librostime.so
 /home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node: /opt/ros/kinetic/lib/libcpp_common.so

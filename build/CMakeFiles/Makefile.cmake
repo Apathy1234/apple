@@ -124,6 +124,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/kinetic/share/cv_bridge/cmake/cv_bridge-extras.cmake"
   "/opt/ros/kinetic/share/cv_bridge/cmake/cv_bridgeConfig-version.cmake"
   "/opt/ros/kinetic/share/cv_bridge/cmake/cv_bridgeConfig.cmake"
+  "/opt/ros/kinetic/share/eigen_conversions/cmake/eigen_conversionsConfig-version.cmake"
+  "/opt/ros/kinetic/share/eigen_conversions/cmake/eigen_conversionsConfig.cmake"
   "/opt/ros/kinetic/share/gencpp/cmake/gencpp-extras.cmake"
   "/opt/ros/kinetic/share/gencpp/cmake/gencppConfig-version.cmake"
   "/opt/ros/kinetic/share/gencpp/cmake/gencppConfig.cmake"

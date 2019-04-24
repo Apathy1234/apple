@@ -57,33 +57,9 @@ include pose_estimate/CMakeFiles/pose_estimate.dir/progress.make
 # Include the compile flags for this target's objects.
 include pose_estimate/CMakeFiles/pose_estimate.dir/flags.make
 
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: pose_estimate/CMakeFiles/pose_estimate.dir/flags.make
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o: /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o"
-	cd /home/tg/slam_mono/build/pose_estimate && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o -c /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc
-
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.i"
-	cd /home/tg/slam_mono/build/pose_estimate && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc > CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.i
-
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.s"
-	cd /home/tg/slam_mono/build/pose_estimate && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/tg/slam_mono/src/pose_estimate/src/pose_estimate.cc -o CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.s
-
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.requires:
-
-.PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.requires
-
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.provides: pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.requires
-	$(MAKE) -f pose_estimate/CMakeFiles/pose_estimate.dir/build.make pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.provides.build
-.PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.provides
-
-pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.provides.build: pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o
-
-
 pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o: pose_estimate/CMakeFiles/pose_estimate.dir/flags.make
 pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o: /home/tg/slam_mono/src/pose_estimate/src/loosely_vio.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
 	cd /home/tg/slam_mono/build/pose_estimate && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o -c /home/tg/slam_mono/src/pose_estimate/src/loosely_vio.cc
 
 pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.i: cmake_force
@@ -107,13 +83,11 @@ pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o.provides.build: 
 
 # Object files for target pose_estimate
 pose_estimate_OBJECTS = \
-"CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o" \
 "CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
 
 # External object files for target pose_estimate
 pose_estimate_EXTERNAL_OBJECTS =
 
-/home/tg/slam_mono/devel/lib/libpose_estimate.so: pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: pose_estimate/CMakeFiles/pose_estimate.dir/build.make
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /home/tg/slam_mono/devel/lib/libmyslam.so
@@ -187,6 +161,8 @@ pose_estimate_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/libxmlrpcpp.so
+/home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/libeigen_conversions.so
+/home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/librostime.so
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/libcpp_common.so
@@ -244,7 +220,7 @@ pose_estimate_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgproc3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_core3.so.3.3.1
 /home/tg/slam_mono/devel/lib/libpose_estimate.so: pose_estimate/CMakeFiles/pose_estimate.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library /home/tg/slam_mono/devel/lib/libpose_estimate.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library /home/tg/slam_mono/devel/lib/libpose_estimate.so"
 	cd /home/tg/slam_mono/build/pose_estimate && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pose_estimate.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -252,7 +228,6 @@ pose_estimate/CMakeFiles/pose_estimate.dir/build: /home/tg/slam_mono/devel/lib/l
 
 .PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/build
 
-pose_estimate/CMakeFiles/pose_estimate.dir/requires: pose_estimate/CMakeFiles/pose_estimate.dir/src/pose_estimate.cc.o.requires
 pose_estimate/CMakeFiles/pose_estimate.dir/requires: pose_estimate/CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o.requires
 
 .PHONY : pose_estimate/CMakeFiles/pose_estimate.dir/requires

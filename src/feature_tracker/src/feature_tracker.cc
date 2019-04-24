@@ -160,7 +160,7 @@ void FeatureTracker::Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg)
     imuMsgBuffer.push_back(*imuMsg);
     if(!isSensorCalibr)
     {
-        if(imuMsgBuffer.size() <1000 ) return;
+        if(imuMsgBuffer.size() < 200 ) return;
         
         Vec3f gyro_sum(0.0, 0.0, 0.0);
         for(const auto& msg : imuMsgBuffer)

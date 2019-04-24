@@ -10,7 +10,7 @@ list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs feature_tracker message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs feature_tracker message_generation eigen_conversions geometry_msgs)
 find_package(OpenCV 3 REQUIRED)
 find_package(G2O REQUIRED)
 find_package(CSparse REQUIRED)
@@ -136,7 +136,6 @@ set(LINK_LIBRARIES
 )
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
-   src/pose_estimate.cc
    src/loosely_vio.cc
  )
 

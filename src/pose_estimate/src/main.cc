@@ -1,4 +1,3 @@
-#include <pose_estimate/pose_estimate.h>
 #include <pose_estimate/loosely_vio.h>
 
 int main(int argc, char **argv)
