@@ -6,6 +6,21 @@
 
 namespace slam_mono
 {
+  inline Eigen::Quaterniond QuaternionFromSmallAngle(const Eigen::Vector3d& dtheta)
+  {
+    double dq_square = dtheta.squaredNorm() / 4.0;
+
+    if (dq_square <= 1)
+    {
+      return Eigen::Quaterniond(sqrt(1-dq_square), dtheta(0) * 0.5, dtheta(1) * 0.5, dtheta(2) * 0.5);
+    }
+    else
+    {
+      const double w = 1.0 / sqrt(1 + dq_square);
+      const double f = w * 0.5;
+      return Eigen::Quaterniond(w, dtheta(0) * f, dtheta(1) * f, dtheta(2) * f);
+    }
+  }
 /*
  *  @brief Create a skew-symmetric matrix from a 3-element vector.
  *  @note Performs the operation:
@@ -16,6 +31,7 @@ namespace slam_mono
     inline Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d& w)
     {
         Eigen::Matrix3d w_sym;
+
         w_sym(0, 0) =     0;
         w_sym(0, 1) = -w(2);
         w_sym(0, 2) =  w(1);
@@ -25,6 +41,7 @@ namespace slam_mono
         w_sym(2, 0) = -w(1);
         w_sym(2, 1) =  w(0);
         w_sym(2, 2) =     0;
+        return w_sym;
     }
 
 /*
@@ -36,43 +53,6 @@ namespace slam_mono
         q = q / norm;
     }
 
-/*
- * @brief Perform q1 * q2, return unit quaternion
- */
-    inline Eigen::Vector4d quaternionMultiplication(const Eigen::Vector4d& q1, const Eigen::Vector4d& q2) 
-    {
-        Eigen::Matrix4d L;
-        L(0, 0) =  q1(3); L(0, 1) =  q1(2); L(0, 2) = -q1(1); L(0, 3) =  q1(0);
-        L(1, 0) = -q1(2); L(1, 1) =  q1(3); L(1, 2) =  q1(0); L(1, 3) =  q1(1);
-        L(2, 0) =  q1(1); L(2, 1) = -q1(0); L(2, 2) =  q1(3); L(2, 3) =  q1(2);
-        L(3, 0) = -q1(0); L(3, 1) = -q1(1); L(3, 2) = -q1(2); L(3, 3) =  q1(3);
-
-        Eigen::Vector4d q = L * q2;
-        quaternionNormalize(q);
-        return q;
-    }
-
-/*
- * @brief Convert a quaternion to the corresponding rotation matrix
- * @note Pay attention to the convention used. The function follows the
- *    conversion in "Indirect Kalman Filter for 3D Attitude Estimation:
- *    A Tutorial for Quaternion Algebra", Equation (78).
- *
- *    The input quaternion should be in the form
- *      [q1, q2, q3, q4(scalar)]^T
- */
-  inline Eigen::Matrix3d quaternionToRotation(const Eigen::Vector4d& q) 
-  {
-    const Eigen::Vector3d& q_vec = q.block(0, 0, 3, 1);
-    const double& q4 = q(3);
-    Eigen::Matrix3d R =
-      (2*q4*q4-1)*Eigen::Matrix3d::Identity() -
-      2*q4*skewSymmetric(q_vec) +
-      2*q_vec*q_vec.transpose();
-    //TODO: Is it necessary to use the approximation equation
-    //    (Equation (87)) when the rotation angle is small?
-    return R;
-  }
 
 /*
  * @brief Convert a rotation matrix to a quaternion.

@@ -27,6 +27,9 @@ class PoseEstimateResult {
       this.tx = null;
       this.ty = null;
       this.tz = null;
+      this.roll = null;
+      this.pitch = null;
+      this.yaw = null;
     }
     else {
       if (initObj.hasOwnProperty('header')) {
@@ -77,6 +80,24 @@ class PoseEstimateResult {
       else {
         this.tz = 0.0;
       }
+      if (initObj.hasOwnProperty('roll')) {
+        this.roll = initObj.roll
+      }
+      else {
+        this.roll = 0.0;
+      }
+      if (initObj.hasOwnProperty('pitch')) {
+        this.pitch = initObj.pitch
+      }
+      else {
+        this.pitch = 0.0;
+      }
+      if (initObj.hasOwnProperty('yaw')) {
+        this.yaw = initObj.yaw
+      }
+      else {
+        this.yaw = 0.0;
+      }
     }
   }
 
@@ -98,6 +119,12 @@ class PoseEstimateResult {
     bufferOffset = _serializer.float64(obj.ty, buffer, bufferOffset);
     // Serialize message field [tz]
     bufferOffset = _serializer.float64(obj.tz, buffer, bufferOffset);
+    // Serialize message field [roll]
+    bufferOffset = _serializer.float64(obj.roll, buffer, bufferOffset);
+    // Serialize message field [pitch]
+    bufferOffset = _serializer.float64(obj.pitch, buffer, bufferOffset);
+    // Serialize message field [yaw]
+    bufferOffset = _serializer.float64(obj.yaw, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -121,13 +148,19 @@ class PoseEstimateResult {
     data.ty = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [tz]
     data.tz = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [roll]
+    data.roll = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [pitch]
+    data.pitch = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [yaw]
+    data.yaw = _deserializer.float64(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    return length + 56;
+    return length + 80;
   }
 
   static datatype() {
@@ -137,7 +170,7 @@ class PoseEstimateResult {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'edd90d7fbf8f7abbec0de80a970bc44c';
+    return 'c29be1721413257519ddd67c8a406938';
   }
 
   static messageDefinition() {
@@ -151,6 +184,9 @@ class PoseEstimateResult {
     float64 tx
     float64 ty
     float64 tz
+    float64 roll
+    float64 pitch
+    float64 yaw
     ================================================================================
     MSG: std_msgs/Header
     # Standard metadata for higher-level stamped data types.
@@ -232,6 +268,27 @@ class PoseEstimateResult {
     }
     else {
       resolved.tz = 0.0
+    }
+
+    if (msg.roll !== undefined) {
+      resolved.roll = msg.roll;
+    }
+    else {
+      resolved.roll = 0.0
+    }
+
+    if (msg.pitch !== undefined) {
+      resolved.pitch = msg.pitch;
+    }
+    else {
+      resolved.pitch = 0.0
+    }
+
+    if (msg.yaw !== undefined) {
+      resolved.yaw = msg.yaw;
+    }
+    else {
+      resolved.yaw = 0.0
     }
 
     return resolved;

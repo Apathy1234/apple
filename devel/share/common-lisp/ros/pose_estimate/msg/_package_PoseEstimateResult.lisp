@@ -15,4 +15,10 @@
           TY
           TZ-VAL
           TZ
+          ROLL-VAL
+          ROLL
+          PITCH-VAL
+          PITCH
+          YAW-VAL
+          YAW
 ))

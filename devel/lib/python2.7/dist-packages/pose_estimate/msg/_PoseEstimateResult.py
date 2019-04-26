@@ -8,7 +8,7 @@ import struct
 import std_msgs.msg
 
 class PoseEstimateResult(genpy.Message):
-  _md5sum = "edd90d7fbf8f7abbec0de80a970bc44c"
+  _md5sum = "c29be1721413257519ddd67c8a406938"
   _type = "pose_estimate/PoseEstimateResult"
   _has_header = True #flag to mark the presence of a Header object
   _full_text = """std_msgs/Header header
@@ -19,6 +19,9 @@ float64 q3
 float64 tx
 float64 ty
 float64 tz
+float64 roll
+float64 pitch
+float64 yaw
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -37,8 +40,8 @@ time stamp
 # 1: global frame
 string frame_id
 """
-  __slots__ = ['header','q0','q1','q2','q3','tx','ty','tz']
-  _slot_types = ['std_msgs/Header','float64','float64','float64','float64','float64','float64','float64']
+  __slots__ = ['header','q0','q1','q2','q3','tx','ty','tz','roll','pitch','yaw']
+  _slot_types = ['std_msgs/Header','float64','float64','float64','float64','float64','float64','float64','float64','float64','float64']
 
   def __init__(self, *args, **kwds):
     """
@@ -48,7 +51,7 @@ string frame_id
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       header,q0,q1,q2,q3,tx,ty,tz
+       header,q0,q1,q2,q3,tx,ty,tz,roll,pitch,yaw
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -73,6 +76,12 @@ string frame_id
         self.ty = 0.
       if self.tz is None:
         self.tz = 0.
+      if self.roll is None:
+        self.roll = 0.
+      if self.pitch is None:
+        self.pitch = 0.
+      if self.yaw is None:
+        self.yaw = 0.
     else:
       self.header = std_msgs.msg.Header()
       self.q0 = 0.
@@ -82,6 +91,9 @@ string frame_id
       self.tx = 0.
       self.ty = 0.
       self.tz = 0.
+      self.roll = 0.
+      self.pitch = 0.
+      self.yaw = 0.
 
   def _get_types(self):
     """
@@ -104,7 +116,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_get_struct_7d().pack(_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz))
+      buff.write(_get_struct_10d().pack(_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz, _x.roll, _x.pitch, _x.yaw))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -132,8 +144,8 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 56
-      (_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz,) = _get_struct_7d().unpack(str[start:end])
+      end += 80
+      (_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz, _x.roll, _x.pitch, _x.yaw,) = _get_struct_10d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -155,7 +167,7 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_get_struct_7d().pack(_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz))
+      buff.write(_get_struct_10d().pack(_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz, _x.roll, _x.pitch, _x.yaw))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -184,8 +196,8 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 56
-      (_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz,) = _get_struct_7d().unpack(str[start:end])
+      end += 80
+      (_x.q0, _x.q1, _x.q2, _x.q3, _x.tx, _x.ty, _x.tz, _x.roll, _x.pitch, _x.yaw,) = _get_struct_10d().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -200,9 +212,9 @@ def _get_struct_3I():
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
-_struct_7d = None
-def _get_struct_7d():
-    global _struct_7d
-    if _struct_7d is None:
-        _struct_7d = struct.Struct("<7d")
-    return _struct_7d
+_struct_10d = None
+def _get_struct_10d():
+    global _struct_10d
+    if _struct_10d is None:
+        _struct_10d = struct.Struct("<10d")
+    return _struct_10d

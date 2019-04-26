@@ -14,11 +14,11 @@ struct CameraState
 
     double time;
 
-    Eigen::Vector4d orientation;
+    Eigen::Quaterniond orientation;
 
     Eigen::Vector3d position;
 
-    CameraState(): id(0), time(0), orientation(Eigen::Vector4d(0, 0, 0, 1)), position(Eigen::Vector3d::Zero()) {}
+    CameraState(): id(0), time(0), orientation(Eigen::Quaterniond(1, 0, 0, 0)), position(Eigen::Vector3d::Zero()) {}
 
 };
 

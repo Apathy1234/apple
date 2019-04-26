@@ -60,6 +60,8 @@ private:
     bool isFirstData;
     double trackRate;
 
+    // for test
+    Eigen::Quaterniond qInit;
     void Load_Parameters(void);
     void Init_Gravity_Bias(void);
     void Add_Feature_Points(const feature_tracker::CameraTrackerResultPtr& pts);
@@ -67,8 +69,10 @@ private:
     void Remove_Feature_Points(void);
     void Bundle_Adjustment(void);
     Eigen::Vector3d Calculate_World_Point(const Eigen::Vector3d pts);
-    void Propagate_Model(const double& time, const Eigen::Vector3d& gyro_mes);
-    void Process_Model(const double& timeBond);
+    void Process_Model(const double& time, const Eigen::Vector3d& gyro_mes);
+    void Deal_with_Imu(const double& timeBond);
+    void Measurement_Update(void);
+    void Apply_Correct(void);
 };
 
 }

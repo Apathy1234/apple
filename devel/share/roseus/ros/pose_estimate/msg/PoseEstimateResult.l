@@ -16,7 +16,7 @@
 
 (defclass pose_estimate::PoseEstimateResult
   :super ros::object
-  :slots (_header _q0 _q1 _q2 _q3 _tx _ty _tz ))
+  :slots (_header _q0 _q1 _q2 _q3 _tx _ty _tz _roll _pitch _yaw ))
 
 (defmethod pose_estimate::PoseEstimateResult
   (:init
@@ -29,6 +29,9 @@
     ((:tx __tx) 0.0)
     ((:ty __ty) 0.0)
     ((:tz __tz) 0.0)
+    ((:roll __roll) 0.0)
+    ((:pitch __pitch) 0.0)
+    ((:yaw __yaw) 0.0)
     )
    (send-super :init)
    (setq _header __header)
@@ -39,6 +42,9 @@
    (setq _tx (float __tx))
    (setq _ty (float __ty))
    (setq _tz (float __tz))
+   (setq _roll (float __roll))
+   (setq _pitch (float __pitch))
+   (setq _yaw (float __yaw))
    self)
   (:header
    (&rest __header)
@@ -68,6 +74,15 @@
   (:tz
    (&optional __tz)
    (if __tz (setq _tz __tz)) _tz)
+  (:roll
+   (&optional __roll)
+   (if __roll (setq _roll __roll)) _roll)
+  (:pitch
+   (&optional __pitch)
+   (if __pitch (setq _pitch __pitch)) _pitch)
+  (:yaw
+   (&optional __yaw)
+   (if __yaw (setq _yaw __yaw)) _yaw)
   (:serialization-length
    ()
    (+
@@ -86,6 +101,12 @@
     ;; float64 _ty
     8
     ;; float64 _tz
+    8
+    ;; float64 _roll
+    8
+    ;; float64 _pitch
+    8
+    ;; float64 _yaw
     8
     ))
   (:serialize
@@ -108,6 +129,12 @@
        (sys::poke _ty (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64 _tz
        (sys::poke _tz (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _roll
+       (sys::poke _roll (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _pitch
+       (sys::poke _pitch (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; float64 _yaw
+       (sys::poke _yaw (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -128,11 +155,17 @@
      (setq _ty (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64 _tz
      (setq _tz (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _roll
+     (setq _roll (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _pitch
+     (setq _pitch (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; float64 _yaw
+     (setq _yaw (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;;
    self)
   )
 
-(setf (get pose_estimate::PoseEstimateResult :md5sum-) "edd90d7fbf8f7abbec0de80a970bc44c")
+(setf (get pose_estimate::PoseEstimateResult :md5sum-) "c29be1721413257519ddd67c8a406938")
 (setf (get pose_estimate::PoseEstimateResult :datatype-) "pose_estimate/PoseEstimateResult")
 (setf (get pose_estimate::PoseEstimateResult :definition-)
       "std_msgs/Header header
@@ -143,6 +176,9 @@ float64 q3
 float64 tx
 float64 ty
 float64 tz
+float64 roll
+float64 pitch
+float64 yaw
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -165,6 +201,6 @@ string frame_id
 
 
 
-(provide :pose_estimate/PoseEstimateResult "edd90d7fbf8f7abbec0de80a970bc44c")
+(provide :pose_estimate/PoseEstimateResult "c29be1721413257519ddd67c8a406938")
 
 

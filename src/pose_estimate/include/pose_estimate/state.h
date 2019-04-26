@@ -11,7 +11,7 @@ struct ImuState
 {
     
     // state var
-    Eigen::Quaterniond q;      // attitude ([q1, q2, q3, q0(scalar)])
+    Eigen::Quaterniond q;      // attitude ([q1, q2, q3, q0(scalar)]) >> from world to imu
     Eigen::Vector3d p;         // positon ( IMU centered )
     Eigen::Vector3d v;         // velocity
 
@@ -23,7 +23,8 @@ struct ImuState
     Eigen::Vector3d p_ci;      // camera-imu position calibration : camera's origin in imu frame
 
     Eigen::Matrix<double, STATE_NUM, STATE_NUM> state_cov;
-    Eigen::Matrix<double, 4, 1> R;
+    Eigen::Matrix<double, 4, 4> R;
+    Eigen::Matrix<double, STATE_NUM, 1> xCorrect;
 };
 
 struct Parameter

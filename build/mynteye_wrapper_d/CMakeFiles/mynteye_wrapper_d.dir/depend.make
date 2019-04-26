@@ -239,6 +239,7 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.c
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/sensor_msgs/image_encodings.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/sensor_msgs/impl/point_cloud2_iterator.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/sensor_msgs/point_cloud2_iterator.h
+mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/std_msgs/ColorRGBA.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/std_msgs/Header.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/tf/LinearMath/Matrix3x3.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/tf/LinearMath/MinMax.h
@@ -266,6 +267,7 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.c
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/tf2_ros/buffer.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/tf2_ros/buffer_interface.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/tf2_ros/static_transform_broadcaster.h
+mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/visualization_msgs/Marker.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.cc.o: /usr/local/include/mynteyed/camera.h

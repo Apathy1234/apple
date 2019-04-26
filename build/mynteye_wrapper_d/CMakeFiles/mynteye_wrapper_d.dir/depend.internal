@@ -240,6 +240,7 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.c
  /opt/ros/kinetic/include/sensor_msgs/image_encodings.h
  /opt/ros/kinetic/include/sensor_msgs/impl/point_cloud2_iterator.h
  /opt/ros/kinetic/include/sensor_msgs/point_cloud2_iterator.h
+ /opt/ros/kinetic/include/std_msgs/ColorRGBA.h
  /opt/ros/kinetic/include/std_msgs/Header.h
  /opt/ros/kinetic/include/tf/LinearMath/Matrix3x3.h
  /opt/ros/kinetic/include/tf/LinearMath/MinMax.h
@@ -267,6 +268,7 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d.dir/src/mynteye_wrapper_nodelet.c
  /opt/ros/kinetic/include/tf2_ros/buffer.h
  /opt/ros/kinetic/include/tf2_ros/buffer_interface.h
  /opt/ros/kinetic/include/tf2_ros/static_transform_broadcaster.h
+ /opt/ros/kinetic/include/visualization_msgs/Marker.h
  /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h
  /usr/local/include/mynteyed/camera.h

@@ -825,7 +825,7 @@ void FeatureTracker::Find_Image_Feature(void)
         }
         Add_Points(); 
 
-        // Triangulate_Points(leftKpsCurr, rightKpsCurr);
+        Triangulate_Points(leftKpsCurr, rightKpsCurr);
     }
     
     for( unsigned int i = 0;; i++ )
@@ -853,7 +853,7 @@ void FeatureTracker::Publish_Info(void)
     Undistorted_Points(leftKpsCurr, leftKpsUndistorted, leftIntrinsics, leftDistortionCoeffs);
     Undistorted_Points(rightKpsCurr, rightKpsUndistorted, rightIntrinsics, rightDistortionCoeffs);
     
-    Triangulate_Points(leftKpsCurr, rightKpsCurr);
+    // Triangulate_Points(leftKpsCurr, rightKpsCurr);
 
     int featureNum = 0;
     for (int i = 0; i < trackerID.size(); i++)
@@ -1005,41 +1005,41 @@ void FeatureTracker::Triangulate_Points(vector<Point2f> leftPts, vector<Point2f>
 
         cameraKps3d.push_back( p );
     }
-    // vector<unsigned char> inlierMarkers(0);
-    // inlierMarkers.resize(cameraKps3d.size(), 1);
-    // for( int i = 0; i < cameraKps3d.size(); i++)
-    // {
-    //     if (cameraKps3d[i].z <= 0)
-    //     {
-    //         inlierMarkers[i] = 0;
-    //     }
-    // }
-    // Reduce_Vector(leftKpsCurr, inlierMarkers);
-    // Reduce_Vector(rightKpsCurr, inlierMarkers);
-    // Reduce_Vector(trackerID, inlierMarkers);
-    // Reduce_Vector(trackerCnt, inlierMarkers);
-    // Reduce_Vector(cameraKps3d, inlierMarkers);
+    vector<unsigned char> inlierMarkers(0);
+    inlierMarkers.resize(cameraKps3d.size(), 1);
+    for( int i = 0; i < cameraKps3d.size(); i++)
+    {
+        if (cameraKps3d[i].z <= 0)
+        {
+            inlierMarkers[i] = 0;
+        }
+    }
+    Reduce_Vector(leftKpsCurr, inlierMarkers);
+    Reduce_Vector(rightKpsCurr, inlierMarkers);
+    Reduce_Vector(trackerID, inlierMarkers);
+    Reduce_Vector(trackerCnt, inlierMarkers);
+    Reduce_Vector(cameraKps3d, inlierMarkers);
         
-    // inlierMarkers.resize(cameraKps3d.size(), 1);
-    // float meanDistance = 0;
-    // for (int i = 0; i < cameraKps3d.size(); i++)
-    // {
-    //     meanDistance += cameraKps3d[i].z;
-    // }
-    // meanDistance /= cameraKps3d.size();
-    // // ROS_INFO_STREAM(meanDistance); 
-    // for (int i = 0; i < cameraKps3d.size(); i++)
-    // {
-    //     if(cameraKps3d[i].z > 4 * meanDistance)
-    //     {
-    //         inlierMarkers[i] = 0;
-    //     }
-    // }
-    // Reduce_Vector(leftKpsCurr, inlierMarkers);
-    // Reduce_Vector(rightKpsCurr, inlierMarkers);
-    // Reduce_Vector(trackerID, inlierMarkers);
-    // Reduce_Vector(trackerCnt, inlierMarkers);
-    // Reduce_Vector(cameraKps3d, inlierMarkers);
+    inlierMarkers.resize(cameraKps3d.size(), 1);
+    float meanDistance = 0;
+    for (int i = 0; i < cameraKps3d.size(); i++)
+    {
+        meanDistance += cameraKps3d[i].z;
+    }
+    meanDistance /= cameraKps3d.size();
+    // ROS_INFO_STREAM(meanDistance); 
+    for (int i = 0; i < cameraKps3d.size(); i++)
+    {
+        if(cameraKps3d[i].z > 4 * meanDistance)
+        {
+            inlierMarkers[i] = 0;
+        }
+    }
+    Reduce_Vector(leftKpsCurr, inlierMarkers);
+    Reduce_Vector(rightKpsCurr, inlierMarkers);
+    Reduce_Vector(trackerID, inlierMarkers);
+    Reduce_Vector(trackerCnt, inlierMarkers);
+    Reduce_Vector(cameraKps3d, inlierMarkers);
 }
 
 void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, const sensor_msgs::ImageConstPtr& rightImg)

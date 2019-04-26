@@ -54,9 +54,12 @@ void Loosely_vio::Load_Parameters(void)
     params.continues_noise_cov.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity() * params.gyro_noise;
     params.continues_noise_cov.block<3, 3>(3, 3) = Eigen::Matrix3d::Identity() * params.gyro_bias_noise;
 
+    // init state_delay
     state_delay.bw = Eigen::Vector3d::Zero();
     state_delay.q_wv = Eigen::Quaterniond(0, 1, 0, 0);
     state_delay.q_ci = state_delay.q_wv.conjugate();
+    state_delay.xCorrect = Eigen::Matrix<double, STATE_NUM, 1>::Zero();
+    state_delay.R = Eigen::Matrix<double, 4, 4>::Identity() * 1 * 1;
 }
 
 void Loosely_vio::Imu_Callback(const sensor_msgs::ImuConstPtr& imuMsg)
@@ -96,6 +99,10 @@ void Loosely_vio::Init_Gravity_Bias(void)
     Eigen::Quaterniond q = Eigen::Quaterniond::FromTwoVectors(gravity, params.gravity);
 
     state_delay.q = q;
+    state_delay.q.normalize();
+    qInit = state_delay.q;
+    // cameraState.orientation  = state_delay.q_ci * state_delay.q * state_delay.q_wv;
+    // cameraState.orientation.normalize();
 }
 
 Eigen::Vector3d Loosely_vio::Calculate_World_Point(const Eigen::Vector3d pts)
@@ -104,11 +111,11 @@ Eigen::Vector3d Loosely_vio::Calculate_World_Point(const Eigen::Vector3d pts)
     Eigen::Isometry3d T_w2c;
     Eigen::Isometry3d T_c2w;            
     // ROS_INFO_STREAM("q: "  << cameraState.orientation);
-    T_w2c.linear() = quaternionToRotation(cameraState.orientation);
+    T_w2c.linear() = cameraState.orientation.toRotationMatrix().transpose();  // from vision to camera
     T_w2c.translation() = cameraState.position;
     // ROS_INFO_STREAM("rotation_w2c: "  << T_c2w.linear());
     // ROS_INFO_STREAM("translation_w2c: " << T_c2w.translation());
-    T_c2w = T_w2c.inverse();
+    T_c2w = T_w2c.inverse();                                         // from camera to vision
     // ROS_INFO_STREAM("rotation: "  << T_c2w.linear());
     // ROS_INFO_STREAM("translation: " << T_c2w.translation());
     // convert the pts in camera to the vision frame, return the result
@@ -125,11 +132,11 @@ void Loosely_vio::Add_Feature_Points(const feature_tracker::CameraTrackerResultP
         // ROS_INFO_STREAM("times: " << mapServer[feature.id].keepTimes);
         if (mapServer.find(feature.id) == mapServer.end() && feature.z > 0)
         {
-            ROS_INFO_STREAM("camera: " << feature.x << " " << feature.y << " " << feature.z);
+            // ROS_INFO_STREAM("camera: " << feature.x << " " << feature.y << " " << feature.z);
             // this is a new feature and the depth is correct
             Eigen::Vector3d worldPts;
             worldPts = Calculate_World_Point(Eigen::Vector3d(feature.x, feature.y, feature.z));
-            ROS_INFO_STREAM("world: " << worldPts(0) << " " << worldPts(1) << " " <<worldPts(2));
+            // ROS_INFO_STREAM("world: " << worldPts(0) << " " << worldPts(1) << " " <<worldPts(2));
             mapServer[feature.id] = FeatureState(worldPts);
             
         }
@@ -203,7 +210,8 @@ void Loosely_vio::Bundle_Adjustment(void)
 
     Eigen::Quaterniond qTemp;
     qTemp = pose->estimate().rotation();
-    cameraState.orientation = Eigen::Vector4d(qTemp.x(), qTemp.y(), qTemp.z(), qTemp.w());
+    cameraState.orientation = qTemp;
+    cameraState.orientation.normalize();
     cameraState.position = pose->estimate().translation();
     // ROS_INFO_STREAM("orientation: " << cameraState.orientation);
     // ROS_INFO_STREAM("position: " << cameraState.position);
@@ -243,16 +251,18 @@ void Loosely_vio::Remove_Feature_Points(void)
     }
 }
 
-void Loosely_vio::Propagate_Model(const double& time, const Eigen::Vector3d& gyro_mes)
+void Loosely_vio::Process_Model(const double& time, const Eigen::Vector3d& gyro_mes)
 {
-    Eigen::Vector3d gyro_debias = gyro_mes - params.gyro_bias;
+    Eigen::Vector3d gyro_debias = gyro_mes - params.gyro_bias - state_delay.bw;
     double dtime = time - params.time;
-    ROS_INFO_STREAM("dtime: " << dtime);
+    // ROS_INFO_STREAM("dtime: " << dtime);
     Eigen::Matrix4d Omega = Eigen::Matrix4d::Zero();
     Omega.block<3, 3>(0, 0) = -skewSymmetric(gyro_debias);
     Omega.block<3, 1>(0, 3) = gyro_debias;
     Omega.block<1, 3>(3, 0) = -gyro_debias;
-    ROS_INFO_STREAM("Omega: " << Omega);
+    // ROS_INFO_STREAM("Omega: " << Omega);
+
+    // propagate state
     Eigen::Vector4d q = Eigen::Vector4d(state_delay.q.x(), state_delay.q.y(), state_delay.q.z(), state_delay.q.w());
 
     Eigen::Vector4d dq_dt, dq_dt2;
@@ -267,14 +277,42 @@ void Loosely_vio::Propagate_Model(const double& time, const Eigen::Vector3d& gyr
         dq_dt = (Eigen::Matrix4d::Identity()+0.5*dtime*Omega) * cos(gyro_norm*dtime*0.5) * q;
         dq_dt2 = (Eigen::Matrix4d::Identity()+0.25*dtime*Omega) * cos(gyro_norm*dtime*0.25) * q;
     }
-    ROS_INFO_STREAM("dq_dt: " << dq_dt);
+    // ROS_INFO_STREAM("dq_dt: " << dq_dt);
     state_delay.q = Eigen::Quaterniond(dq_dt(3), dq_dt(0), dq_dt(1), dq_dt(2));
     state_delay.q.normalize();
+
+    // calculate process covariance
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> F = Eigen::Matrix<double, STATE_NUM, STATE_NUM>::Zero();
+    Eigen::Matrix<double, STATE_NUM, 6> G = Eigen::Matrix<double, STATE_NUM, 6>::Zero();
+
+    F.block<3, 3>(0, 0) = -skewSymmetric(gyro_debias);
+    F.block<3, 3>(0, 3) = -Eigen::Matrix3d::Identity();
+
+    G.block<3, 3>(0, 0) = -Eigen::Matrix3d::Identity();
+    G.block<3, 3>(3, 3) = Eigen::Matrix3d::Identity();
+
+    // calculate Fd
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> Fdt = F * dtime;
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> Fdt_square = Fdt * Fdt;
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> Fdt_cube = Fdt_square * Fdt;
+
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> Fd = Eigen::Matrix<double, STATE_NUM, STATE_NUM>::Identity() + 
+                                                     Fdt + 0.5 * Fdt_square + (1.0 / 6.0) * Fdt_cube;
+    
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> Q = Fd * G * params.continues_noise_cov * 
+                                                    G.transpose() * F.transpose() * dtime;
+    
+    state_delay.state_cov = Fd * state_delay.state_cov * Fd.transpose() + Q;
+
+    Eigen::MatrixXd state_cov_symmetry = (state_delay.state_cov + state_delay.state_cov.transpose()) / 2.0;
+
+    state_delay.state_cov = state_cov_symmetry;
+
     params.time = time;
 }
 
 
-void Loosely_vio::Process_Model(const double& timeBond)
+void Loosely_vio::Deal_with_Imu(const double& timeBond)
 {
     int imu_msg_used_cnt = 0;
 
@@ -292,14 +330,77 @@ void Loosely_vio::Process_Model(const double& timeBond)
         tf::vectorMsgToEigen(imu.angular_velocity, gyro_mes);
         // tf::vectorMsgToEigen(imu.linear_acceleration, acc_mes);
 
-        /********************************************************/
-        Propagate_Model(imuTime, gyro_mes);
+        Process_Model(imuTime, gyro_mes);
 
-        /********************************************************/
         imu_msg_used_cnt++;
     }
     
     imuMsgBuffer.erase(imuMsgBuffer.begin(), imuMsgBuffer.begin() + imu_msg_used_cnt);
+}
+
+void Loosely_vio::Measurement_Update(void)
+{
+    Eigen::Matrix<double, 4, STATE_NUM> H = Eigen::Matrix<double, 4, 12>::Zero();
+    Eigen::Matrix<double, 4, 1> zhat = Eigen::Matrix<double, 4, 1>::Zero();
+
+    Eigen::Matrix3d R_wv = state_delay.q_wv.toRotationMatrix().transpose();  // from vision to world
+    Eigen::Matrix3d R_ci = state_delay.q_ci.toRotationMatrix().transpose();  // from imu to camera
+    Eigen::Matrix3d R = state_delay.q.toRotationMatrix().transpose();        // from world to imu
+    
+    H.block<3, 3>(0, 0) = R_wv.transpose();
+    H.block<3, 3>(0, 6) = Eigen::Matrix3d::Identity();
+    H.block<3, 3>(0, 9) = R_wv.transpose() * R.transpose();
+    H(3, 8) = 1;
+
+    // calculate resudial
+    Eigen::Quaterniond Hx = state_delay.q_ci * state_delay.q * state_delay.q_wv;
+    Hx.normalize();
+    Eigen::Quaterniond q_err_use = Hx.inverse() * (cameraState.orientation * (state_delay.q_ci * qInit * state_delay.q_wv));
+
+    zhat.block<3, 1>(0, 0) = q_err_use.vec() / q_err_use.w() * 2;
+    q_err_use = state_delay.q_wv;
+    zhat(3, 0) = -2 * (q_err_use.w() * q_err_use.z() + q_err_use.x() * q_err_use.y()) / 
+                 (1 - 2 * (q_err_use.y() * q_err_use.y() + q_err_use.z() * q_err_use.z()));
+    
+    Eigen::Matrix<double, 4, 4> S = H * state_delay.state_cov * H.transpose() + state_delay.R;
+    Eigen::Matrix<double, STATE_NUM, 4> K = state_delay.state_cov * H.transpose() * S.inverse();
+    Eigen::Matrix<double, STATE_NUM, STATE_NUM> I_KH = Eigen::Matrix<double, STATE_NUM, STATE_NUM>::Identity() - K * H;
+
+    // calculate the correct and update the state_cov
+    state_delay.xCorrect = K * zhat;
+    state_delay.state_cov = I_KH * state_delay.state_cov * I_KH.transpose() + K * state_delay.R * K.transpose();
+    
+    Eigen::MatrixXd state_cov_symmetry = (state_delay.state_cov + state_delay.state_cov.transpose()) / 2.0;
+    state_delay.state_cov = state_cov_symmetry;
+}
+
+/*  output normalized q  */
+void Loosely_vio::Apply_Correct(void)
+{
+    Eigen::Matrix<double, STATE_NUM, 1> cor = state_delay.xCorrect;
+    if(params.fixed_bias)
+    {
+        cor.block<3, 1>(3, 0) = Eigen::Vector3d::Zero();
+    }
+    if(params.fixed_calibr)
+    {
+        cor.block<6, 1>(6, 0) = Eigen::Matrix<double, 6, 1>::Zero();
+    }
+
+    state_delay.bw += cor.block<3, 1>(3, 0);
+
+    Eigen::Quaterniond qbuffer_q = QuaternionFromSmallAngle(cor.block<3, 1>(0, 0));
+    state_delay.q = state_delay.q * qbuffer_q;
+    state_delay.q.normalize();
+
+    Eigen::Quaterniond qbuffer_q_wv = QuaternionFromSmallAngle(cor.block<3, 1>(6, 0));
+    state_delay.q_wv = state_delay.q_wv * qbuffer_q_wv;
+    state_delay.q_wv.normalize();
+
+    Eigen::Quaterniond qbuffer_q_ci = QuaternionFromSmallAngle(cor.block<3, 1>(9, 0));
+    state_delay.q_ci = state_delay.q_ci * qbuffer_q_ci;
+    state_delay.q_ci.normalize();
+
 }
 
 void Loosely_vio::Feature_Callback(const feature_tracker::CameraTrackerResultPtr& pts)
@@ -316,42 +417,82 @@ void Loosely_vio::Feature_Callback(const feature_tracker::CameraTrackerResultPtr
     {
         Find_Feature_Matched(pts);
         Bundle_Adjustment();
+
+        // fusion start
+
+        Deal_with_Imu(pts->header.stamp.toSec());
+
+        Measurement_Update();
+
+        Apply_Correct();
+
+        // deal with map
         Remove_Feature_Points();
         // ROS_INFO_STREAM("the map before add: " << mapServer.size());
         Add_Feature_Points(pts);
         // ROS_INFO_STREAM("the map after add: " << mapServer.size());
         
 
-        // fusion start
-
-        Process_Model(pts->header.stamp.toSec());
-
-
-
 
         /*******************************publish info************************************************/
+        double q0 = cameraState.orientation.w();
+        double q1 = cameraState.orientation.x();
+        double q2 = cameraState.orientation.y();
+        double q3 = cameraState.orientation.z();
+        Eigen::Matrix3d C_ned2b;
+        C_ned2b << 1-2*(q2*q2+q3*q3),      2*(q1*q2+q3*q0),       2*(q1*q3-q2*q0),
+                     2*(q1*q2-q3*q0),    1-2*(q1*q1+q3*q3),       2*(q2*q3+q1*q0),
+                     2*(q1*q3+q2*q0),      2*(q2*q3-q1*q0),     1-2*(q1*q1+q2*q2);
+
+        double yaw = asin(-C_ned2b(0, 2)) * 57.3;
+        double pitch = atan2(C_ned2b(1, 2), C_ned2b(2, 2)) * 57.3;
+        double roll = atan2(C_ned2b(0, 1), C_ned2b(0, 0)) * 57.3;
+        if (abs(C_ned2b(0,2)) > 1 - 1e-8)
+        {
+            pitch = 0;
+            yaw = atan2( -C_ned2b(0,2), C_ned2b(2,2)) * 57.3;
+            roll = atan2( -C_ned2b(1,0), C_ned2b(1,1)) * 57.3;
+        }
+
+        q0 = state_delay.q.w();
+        q1 = state_delay.q.x();
+        q2 = state_delay.q.y();
+        q3 = state_delay.q.z();
+        C_ned2b << 1-2*(q2*q2+q3*q3),      2*(q1*q2+q3*q0),       2*(q1*q3-q2*q0),
+                     2*(q1*q2-q3*q0),    1-2*(q1*q1+q3*q3),       2*(q2*q3+q1*q0),
+                     2*(q1*q3+q2*q0),      2*(q2*q3-q1*q0),     1-2*(q1*q1+q2*q2);
+
+        double yaw_state = asin(-C_ned2b(0, 2)) * 57.3;
+        double pitch_state = atan2(C_ned2b(1, 2), C_ned2b(2, 2)) * 57.3;
+        double roll_state = atan2(C_ned2b(0, 1), C_ned2b(0, 0)) * 57.3;
+        if (abs(C_ned2b(0,2)) > 1 - 1e-8)
+        {
+            pitch_state = 0;
+            yaw_state = atan2( -C_ned2b(0,2), C_ned2b(2,2)) * 57.3;
+            roll_state = atan2( -C_ned2b(1,0), C_ned2b(1,1)) * 57.3;
+        }
+        
         pose_estimate::PoseEstimateResultPtr cameraPoseInfo(new pose_estimate::PoseEstimateResult);
         cameraPoseInfo->header.stamp = pts->header.stamp;
         cameraPoseInfo->header.frame_id = "camera";
         
-        // cameraPoseInfo->q0 = cameraState.orientation(3);
-        // cameraPoseInfo->q1 = cameraState.orientation(0);
-        // cameraPoseInfo->q2 = cameraState.orientation(1);
-        // cameraPoseInfo->q3 = cameraState.orientation(2);
-        cameraPoseInfo->q0 = state_delay.q.w();
-        cameraPoseInfo->q1 = state_delay.q.x();
-        cameraPoseInfo->q2 = state_delay.q.y();
-        cameraPoseInfo->q3 = state_delay.q.z();
-        cameraPoseInfo->tx = cameraState.position(0);
-        cameraPoseInfo->ty = cameraState.position(1);
-        cameraPoseInfo->tz = cameraState.position(2);
+        cameraPoseInfo->q0 = roll_state;
+        cameraPoseInfo->q1 = pitch_state;
+        cameraPoseInfo->q2 = yaw_state;
+        cameraPoseInfo->q3 = cameraState.orientation.z();
+        cameraPoseInfo->tx = state_delay.bw(0);
+        cameraPoseInfo->ty = state_delay.bw(1);
+        cameraPoseInfo->tz = state_delay.bw(2);
+        cameraPoseInfo->yaw = yaw;
+        cameraPoseInfo->pitch = pitch;
+        cameraPoseInfo->roll = roll;
+        
         
         posePub.publish(cameraPoseInfo);
 
         geometry_msgs::PoseStampedPtr imuPoseInfo(new geometry_msgs::PoseStamped);
         imuPoseInfo->header.stamp = pts->header.stamp;
         imuPoseInfo->header.frame_id = "imu";
-
 
         imuPoseInfo->pose.orientation.x = state_delay.q.x();
         imuPoseInfo->pose.orientation.y = state_delay.q.y();

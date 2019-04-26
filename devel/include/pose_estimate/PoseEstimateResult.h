@@ -32,7 +32,10 @@ struct PoseEstimateResult_
     , q3(0.0)
     , tx(0.0)
     , ty(0.0)
-    , tz(0.0)  {
+    , tz(0.0)
+    , roll(0.0)
+    , pitch(0.0)
+    , yaw(0.0)  {
     }
   PoseEstimateResult_(const ContainerAllocator& _alloc)
     : header(_alloc)
@@ -42,7 +45,10 @@ struct PoseEstimateResult_
     , q3(0.0)
     , tx(0.0)
     , ty(0.0)
-    , tz(0.0)  {
+    , tz(0.0)
+    , roll(0.0)
+    , pitch(0.0)
+    , yaw(0.0)  {
   (void)_alloc;
     }
 
@@ -71,6 +77,15 @@ struct PoseEstimateResult_
 
    typedef double _tz_type;
   _tz_type tz;
+
+   typedef double _roll_type;
+  _roll_type roll;
+
+   typedef double _pitch_type;
+  _pitch_type pitch;
+
+   typedef double _yaw_type;
+  _yaw_type yaw;
 
 
 
@@ -150,12 +165,12 @@ struct MD5Sum< ::pose_estimate::PoseEstimateResult_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "edd90d7fbf8f7abbec0de80a970bc44c";
+    return "c29be1721413257519ddd67c8a406938";
   }
 
   static const char* value(const ::pose_estimate::PoseEstimateResult_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xedd90d7fbf8f7abbULL;
-  static const uint64_t static_value2 = 0xec0de80a970bc44cULL;
+  static const uint64_t static_value1 = 0xc29be17214132575ULL;
+  static const uint64_t static_value2 = 0x19ddd67c8a406938ULL;
 };
 
 template<class ContainerAllocator>
@@ -182,6 +197,9 @@ float64 q3\n\
 float64 tx\n\
 float64 ty\n\
 float64 tz\n\
+float64 roll\n\
+float64 pitch\n\
+float64 yaw\n\
 ================================================================================\n\
 MSG: std_msgs/Header\n\
 # Standard metadata for higher-level stamped data types.\n\
@@ -225,6 +243,9 @@ namespace serialization
       stream.next(m.tx);
       stream.next(m.ty);
       stream.next(m.tz);
+      stream.next(m.roll);
+      stream.next(m.pitch);
+      stream.next(m.yaw);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -260,6 +281,12 @@ struct Printer< ::pose_estimate::PoseEstimateResult_<ContainerAllocator> >
     Printer<double>::stream(s, indent + "  ", v.ty);
     s << indent << "tz: ";
     Printer<double>::stream(s, indent + "  ", v.tz);
+    s << indent << "roll: ";
+    Printer<double>::stream(s, indent + "  ", v.roll);
+    s << indent << "pitch: ";
+    Printer<double>::stream(s, indent + "  ", v.pitch);
+    s << indent << "yaw: ";
+    Printer<double>::stream(s, indent + "  ", v.yaw);
   }
 };
 
