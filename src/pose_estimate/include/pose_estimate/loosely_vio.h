@@ -43,7 +43,6 @@ private:
     // 相机姿态相关
     CameraState cameraState;
 
-
     // 特征点相关
     vector<FeatureIDType> matchedFeatureID;    
     vector<Eigen::Vector3d> ptsMapMatched;
@@ -55,13 +54,10 @@ private:
     ImuState state_delay;
     ImuState state;
 
-
     //　相关标志位
     bool isFirstData;
     double trackRate;
 
-    // for test
-    Eigen::Quaterniond qInit;
     void Load_Parameters(void);
     void Init_Gravity_Bias(void);
     void Add_Feature_Points(const feature_tracker::CameraTrackerResultPtr& pts);
