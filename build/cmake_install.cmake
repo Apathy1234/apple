@@ -118,6 +118,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/tg/slam_mono/build/gtest/cmake_install.cmake")
   include("/home/tg/slam_mono/build/feature_tracker/cmake_install.cmake")
+  include("/home/tg/slam_mono/build/pose_est_new/cmake_install.cmake")
   include("/home/tg/slam_mono/build/pose_estimate/cmake_install.cmake")
   include("/home/tg/slam_mono/build/mynteye_wrapper_d/cmake_install.cmake")
 

@@ -6,5 +6,6 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs(gtest)
 subdirs(feature_tracker)
+subdirs(pose_est_new)
 subdirs(pose_estimate)
 subdirs(mynteye_wrapper_d)

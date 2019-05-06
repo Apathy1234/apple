@@ -27,6 +27,8 @@ flags = [
 '-isystem',
 '/home/tg/slam_mono/src/mynteye_wrapper_d/include',
 '-isystem',
+'/home/tg/slam_mono/src/pose_est_new/include',
+'-isystem',
 '/home/tg/slam_mono/src/pose_estimate/include'
 ]
 

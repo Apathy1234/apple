@@ -1,0 +1,8 @@
+prefix=/home/tg/slam_mono/install
+
+Name: pose_est_new
+Description: Description of pose_est_new
+Version: 0.0.0
+Cflags: -I/home/tg/slam_mono/install/include
+Libs: -L/home/tg/slam_mono/install/lib 
+Requires: message_runtime
