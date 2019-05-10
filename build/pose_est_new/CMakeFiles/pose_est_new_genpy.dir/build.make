@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sfox/slam_mono/src
+CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
+CMAKE_BINARY_DIR = /home/tg/slam_mono/build
 
 # Utility rule file for pose_est_new_genpy.
 
@@ -63,10 +63,10 @@ pose_est_new/CMakeFiles/pose_est_new_genpy.dir/build: pose_est_new_genpy
 .PHONY : pose_est_new/CMakeFiles/pose_est_new_genpy.dir/build
 
 pose_est_new/CMakeFiles/pose_est_new_genpy.dir/clean:
-	cd /home/sfox/slam_mono/build/pose_est_new && $(CMAKE_COMMAND) -P CMakeFiles/pose_est_new_genpy.dir/cmake_clean.cmake
+	cd /home/tg/slam_mono/build/pose_est_new && $(CMAKE_COMMAND) -P CMakeFiles/pose_est_new_genpy.dir/cmake_clean.cmake
 .PHONY : pose_est_new/CMakeFiles/pose_est_new_genpy.dir/clean
 
 pose_est_new/CMakeFiles/pose_est_new_genpy.dir/depend:
-	cd /home/sfox/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sfox/slam_mono/src /home/sfox/slam_mono/src/pose_est_new /home/sfox/slam_mono/build /home/sfox/slam_mono/build/pose_est_new /home/sfox/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new_genpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/pose_est_new /home/tg/slam_mono/build /home/tg/slam_mono/build/pose_est_new /home/tg/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new_genpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : pose_est_new/CMakeFiles/pose_est_new_genpy.dir/depend
 

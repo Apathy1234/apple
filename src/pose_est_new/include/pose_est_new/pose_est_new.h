@@ -42,6 +42,10 @@ private:
     // camera
     CameraPose::ptr camera;
 
+    // rotation
+    Eigen::Matrix4d T_left2imu;
+    
+    void Put_Feature_into_Vector(const feature_tracker::CameraTrackerResultConstPtr& msg);
     void Clear_Points(FeatureState& feature);
     void Find_Feature_Matches(void);
 };

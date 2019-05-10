@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sfox/slam_mono/src/pose_est_new/src/camera_pose.cc" "/home/sfox/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/camera_pose.cc.o"
-  "/home/sfox/slam_mono/src/pose_est_new/src/g2o_type.cc" "/home/sfox/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/g2o_type.cc.o"
-  "/home/sfox/slam_mono/src/pose_est_new/src/pose_est_new.cc" "/home/sfox/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/pose_est_new.cc.o"
+  "/home/tg/slam_mono/src/pose_est_new/src/camera_pose.cc" "/home/tg/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/camera_pose.cc.o"
+  "/home/tg/slam_mono/src/pose_est_new/src/g2o_type.cc" "/home/tg/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/g2o_type.cc.o"
+  "/home/tg/slam_mono/src/pose_est_new/src/pose_est_new.cc" "/home/tg/slam_mono/build/pose_est_new/CMakeFiles/pose_est_new.dir/src/pose_est_new.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -19,9 +19,9 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/sfox/slam_mono/devel/include"
-  "/home/sfox/slam_mono/src/pose_est_new/include"
-  "/home/sfox/slam_mono/src/feature_tracker/include"
+  "/home/tg/slam_mono/devel/include"
+  "/home/tg/slam_mono/src/pose_est_new/include"
+  "/home/tg/slam_mono/src/feature_tracker/include"
   "/opt/ros/kinetic/include"
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev"
@@ -32,7 +32,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/sfox/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/DependInfo.cmake"
+  "/home/tg/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

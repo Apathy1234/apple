@@ -6,7 +6,47 @@
 
 #IncludeRegexTransform: 
 
-/home/sfox/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
+/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParams.h
+ros/service_traits.h
+-
+mynteye_wrapper_d/GetParamsRequest.h
+-
+mynteye_wrapper_d/GetParamsResponse.h
+-
+
+/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParamsRequest.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParamsResponse.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/home/tg/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
 configuru.hpp
 -
 algorithm
@@ -62,7 +102,7 @@ cstdlib
 cstdlib
 -
 
-/home/sfox/slam_mono/src/mynteye_wrapper_d/src/mynteye_listener.cc
+/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteye_listener.cc
 ros/ros.h
 -
 image_transport/image_transport.h
@@ -78,7 +118,7 @@ opencv2/highgui/highgui.hpp
 mynteye_wrapper_d/GetParams.h
 -
 configuru.hpp
-/home/sfox/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
+/home/tg/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
 
 /opt/ros/kinetic/include/cv_bridge/cv_bridge.h
 sensor_msgs/Image.h

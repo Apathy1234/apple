@@ -1,10 +1,10 @@
 
 "use strict";
 
-let CameraState = require('./CameraState.js');
 let DataCollectionForSim = require('./DataCollectionForSim.js');
+let CameraState = require('./CameraState.js');
 
 module.exports = {
-  CameraState: CameraState,
   DataCollectionForSim: DataCollectionForSim,
+  CameraState: CameraState,
 };

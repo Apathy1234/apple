@@ -1,6 +1,6 @@
 <launch>
 
-<!--include file="$(find mynteye_wrapper_d)/launch/mynteye.launch"/-->
+<include file="$(find mynteye_wrapper_d)/launch/mynteye.launch"/>
 
 <rosparam file = "$(find feature_tracker)/cfg/camera_param.yaml" command = "load"/>
 <node pkg = "nodelet" type = "nodelet" name = "nodelet_manager" args = "manager" output = "screen"/>

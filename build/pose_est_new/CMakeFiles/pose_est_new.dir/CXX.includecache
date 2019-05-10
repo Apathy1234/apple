@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/sfox/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
+/home/tg/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
 string
 -
 vector
@@ -26,7 +26,7 @@ std_msgs/Header.h
 feature_tracker/FeatureTrackerResult.h
 -
 
-/home/sfox/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
+/home/tg/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
 string
 -
 vector
@@ -42,25 +42,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/sfox/slam_mono/devel/include/pose_est_new/CameraState.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-std_msgs/Header.h
--
-
-/home/sfox/slam_mono/devel/include/pose_est_new/CamreaState.h
+/home/tg/slam_mono/devel/include/pose_est_new/CameraState.h
 string
 -
 vector
@@ -78,7 +60,25 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 
-/home/sfox/slam_mono/devel/include/pose_est_new/DataCollectionForSim.h
+/home/tg/slam_mono/devel/include/pose_est_new/CamreaState.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
+/home/tg/slam_mono/devel/include/pose_est_new/DataCollectionForSim.h
 string
 -
 vector
@@ -104,21 +104,21 @@ geometry_msgs/Vector3.h
 geometry_msgs/Vector3.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/include/pose_est_new/camera_pose.h
+/home/tg/slam_mono/src/pose_est_new/include/pose_est_new/camera_pose.h
 pose_est_new/my_includes.h
 -
 pose_est_new/g2o_type.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/include/pose_est_new/feature_state.h
+/home/tg/slam_mono/src/pose_est_new/include/pose_est_new/feature_state.h
 pose_est_new/my_includes.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/include/pose_est_new/g2o_type.h
+/home/tg/slam_mono/src/pose_est_new/include/pose_est_new/g2o_type.h
 pose_est_new/my_includes.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/include/pose_est_new/my_includes.h
+/home/tg/slam_mono/src/pose_est_new/include/pose_est_new/my_includes.h
 ros/ros.h
 -
 feature_tracker/FeatureTrackerResult.h
@@ -162,7 +162,7 @@ g2o/types/sba/types_six_dof_expmap.h
 g2o/core/factory.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/include/pose_est_new/pose_est_new.h
+/home/tg/slam_mono/src/pose_est_new/include/pose_est_new/pose_est_new.h
 pose_est_new/my_includes.h
 -
 pose_est_new/feature_state.h
@@ -172,15 +172,15 @@ pose_est_new/camera_pose.h
 pose_est_new/CamreaState.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/src/camera_pose.cc
+/home/tg/slam_mono/src/pose_est_new/src/camera_pose.cc
 pose_est_new/camera_pose.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/src/g2o_type.cc
+/home/tg/slam_mono/src/pose_est_new/src/g2o_type.cc
 pose_est_new/g2o_type.h
 -
 
-/home/sfox/slam_mono/src/pose_est_new/src/pose_est_new.cc
+/home/tg/slam_mono/src/pose_est_new/src/pose_est_new.cc
 pose_est_new/pose_est_new.h
 -
 pose_est_new/CameraState.h

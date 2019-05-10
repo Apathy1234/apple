@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sfox/slam_mono/src
+CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
+CMAKE_BINARY_DIR = /home/tg/slam_mono/build
 
 # Utility rule file for feature_tracker_genpy.
 
@@ -63,10 +63,10 @@ feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build: feature_tracker_genp
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_genpy.dir/build
 
 feature_tracker/CMakeFiles/feature_tracker_genpy.dir/clean:
-	cd /home/sfox/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/feature_tracker_genpy.dir/cmake_clean.cmake
+	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/feature_tracker_genpy.dir/cmake_clean.cmake
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_genpy.dir/clean
 
 feature_tracker/CMakeFiles/feature_tracker_genpy.dir/depend:
-	cd /home/sfox/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sfox/slam_mono/src /home/sfox/slam_mono/src/feature_tracker /home/sfox/slam_mono/build /home/sfox/slam_mono/build/feature_tracker /home/sfox/slam_mono/build/feature_tracker/CMakeFiles/feature_tracker_genpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/feature_tracker /home/tg/slam_mono/build /home/tg/slam_mono/build/feature_tracker /home/tg/slam_mono/build/feature_tracker/CMakeFiles/feature_tracker_genpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_genpy.dir/depend
 

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pose_estimate_node.dir/src/main.cc.o"
-  "/home/sfox/slam_mono/devel/lib/pose_estimate/pose_estimate_node.pdb"
-  "/home/sfox/slam_mono/devel/lib/pose_estimate/pose_estimate_node"
+  "/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node.pdb"
+  "/home/tg/slam_mono/devel/lib/pose_estimate/pose_estimate_node"
 )
 
 # Per-language clean rules from dependency scanning.

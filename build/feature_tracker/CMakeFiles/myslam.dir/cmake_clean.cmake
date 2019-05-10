@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
   "CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
-  "/home/sfox/slam_mono/devel/lib/libmyslam.pdb"
-  "/home/sfox/slam_mono/devel/lib/libmyslam.so"
+  "/home/tg/slam_mono/devel/lib/libmyslam.pdb"
+  "/home/tg/slam_mono/devel/lib/libmyslam.so"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,10 +1,10 @@
 
 "use strict";
 
-let CameraTrackerResult = require('./CameraTrackerResult.js');
 let FeatureTrackerResult = require('./FeatureTrackerResult.js');
+let CameraTrackerResult = require('./CameraTrackerResult.js');
 
 module.exports = {
-  CameraTrackerResult: CameraTrackerResult,
   FeatureTrackerResult: FeatureTrackerResult,
+  CameraTrackerResult: CameraTrackerResult,
 };

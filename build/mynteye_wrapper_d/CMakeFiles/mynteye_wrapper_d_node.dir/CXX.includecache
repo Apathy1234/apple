@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/sfox/slam_mono/src/mynteye_wrapper_d/src/mynteye_wrapper_node.cc
+/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteye_wrapper_node.cc
 ros/ros.h
 -
 nodelet/loader.h

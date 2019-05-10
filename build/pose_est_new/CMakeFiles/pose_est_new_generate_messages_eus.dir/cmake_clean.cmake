@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pose_est_new_generate_messages_eus"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/pose_est_new/msg/DataCollectionForSim.l"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/pose_est_new/msg/CameraState.l"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/pose_est_new/manifest.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/pose_est_new/msg/DataCollectionForSim.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/pose_est_new/msg/CameraState.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/pose_est_new/manifest.l"
 )
 
 # Per-language clean rules from dependency scanning.

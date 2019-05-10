@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/feature_tracker_generate_messages_eus"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/feature_tracker/msg/FeatureTrackerResult.l"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/feature_tracker/msg/CameraTrackerResult.l"
-  "/home/sfox/slam_mono/devel/share/roseus/ros/feature_tracker/manifest.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/feature_tracker/msg/FeatureTrackerResult.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/feature_tracker/msg/CameraTrackerResult.l"
+  "/home/tg/slam_mono/devel/share/roseus/ros/feature_tracker/manifest.l"
 )
 
 # Per-language clean rules from dependency scanning.

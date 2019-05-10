@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sfox/slam_mono/src
+CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
+CMAKE_BINARY_DIR = /home/tg/slam_mono/build
 
 # Utility rule file for _feature_tracker_generate_messages_check_deps_CameraTrackerResult.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
 include feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/progress.make
 
 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult:
-	cd /home/sfox/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py feature_tracker /home/sfox/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg feature_tracker/FeatureTrackerResult:std_msgs/Header
+	cd /home/tg/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py feature_tracker /home/tg/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg feature_tracker/FeatureTrackerResult:std_msgs/Header
 
 _feature_tracker_generate_messages_check_deps_CameraTrackerResult: feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult
 _feature_tracker_generate_messages_check_deps_CameraTrackerResult: feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/build.make
@@ -67,10 +67,10 @@ feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraT
 .PHONY : feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/build
 
 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/clean:
-	cd /home/sfox/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/cmake_clean.cmake
+	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/cmake_clean.cmake
 .PHONY : feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/clean
 
 feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/depend:
-	cd /home/sfox/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sfox/slam_mono/src /home/sfox/slam_mono/src/feature_tracker /home/sfox/slam_mono/build /home/sfox/slam_mono/build/feature_tracker /home/sfox/slam_mono/build/feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/feature_tracker /home/tg/slam_mono/build /home/tg/slam_mono/build/feature_tracker /home/tg/slam_mono/build/feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : feature_tracker/CMakeFiles/_feature_tracker_generate_messages_check_deps_CameraTrackerResult.dir/depend
 
