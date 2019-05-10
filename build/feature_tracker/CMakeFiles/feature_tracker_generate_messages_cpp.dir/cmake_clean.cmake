@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/feature_tracker_generate_messages_cpp"
-  "/home/tg/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h"
-  "/home/tg/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h"
+  "/home/sfox/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h"
+  "/home/sfox/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h"
 )
 
 # Per-language clean rules from dependency scanning.

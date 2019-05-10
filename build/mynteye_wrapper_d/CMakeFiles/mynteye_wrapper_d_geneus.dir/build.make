@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/sfox/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
 
 # Utility rule file for mynteye_wrapper_d_geneus.
 
@@ -63,10 +63,10 @@ mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/build: mynteye_wrapper
 .PHONY : mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/build
 
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/clean:
-	cd /home/tg/slam_mono/build/mynteye_wrapper_d && $(CMAKE_COMMAND) -P CMakeFiles/mynteye_wrapper_d_geneus.dir/cmake_clean.cmake
+	cd /home/sfox/slam_mono/build/mynteye_wrapper_d && $(CMAKE_COMMAND) -P CMakeFiles/mynteye_wrapper_d_geneus.dir/cmake_clean.cmake
 .PHONY : mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/clean
 
 mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/mynteye_wrapper_d /home/tg/slam_mono/build /home/tg/slam_mono/build/mynteye_wrapper_d /home/tg/slam_mono/build/mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/sfox/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sfox/slam_mono/src /home/sfox/slam_mono/src/mynteye_wrapper_d /home/sfox/slam_mono/build /home/sfox/slam_mono/build/mynteye_wrapper_d /home/sfox/slam_mono/build/mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : mynteye_wrapper_d/CMakeFiles/mynteye_wrapper_d_geneus.dir/depend
 

@@ -25,7 +25,8 @@ private:
     ros::NodeHandle n;
     ros::Subscriber featureSub;
     ros::Subscriber imuSub;
-    ros::Publisher cameraStatePub;
+    ros::Publisher cameraStatePub;  int cameraStateUpdate = 0;
+    ros::Publisher dataCollectionForSimPub;
     
     
     // imu

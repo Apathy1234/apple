@@ -43,43 +43,43 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/sfox/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/sfox/slam_mono/build
 
 # Utility rule file for feature_tracker_generate_messages_py.
 
 # Include the progress variables for this target.
 include feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/progress.make
 
-feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
-feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
-feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py
+feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
+feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
+feature_tracker/CMakeFiles/feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py
 
 
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py: /home/tg/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG feature_tracker/FeatureTrackerResult"
-	cd /home/tg/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/tg/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg -Ifeature_tracker:/home/tg/slam_mono/src/feature_tracker/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p feature_tracker -o /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py: /home/sfox/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/sfox/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG feature_tracker/FeatureTrackerResult"
+	cd /home/sfox/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/sfox/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg -Ifeature_tracker:/home/sfox/slam_mono/src/feature_tracker/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p feature_tracker -o /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg
 
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /home/tg/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /home/tg/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /opt/ros/kinetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG feature_tracker/CameraTrackerResult"
-	cd /home/tg/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/tg/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg -Ifeature_tracker:/home/tg/slam_mono/src/feature_tracker/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p feature_tracker -o /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /home/sfox/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /home/sfox/slam_mono/src/feature_tracker/msg/FeatureTrackerResult.msg
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py: /opt/ros/kinetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/sfox/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG feature_tracker/CameraTrackerResult"
+	cd /home/sfox/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/sfox/slam_mono/src/feature_tracker/msg/CameraTrackerResult.msg -Ifeature_tracker:/home/sfox/slam_mono/src/feature_tracker/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p feature_tracker -o /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg
 
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
-/home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/tg/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for feature_tracker"
-	cd /home/tg/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg --initpy
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
+/home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/sfox/slam_mono/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for feature_tracker"
+	cd /home/sfox/slam_mono/build/feature_tracker && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg --initpy
 
 feature_tracker_generate_messages_py: feature_tracker/CMakeFiles/feature_tracker_generate_messages_py
-feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
-feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
-feature_tracker_generate_messages_py: /home/tg/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py
+feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_FeatureTrackerResult.py
+feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/_CameraTrackerResult.py
+feature_tracker_generate_messages_py: /home/sfox/slam_mono/devel/lib/python2.7/dist-packages/feature_tracker/msg/__init__.py
 feature_tracker_generate_messages_py: feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/build.make
 
 .PHONY : feature_tracker_generate_messages_py
@@ -90,10 +90,10 @@ feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/build: featu
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/build
 
 feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/clean:
-	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/feature_tracker_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/sfox/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/feature_tracker_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/clean
 
 feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/feature_tracker /home/tg/slam_mono/build /home/tg/slam_mono/build/feature_tracker /home/tg/slam_mono/build/feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/sfox/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sfox/slam_mono/src /home/sfox/slam_mono/src/feature_tracker /home/sfox/slam_mono/build /home/sfox/slam_mono/build/feature_tracker /home/sfox/slam_mono/build/feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : feature_tracker/CMakeFiles/feature_tracker_generate_messages_py.dir/depend
 

@@ -1,8 +1,8 @@
-prefix=/home/tg/slam_mono/devel
+prefix=/home/sfox/slam_mono/devel
 
 Name: pose_est_new
 Description: Description of pose_est_new
 Version: 0.0.0
-Cflags: -I/home/tg/slam_mono/devel/include
-Libs: -L/home/tg/slam_mono/devel/lib 
+Cflags: -I/home/sfox/slam_mono/devel/include
+Libs: -L/home/sfox/slam_mono/devel/lib 
 Requires: message_runtime

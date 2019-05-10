@@ -47,7 +47,8 @@ find_package(CSparse REQUIRED)
 
 ## Generate messages in the 'msg' folder
 add_message_files(FILES
-  CamreaState.msg
+  CameraState.msg
+  DataCollectionForSim.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -67,6 +68,7 @@ add_message_files(FILES
 ## Generate added messages and services with any dependencies listed here
 generate_messages(DEPENDENCIES
   std_msgs
+  geometry_msgs
 )
 
 ################################################

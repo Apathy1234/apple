@@ -6,5 +6,5 @@ CXX_FLAGS = -g -fPIC   -std=c++11
 
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"mynteye_wrapper_d\" -DWITH_OPENCV -DWITH_OPENCV3 -Dmynteye_wrapper_d_EXPORTS
 
-CXX_INCLUDES = -I/home/tg/slam_mono/devel/include -I/opt/ros/kinetic/include -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv -I/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -isystem /usr/local/include 
+CXX_INCLUDES = -I/home/sfox/slam_mono/devel/include -I/opt/ros/kinetic/include -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev -isystem /opt/ros/kinetic/include/opencv-3.3.1-dev/opencv -I/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -isystem /usr/local/include 
 

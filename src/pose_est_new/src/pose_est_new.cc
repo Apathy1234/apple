@@ -1,4 +1,6 @@
 #include <pose_est_new/pose_est_new.h>
+#include <pose_est_new/CameraState.h>
+#include <pose_est_new/DataCollectionForSim.h>
 
 namespace slam_mono
 {
@@ -9,7 +11,10 @@ PoseEst::PoseEst(void): isSensorCalibr(false), camera(new CameraPose)
     n.param<string>("pub_feature_topic", FEATURE_TOPIC, string("/feature_tracker/points"));
 
     featureSub = n.subscribe(FEATURE_TOPIC, 1, &PoseEst::Feature_Callback, this);
-    imuSub = n.subscribe(IMU_TOPIC, 50, &PoseEst::Imu_Callback, this);
+    imuSub = n.subscribe(IMU_TOPIC, 1, &PoseEst::Imu_Callback, this);
+
+    cameraStatePub = n.advertise<pose_est_new::CameraState>("/slam_mono/cameraState", 1);
+    dataCollectionForSimPub = n.advertise<pose_est_new::DataCollectionForSim>("/slam_mono/dataCollectionForSim",1);
     ROS_INFO("parameters load success!");
 }
 
@@ -20,7 +25,35 @@ PoseEst::~PoseEst()
 
 void PoseEst::Imu_Callback(const sensor_msgs::ImuConstPtr& msg)
 {
+    pose_est_new::DataCollectionForSim msgDataCollectionForSim;
+    msgDataCollectionForSim.angular_velocity_imu = msg->angular_velocity;
+    msgDataCollectionForSim.linear_acceleration_imu = msg->linear_acceleration;
 
+    msgDataCollectionForSim.header.stamp = msg->header.stamp;
+    if(cameraStateUpdate==1)
+    {
+        cameraStateUpdate = 0;
+        msgDataCollectionForSim.orientation_cam.w = camera->q.w();
+        msgDataCollectionForSim.orientation_cam.x = camera->q.x();
+        msgDataCollectionForSim.orientation_cam.y = camera->q.y();
+        msgDataCollectionForSim.orientation_cam.z = camera->q.z();
+        msgDataCollectionForSim.pos_cam.x = camera->p(0);
+        msgDataCollectionForSim.pos_cam.y = camera->p(1);
+        msgDataCollectionForSim.pos_cam.z = camera->p(2);
+        msgDataCollectionForSim.updateCameraState = 1;
+    }
+    else
+    {
+        msgDataCollectionForSim.updateCameraState = 0;
+        msgDataCollectionForSim.orientation_cam.w = 0.0;
+        msgDataCollectionForSim.orientation_cam.x = 0.0;
+        msgDataCollectionForSim.orientation_cam.y = 0.0;
+        msgDataCollectionForSim.orientation_cam.z = 0.0;
+        msgDataCollectionForSim.pos_cam.x = 0.0;
+        msgDataCollectionForSim.pos_cam.y = 0.0;
+        msgDataCollectionForSim.pos_cam.z = 0.0;
+    }
+    dataCollectionForSimPub.publish(msgDataCollectionForSim);
 }
 
 void PoseEst::Feature_Callback(const feature_tracker::CameraTrackerResultConstPtr& msg)
@@ -46,7 +79,19 @@ void PoseEst::Feature_Callback(const feature_tracker::CameraTrackerResultConstPt
     {
         Find_Feature_Matches();
         camera->Bundle_Adjustment(ptsRefMatched, ptsCurrMatched);
-    
+        //
+        {
+            pose_est_new::CameraState msgCameraState;
+            msgCameraState.q0 = camera->q.w();
+            msgCameraState.q1 = camera->q.x();
+            msgCameraState.q2 = camera->q.y();
+            msgCameraState.q3 = camera->q.z();
+            msgCameraState.x = camera->p(0);
+            msgCameraState.y = camera->p(1);
+            msgCameraState.z = camera->p(2);
+            cameraStateUpdate = 1;
+            cameraStatePub.publish(msgCameraState);
+        }
     }
 
     featuresRef = featuresCurr;

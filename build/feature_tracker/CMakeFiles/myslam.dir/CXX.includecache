@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/tg/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
+/home/sfox/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
 string
 -
 vector
@@ -26,7 +26,7 @@ std_msgs/Header.h
 feature_tracker/FeatureTrackerResult.h
 -
 
-/home/tg/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
+/home/sfox/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
 string
 -
 vector
@@ -42,11 +42,11 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/tg/slam_mono/src/feature_tracker/include/feature_tracker/feature_tracker.h
+/home/sfox/slam_mono/src/feature_tracker/include/feature_tracker/feature_tracker.h
 feature_tracker/my_include.h
 -
 
-/home/tg/slam_mono/src/feature_tracker/include/feature_tracker/feature_tracker_nodelet.h
+/home/sfox/slam_mono/src/feature_tracker/include/feature_tracker/feature_tracker_nodelet.h
 nodelet/nodelet.h
 -
 pluginlib/class_list_macros.h
@@ -54,7 +54,7 @@ pluginlib/class_list_macros.h
 feature_tracker/feature_tracker.h
 -
 
-/home/tg/slam_mono/src/feature_tracker/include/feature_tracker/my_include.h
+/home/sfox/slam_mono/src/feature_tracker/include/feature_tracker/my_include.h
 ros/ros.h
 -
 sensor_msgs/Image.h
@@ -108,11 +108,11 @@ memory
 cmath
 -
 
-/home/tg/slam_mono/src/feature_tracker/src/feature_tracker.cc
+/home/sfox/slam_mono/src/feature_tracker/src/feature_tracker.cc
 feature_tracker/feature_tracker.h
 -
 
-/home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc
+/home/sfox/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc
 feature_tracker/my_include.h
 -
 feature_tracker/feature_tracker_nodelet.h

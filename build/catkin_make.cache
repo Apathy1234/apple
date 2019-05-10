@@ -1,2 +1,2 @@
 feature_tracker:mynteye_wrapper_d:pose_est_new:pose_estimate
--DCMAKE_BUILD_TYPE=Debug -DCATKIN_DEVEL_PREFIX=/home/tg/slam_mono/devel -DCMAKE_INSTALL_PREFIX=/home/tg/slam_mono/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/sfox/slam_mono/devel -DCMAKE_INSTALL_PREFIX=/home/sfox/slam_mono/install -G Unix Makefiles

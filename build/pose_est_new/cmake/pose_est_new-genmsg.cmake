@@ -1,8 +1,8 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "pose_est_new: 1 messages, 0 services")
+message(STATUS "pose_est_new: 2 messages, 0 services")
 
-set(MSG_I_FLAGS "-Ipose_est_new:/home/tg/slam_mono/src/pose_est_new/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Ipose_est_new:/home/sfox/slam_mono/src/pose_est_new/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,9 +17,14 @@ add_custom_target(pose_est_new_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
 add_custom_target(_pose_est_new_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "pose_est_new" "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" "std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "pose_est_new" "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" "geometry_msgs/Quaternion:std_msgs/Header:geometry_msgs/Vector3"
+)
+
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
+add_custom_target(_pose_est_new_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "pose_est_new" "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" "std_msgs/Header"
 )
 
 #
@@ -29,7 +34,13 @@ add_custom_target(_pose_est_new_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(pose_est_new
-  "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg"
+  "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/pose_est_new
+)
+_generate_msg_cpp(pose_est_new
+  "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/pose_est_new
@@ -49,7 +60,9 @@ add_custom_target(pose_est_new_generate_messages_cpp
 add_dependencies(pose_est_new_generate_messages pose_est_new_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
+add_dependencies(pose_est_new_generate_messages_cpp _pose_est_new_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
 add_dependencies(pose_est_new_generate_messages_cpp _pose_est_new_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -62,7 +75,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_est_new_generate_messages_cpp)
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(pose_est_new
-  "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg"
+  "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/pose_est_new
+)
+_generate_msg_eus(pose_est_new
+  "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/pose_est_new
@@ -82,7 +101,9 @@ add_custom_target(pose_est_new_generate_messages_eus
 add_dependencies(pose_est_new_generate_messages pose_est_new_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
+add_dependencies(pose_est_new_generate_messages_eus _pose_est_new_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
 add_dependencies(pose_est_new_generate_messages_eus _pose_est_new_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -95,7 +116,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_est_new_generate_messages_eus)
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(pose_est_new
-  "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg"
+  "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/pose_est_new
+)
+_generate_msg_lisp(pose_est_new
+  "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/pose_est_new
@@ -115,7 +142,9 @@ add_custom_target(pose_est_new_generate_messages_lisp
 add_dependencies(pose_est_new_generate_messages pose_est_new_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
+add_dependencies(pose_est_new_generate_messages_lisp _pose_est_new_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
 add_dependencies(pose_est_new_generate_messages_lisp _pose_est_new_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -128,7 +157,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_est_new_generate_messages_lisp
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(pose_est_new
-  "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg"
+  "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/pose_est_new
+)
+_generate_msg_nodejs(pose_est_new
+  "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/pose_est_new
@@ -148,7 +183,9 @@ add_custom_target(pose_est_new_generate_messages_nodejs
 add_dependencies(pose_est_new_generate_messages pose_est_new_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
+add_dependencies(pose_est_new_generate_messages_nodejs _pose_est_new_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
 add_dependencies(pose_est_new_generate_messages_nodejs _pose_est_new_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -161,7 +198,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_est_new_generate_messages_node
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(pose_est_new
-  "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg"
+  "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/kinetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/pose_est_new
+)
+_generate_msg_py(pose_est_new
+  "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/pose_est_new
@@ -181,7 +224,9 @@ add_custom_target(pose_est_new_generate_messages_py
 add_dependencies(pose_est_new_generate_messages pose_est_new_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_est_new/msg/CamreaState.msg" NAME_WE)
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/DataCollectionForSim.msg" NAME_WE)
+add_dependencies(pose_est_new_generate_messages_py _pose_est_new_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/sfox/slam_mono/src/pose_est_new/msg/CameraState.msg" NAME_WE)
 add_dependencies(pose_est_new_generate_messages_py _pose_est_new_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -203,6 +248,9 @@ endif()
 if(TARGET std_msgs_generate_messages_cpp)
   add_dependencies(pose_est_new_generate_messages_cpp std_msgs_generate_messages_cpp)
 endif()
+if(TARGET geometry_msgs_generate_messages_cpp)
+  add_dependencies(pose_est_new_generate_messages_cpp geometry_msgs_generate_messages_cpp)
+endif()
 
 if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/pose_est_new)
   # install generated code
@@ -213,6 +261,9 @@ if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/po
 endif()
 if(TARGET std_msgs_generate_messages_eus)
   add_dependencies(pose_est_new_generate_messages_eus std_msgs_generate_messages_eus)
+endif()
+if(TARGET geometry_msgs_generate_messages_eus)
+  add_dependencies(pose_est_new_generate_messages_eus geometry_msgs_generate_messages_eus)
 endif()
 
 if(genlisp_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/pose_est_new)
@@ -225,6 +276,9 @@ endif()
 if(TARGET std_msgs_generate_messages_lisp)
   add_dependencies(pose_est_new_generate_messages_lisp std_msgs_generate_messages_lisp)
 endif()
+if(TARGET geometry_msgs_generate_messages_lisp)
+  add_dependencies(pose_est_new_generate_messages_lisp geometry_msgs_generate_messages_lisp)
+endif()
 
 if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/pose_est_new)
   # install generated code
@@ -235,6 +289,9 @@ if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_D
 endif()
 if(TARGET std_msgs_generate_messages_nodejs)
   add_dependencies(pose_est_new_generate_messages_nodejs std_msgs_generate_messages_nodejs)
+endif()
+if(TARGET geometry_msgs_generate_messages_nodejs)
+  add_dependencies(pose_est_new_generate_messages_nodejs geometry_msgs_generate_messages_nodejs)
 endif()
 
 if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/pose_est_new)
@@ -247,4 +304,7 @@ if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/pose
 endif()
 if(TARGET std_msgs_generate_messages_py)
   add_dependencies(pose_est_new_generate_messages_py std_msgs_generate_messages_py)
+endif()
+if(TARGET geometry_msgs_generate_messages_py)
+  add_dependencies(pose_est_new_generate_messages_py geometry_msgs_generate_messages_py)
 endif()

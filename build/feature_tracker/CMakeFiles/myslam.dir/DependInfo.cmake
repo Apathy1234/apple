@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tg/slam_mono/src/feature_tracker/src/feature_tracker.cc" "/home/tg/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
-  "/home/tg/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc" "/home/tg/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
+  "/home/sfox/slam_mono/src/feature_tracker/src/feature_tracker.cc" "/home/sfox/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker.cc.o"
+  "/home/sfox/slam_mono/src/feature_tracker/src/feature_tracker_nodelet.cc" "/home/sfox/slam_mono/build/feature_tracker/CMakeFiles/myslam.dir/src/feature_tracker_nodelet.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,8 +18,8 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/tg/slam_mono/devel/include"
-  "/home/tg/slam_mono/src/feature_tracker/include"
+  "/home/sfox/slam_mono/devel/include"
+  "/home/sfox/slam_mono/src/feature_tracker/include"
   "/usr/include/eigen3"
   "/opt/ros/kinetic/include"
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"

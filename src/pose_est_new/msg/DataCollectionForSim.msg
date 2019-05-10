@@ -1,0 +1,6 @@
+std_msgs/Header header
+int32 updateCameraState
+geometry_msgs/Quaternion orientation_cam
+geometry_msgs/Vector3 pos_cam
+geometry_msgs/Vector3 angular_velocity_imu
+geometry_msgs/Vector3 linear_acceleration_imu
