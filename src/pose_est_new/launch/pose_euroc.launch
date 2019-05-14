@@ -1,0 +1,5 @@
+<launch>
+<include file="$(find feature_tracker)/launch/feature_tracker_euroc.launch"/>
+<node pkg = "pose_est_new" type = "pose_est_new_node" name = "pose_est_new_node" output = "screen"/>
+
+</launch>

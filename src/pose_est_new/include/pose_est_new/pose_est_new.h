@@ -28,6 +28,8 @@ private:
     ros::Publisher cameraStatePub;  int cameraStateUpdate = 0;
     ros::Publisher dataCollectionForSimPub;
     
+    // image
+    double firstImageTime;
     
     // imu
     bool isSensorCalibr;
@@ -44,7 +46,11 @@ private:
 
     // rotation
     Eigen::Matrix4d T_left2imu;
-    
+
+    // flag
+    bool isFirstImage;
+
+    void Deal_with_IMU(const double& timeBond);
     void Put_Feature_into_Vector(const feature_tracker::CameraTrackerResultConstPtr& msg);
     void Clear_Points(FeatureState& feature);
     void Find_Feature_Matches(void);
