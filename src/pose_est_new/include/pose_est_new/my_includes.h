@@ -5,11 +5,14 @@
 #include <feature_tracker/FeatureTrackerResult.h>
 #include <feature_tracker/CameraTrackerResult.h>
 #include <sensor_msgs/Imu.h>
+#include <eigen_conversions/eigen_msg.h>
 
 #include <map>
 #include <string>
 #include <vector>
 #include <cmath>
+
+#include <opencv2/core/core.hpp>
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>

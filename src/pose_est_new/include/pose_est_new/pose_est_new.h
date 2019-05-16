@@ -5,6 +5,7 @@
 #include <pose_est_new/feature_state.h>
 #include <pose_est_new/camera_pose.h>
 #include <pose_est_new/CamreaState.h>
+#include <pose_est_new/state.h>
 
 namespace slam_mono
 {
@@ -28,11 +29,7 @@ private:
     ros::Publisher cameraStatePub;  int cameraStateUpdate = 0;
     ros::Publisher dataCollectionForSimPub;
     
-    // image
-    double firstImageTime;
-    
     // imu
-    bool isSensorCalibr;
     vector<sensor_msgs::Imu> imuMsgBuffer;
 
     // feature
@@ -45,11 +42,19 @@ private:
     CameraPose::ptr camera;
 
     // rotation
-    Eigen::Matrix4d T_left2imu;
+    Matrix4d T_left2imu;
+    Matrix3d T_sensor;
 
     // flag
     bool isFirstImage;
+    bool isSensorCalibr;
 
+    // filter
+    Parameter params;
+    ImuState state_delay;
+
+    void Init_Sensor(void);
+    void Process_Model(const double& time, Vector3d& gyro_mes,Vector3d& acc_mes);
     void Deal_with_IMU(const double& timeBond);
     void Put_Feature_into_Vector(const feature_tracker::CameraTrackerResultConstPtr& msg);
     void Clear_Points(FeatureState& feature);

@@ -8,7 +8,7 @@ set( CMAKE_CXX_FLAGS "-std=c++11 -O3" )
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs feature_tracker message_generation sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs feature_tracker message_generation sensor_msgs eigen_conversions)
 find_package(OpenCV 3 REQUIRED)
 find_package(G2O REQUIRED)
 find_package(CSparse REQUIRED)

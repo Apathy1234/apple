@@ -94,7 +94,7 @@ void CameraPose::Bundle_Adjustment(const vector<Vector3d>& pts1, const vector<Ve
     q.normalize();
     p = pose->estimate().translation();
     optimizer.clear();
-    cout << "pose: " << q.w() << ", " << q.x() << ", " << q.y() << ", " << q.z() << endl;
-    cout << "pos: " << p(0) << ", " << p(1) << ", " << p(2) << endl;
+    // cout << "pose: " << q.w() << ", " << q.x() << ", " << q.y() << ", " << q.z() << endl;
+    // cout << "pos: " << p(0) << ", " << p(1) << ", " << p(2) << endl;
 }
 }

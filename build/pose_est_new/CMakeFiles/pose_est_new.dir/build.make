@@ -213,6 +213,8 @@ pose_est_new_EXTERNAL_OBJECTS =
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/libxmlrpcpp.so
+/home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/libeigen_conversions.so
+/home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/libroscpp_serialization.so
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/librostime.so
 /home/tg/slam_mono/devel/lib/libpose_est_new.so: /opt/ros/kinetic/lib/libcpp_common.so

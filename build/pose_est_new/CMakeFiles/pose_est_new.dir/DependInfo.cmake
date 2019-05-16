@@ -26,8 +26,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev"
   "/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv"
-  "/usr/include/suitesparse"
   "/usr/include/eigen3"
+  "/usr/include/suitesparse"
   )
 
 # Targets to which this target links.
