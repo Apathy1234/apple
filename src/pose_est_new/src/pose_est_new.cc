@@ -231,20 +231,50 @@ void PoseEst::Process_Model(const double& time, Vector3d& gyro_mes, Vector3d& ac
 
     
     // propagate state
-    Vector4d dq_dt;
+    Vector4d dq_dt, dq_dt2;
     Vector4d q = Vector4d(state_delay.q.w(), state_delay.q.x(), state_delay.q.y(), state_delay.q.z());
     double gyro_norm = gyro_debias.norm();
     if(gyro_norm > 1e-5)
     {
         dq_dt = (cos(gyro_norm*dtime*0.5)*Matrix4d::Identity() + 1/gyro_norm*sin(gyro_norm*dtime*0.5)*Omega) * q;
+        dq_dt2 = (cos(gyro_norm*dtime*0.25)*Matrix4d::Identity() + 1/gyro_norm*sin(gyro_norm*dtime*0.25)*Omega) * q;
     }
     else
     {
         dq_dt = (Matrix4d::Identity()+0.5*dtime*Omega) * cos(gyro_norm*dtime*0.5) * q;
+        dq_dt2 = (Matrix4d::Identity()+0.25*dtime*Omega) * cos(gyro_norm*dtime*0.25) *q;
     }
     
+    Quaterniond dq_dt_quat = Quaterniond(dq_dt(0), dq_dt(1), dq_dt(2), dq_dt(3));
+    Quaterniond dq_dt2_quat = Quaterniond(dq_dt2(0), dq_dt2(1), dq_dt2(2), dq_dt2(3));
+
+    Matrix3d dR_old_b2ned = state_delay.q.toRotationMatrix().transpose();
+    Matrix3d dR_dt_b2ned = dq_dt_quat.toRotationMatrix().transpose();
+    Matrix3d dR_dt2_b2ned = dq_dt2_quat.toRotationMatrix().transpose();
+
+    // k1 = f(tn, yn)
+    Vector3d k1_v_dot = dR_old_b2ned * acc_debias - params.gravity;
+    Vector3d k1_p_dot = state_delay.v;
+
+    // k2 = f(tn+dt/2, yn+dt/2*k1)
+    Vector3d k2_v_dot = dR_dt2_b2ned * acc_debias - params.gravity;
+    Vector3d k2_p_dot = state_delay.v + k1_v_dot * dtime / 2.0f;
+
+    // k3 = f(tn+dt/2, yn+dt/2*k2)
+    Vector3d k3_v_dot = dR_dt2_b2ned * acc_debias - params.gravity;
+    Vector3d k3_p_dot = state_delay.v + k2_v_dot * dtime / 2.0f;
+
+    // k4 = f(tn+dt, yn+dt*k3)
+    Vector3d k4_v_dot = dR_dt_b2ned * acc_debias - params.gravity;
+    Vector3d k4_p_dot = state_delay.v + k3_v_dot * dtime;
+
+    // yn+1 = yn + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     state_delay.q = Quaterniond(dq_dt(0), dq_dt(1), dq_dt(2), dq_dt(3));;
     state_delay.q.normalize();
+    state_delay.p = state_delay.p + dtime / 6.0f * (k1_p_dot + 2*k2_p_dot + 2*k3_p_dot + k4_p_dot);
+    state_delay.v = state_delay.v + dtime / 6.0f * (k1_v_dot + 2*k2_v_dot + 2*k3_v_dot + k4_v_dot);
+
+
     // cout << "state_delay.q: " << state_delay.q.w() << ", " << state_delay.q.x() << ", " << state_delay.q.y() << ", " << state_delay.q.z() << endl;
     
     // calculate F

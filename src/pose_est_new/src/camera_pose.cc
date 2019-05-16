@@ -94,6 +94,13 @@ void CameraPose::Bundle_Adjustment(const vector<Vector3d>& pts1, const vector<Ve
     q.normalize();
     p = pose->estimate().translation();
     optimizer.clear();
+    static Quaterniond atti = Quaterniond(1, 0, 0, 0);
+    static Vector3d pos = Vector3d::Zero();
+    atti = q * atti;
+    atti.normalize();
+    pos = -atti.toRotationMatrix().transpose() * p + pos;
+    // cout << "R:" << endl << atti.toRotationMatrix() << endl;
+    cout << "pos:" << pos(0) << ", " << pos(1) << ", " << pos(2) << endl;
     // cout << "pose: " << q.w() << ", " << q.x() << ", " << q.y() << ", " << q.z() << endl;
     // cout << "pos: " << p(0) << ", " << p(1) << ", " << p(2) << endl;
 }

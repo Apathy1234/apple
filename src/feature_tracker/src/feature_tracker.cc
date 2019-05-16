@@ -1046,7 +1046,7 @@ void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, 
 {
     if (!isSensorCalibr) return;
     static char imageCnt = 0;
-    // uint64 timeBegin = ros::Time::now().toNSec();
+    uint64 timeBegin = ros::Time::now().toNSec();
     // ROS_INFO_STREAM("The image time: " << leftImg->header.stamp.toSec());
     if ( state == FIRST_IMAGE )
     {
@@ -1113,7 +1113,7 @@ void FeatureTracker::Stereo_Callback(const sensor_msgs::ImageConstPtr& leftImg, 
         Publish_Info();
     }
     lastImageTime = currImageTime;
-    // uint64 timeEnd = ros::Time::now().toNSec();
+    uint64 timeEnd = ros::Time::now().toNSec();
     // ROS_INFO_STREAM("code cost time: " << (timeEnd - timeBegin) << " ns");
 }
 

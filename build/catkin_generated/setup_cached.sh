@@ -7,4 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/tg/slam_mono/build"
+export PWD="/home/dxy/slam_mono/build"

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/dxy/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/dxy/slam_mono/build
 
 # Utility rule file for pose_estimate_gennodejs.
 
@@ -63,10 +63,10 @@ pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/build: pose_estimate_gennod
 .PHONY : pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/build
 
 pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/clean:
-	cd /home/tg/slam_mono/build/pose_estimate && $(CMAKE_COMMAND) -P CMakeFiles/pose_estimate_gennodejs.dir/cmake_clean.cmake
+	cd /home/dxy/slam_mono/build/pose_estimate && $(CMAKE_COMMAND) -P CMakeFiles/pose_estimate_gennodejs.dir/cmake_clean.cmake
 .PHONY : pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/clean
 
 pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/pose_estimate /home/tg/slam_mono/build /home/tg/slam_mono/build/pose_estimate /home/tg/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dxy/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dxy/slam_mono/src /home/dxy/slam_mono/src/pose_estimate /home/dxy/slam_mono/build /home/dxy/slam_mono/build/pose_estimate /home/dxy/slam_mono/build/pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : pose_estimate/CMakeFiles/pose_estimate_gennodejs.dir/depend
 

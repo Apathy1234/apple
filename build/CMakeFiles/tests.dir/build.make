@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/dxy/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/dxy/slam_mono/build
 
 # Utility rule file for tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src /home/tg/slam_mono/build /home/tg/slam_mono/build /home/tg/slam_mono/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dxy/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dxy/slam_mono/src /home/dxy/slam_mono/src /home/dxy/slam_mono/build /home/dxy/slam_mono/build /home/dxy/slam_mono/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

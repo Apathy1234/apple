@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mynteye_wrapper_d_generate_messages_py"
-  "/home/tg/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/msg/_Temp.py"
-  "/home/tg/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/srv/_GetParams.py"
-  "/home/tg/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/msg/__init__.py"
-  "/home/tg/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/srv/__init__.py"
+  "/home/dxy/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/msg/_Temp.py"
+  "/home/dxy/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/srv/_GetParams.py"
+  "/home/dxy/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/msg/__init__.py"
+  "/home/dxy/slam_mono/devel/lib/python2.7/dist-packages/mynteye_wrapper_d/srv/__init__.py"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -2,7 +2,7 @@
 
 message(STATUS "pose_estimate: 1 messages, 0 services")
 
-set(MSG_I_FLAGS "-Ipose_estimate:/home/tg/slam_mono/src/pose_estimate/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Ipose_estimate:/home/dxy/slam_mono/src/pose_estimate/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,9 +17,9 @@ add_custom_target(pose_estimate_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_custom_target(_pose_estimate_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "pose_estimate" "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" "std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "pose_estimate" "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" "std_msgs/Header"
 )
 
 #
@@ -29,7 +29,7 @@ add_custom_target(_pose_estimate_generate_messages_check_deps_${_filename}
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(pose_estimate
-  "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
+  "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/pose_estimate
@@ -49,7 +49,7 @@ add_custom_target(pose_estimate_generate_messages_cpp
 add_dependencies(pose_estimate_generate_messages pose_estimate_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_dependencies(pose_estimate_generate_messages_cpp _pose_estimate_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -62,7 +62,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_estimate_generate_messages_cpp
 ### Section generating for lang: geneus
 ### Generating Messages
 _generate_msg_eus(pose_estimate
-  "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
+  "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/pose_estimate
@@ -82,7 +82,7 @@ add_custom_target(pose_estimate_generate_messages_eus
 add_dependencies(pose_estimate_generate_messages pose_estimate_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_dependencies(pose_estimate_generate_messages_eus _pose_estimate_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -95,7 +95,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_estimate_generate_messages_eus
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(pose_estimate
-  "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
+  "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/pose_estimate
@@ -115,7 +115,7 @@ add_custom_target(pose_estimate_generate_messages_lisp
 add_dependencies(pose_estimate_generate_messages pose_estimate_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_dependencies(pose_estimate_generate_messages_lisp _pose_estimate_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -128,7 +128,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_estimate_generate_messages_lis
 ### Section generating for lang: gennodejs
 ### Generating Messages
 _generate_msg_nodejs(pose_estimate
-  "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
+  "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/pose_estimate
@@ -148,7 +148,7 @@ add_custom_target(pose_estimate_generate_messages_nodejs
 add_dependencies(pose_estimate_generate_messages pose_estimate_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_dependencies(pose_estimate_generate_messages_nodejs _pose_estimate_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -161,7 +161,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS pose_estimate_generate_messages_nod
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(pose_estimate
-  "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
+  "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg"
   "${MSG_I_FLAGS}"
   "/opt/ros/kinetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/pose_estimate
@@ -181,7 +181,7 @@ add_custom_target(pose_estimate_generate_messages_py
 add_dependencies(pose_estimate_generate_messages pose_estimate_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/tg/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
+get_filename_component(_filename "/home/dxy/slam_mono/src/pose_estimate/msg/PoseEstimateResult.msg" NAME_WE)
 add_dependencies(pose_estimate_generate_messages_py _pose_estimate_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

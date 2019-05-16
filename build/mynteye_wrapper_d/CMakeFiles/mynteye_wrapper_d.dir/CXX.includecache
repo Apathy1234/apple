@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParams.h
+/home/dxy/slam_mono/devel/include/mynteye_wrapper_d/GetParams.h
 ros/service_traits.h
 -
 mynteye_wrapper_d/GetParamsRequest.h
@@ -14,7 +14,7 @@ mynteye_wrapper_d/GetParamsRequest.h
 mynteye_wrapper_d/GetParamsResponse.h
 -
 
-/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParamsRequest.h
+/home/dxy/slam_mono/devel/include/mynteye_wrapper_d/GetParamsRequest.h
 string
 -
 vector
@@ -30,7 +30,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/tg/slam_mono/devel/include/mynteye_wrapper_d/GetParamsResponse.h
+/home/dxy/slam_mono/devel/include/mynteye_wrapper_d/GetParamsResponse.h
 string
 -
 vector
@@ -46,7 +46,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/tg/slam_mono/devel/include/mynteye_wrapper_d/Temp.h
+/home/dxy/slam_mono/devel/include/mynteye_wrapper_d/Temp.h
 string
 -
 vector
@@ -64,7 +64,7 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
 configuru.hpp
 -
 algorithm
@@ -120,7 +120,7 @@ cstdlib
 cstdlib
 -
 
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteye_wrapper_nodelet.cc
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/mynteye_wrapper_nodelet.cc
 ros/ros.h
 -
 nodelet/nodelet.h
@@ -160,23 +160,23 @@ opencv2/imgproc/imgproc.hpp
 mynteye_wrapper_d/Temp.h
 -
 mynteyed/camera.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteyed/camera.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/mynteyed/camera.h
 mynteyed/utils.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteyed/utils.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/mynteyed/utils.h
 pointcloud_generator.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
 configuru.hpp
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/configuru.hpp
 pluginlib/class_list_macros.h
 -
 
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.cc
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.cc
 pointcloud_generator.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
 utility
 -
 
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/pointcloud_generator.h
 condition_variable
 -
 functional
@@ -194,9 +194,9 @@ sensor_msgs/PointCloud2.h
 sensor_msgs/point_cloud2_iterator.h
 -
 mynteyed/util/rate.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteyed/util/rate.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/mynteyed/util/rate.h
 mynteyed/stubs/types_calib.h
-/home/tg/slam_mono/src/mynteye_wrapper_d/src/mynteyed/stubs/types_calib.h
+/home/dxy/slam_mono/src/mynteye_wrapper_d/src/mynteyed/stubs/types_calib.h
 
 /opt/ros/kinetic/include/class_loader/./class_loader.hpp
 boost/bind.hpp
@@ -2736,8 +2736,6 @@ string
 sensor_msgs/PointCloud2.h
 -
 cstdarg
--
-sstream
 -
 string
 -

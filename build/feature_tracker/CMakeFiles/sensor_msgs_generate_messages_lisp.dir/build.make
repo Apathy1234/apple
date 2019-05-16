@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/dxy/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/dxy/slam_mono/build
 
 # Utility rule file for sensor_msgs_generate_messages_lisp.
 
@@ -63,10 +63,10 @@ feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build: sensor_
 .PHONY : feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
 
 feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean:
-	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/sensor_msgs_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /home/dxy/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/sensor_msgs_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
 
 feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/feature_tracker /home/tg/slam_mono/build /home/tg/slam_mono/build/feature_tracker /home/tg/slam_mono/build/feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dxy/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dxy/slam_mono/src /home/dxy/slam_mono/src/feature_tracker /home/dxy/slam_mono/build /home/dxy/slam_mono/build/feature_tracker /home/dxy/slam_mono/build/feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : feature_tracker/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/depend
 

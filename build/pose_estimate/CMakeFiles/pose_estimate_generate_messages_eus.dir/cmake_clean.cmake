@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pose_estimate_generate_messages_eus"
-  "/home/tg/slam_mono/devel/share/roseus/ros/pose_estimate/msg/PoseEstimateResult.l"
-  "/home/tg/slam_mono/devel/share/roseus/ros/pose_estimate/manifest.l"
+  "/home/dxy/slam_mono/devel/share/roseus/ros/pose_estimate/msg/PoseEstimateResult.l"
+  "/home/dxy/slam_mono/devel/share/roseus/ros/pose_estimate/manifest.l"
 )
 
 # Per-language clean rules from dependency scanning.

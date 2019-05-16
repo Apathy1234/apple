@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/tg/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
+/home/dxy/slam_mono/devel/include/feature_tracker/CameraTrackerResult.h
 string
 -
 vector
@@ -26,7 +26,7 @@ std_msgs/Header.h
 feature_tracker/FeatureTrackerResult.h
 -
 
-/home/tg/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
+/home/dxy/slam_mono/devel/include/feature_tracker/FeatureTrackerResult.h
 string
 -
 vector
@@ -42,7 +42,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/tg/slam_mono/devel/include/pose_estimate/PoseEstimateResult.h
+/home/dxy/slam_mono/devel/include/pose_estimate/PoseEstimateResult.h
 string
 -
 vector
@@ -60,19 +60,19 @@ ros/message_operations.h
 std_msgs/Header.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/camera_state.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/camera_state.h
 pose_estimate/my_include.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/feature.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/feature.h
 pose_estimate/my_include.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/g2o_edge.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/g2o_edge.h
 pose_estimate/my_include.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/loosely_vio.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/loosely_vio.h
 pose_estimate/my_include.h
 -
 pose_estimate/g2o_edge.h
@@ -88,11 +88,11 @@ pose_estimate/state.h
 geometry_msgs/PoseStamped.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/math_utils.hpp
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/math_utils.hpp
 pose_estimate/my_include.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/my_include.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/my_include.h
 ros/ros.h
 -
 sensor_msgs/Imu.h
@@ -142,11 +142,11 @@ g2o/core/robust_kernel.h
 g2o/core/robust_kernel_impl.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/include/pose_estimate/state.h
+/home/dxy/slam_mono/src/pose_estimate/include/pose_estimate/state.h
 pose_estimate/my_include.h
 -
 
-/home/tg/slam_mono/src/pose_estimate/src/main.cc
+/home/dxy/slam_mono/src/pose_estimate/src/main.cc
 pose_estimate/loosely_vio.h
 -
 

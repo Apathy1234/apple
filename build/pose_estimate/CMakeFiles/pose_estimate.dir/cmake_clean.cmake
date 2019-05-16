@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pose_estimate.dir/src/loosely_vio.cc.o"
-  "/home/tg/slam_mono/devel/lib/libpose_estimate.pdb"
-  "/home/tg/slam_mono/devel/lib/libpose_estimate.so"
+  "/home/dxy/slam_mono/devel/lib/libpose_estimate.pdb"
+  "/home/dxy/slam_mono/devel/lib/libpose_estimate.so"
 )
 
 # Per-language clean rules from dependency scanning.

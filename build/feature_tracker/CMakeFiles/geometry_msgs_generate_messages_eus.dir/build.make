@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tg/slam_mono/src
+CMAKE_SOURCE_DIR = /home/dxy/slam_mono/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tg/slam_mono/build
+CMAKE_BINARY_DIR = /home/dxy/slam_mono/build
 
 # Utility rule file for geometry_msgs_generate_messages_eus.
 
@@ -63,10 +63,10 @@ feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build: geomet
 .PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
 
 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/clean:
-	cd /home/tg/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_eus.dir/cmake_clean.cmake
+	cd /home/dxy/slam_mono/build/feature_tracker && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_eus.dir/cmake_clean.cmake
 .PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/clean
 
 feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/depend:
-	cd /home/tg/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/tg/slam_mono/src /home/tg/slam_mono/src/feature_tracker /home/tg/slam_mono/build /home/tg/slam_mono/build/feature_tracker /home/tg/slam_mono/build/feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dxy/slam_mono/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dxy/slam_mono/src /home/dxy/slam_mono/src/feature_tracker /home/dxy/slam_mono/build /home/dxy/slam_mono/build/feature_tracker /home/dxy/slam_mono/build/feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : feature_tracker/CMakeFiles/geometry_msgs_generate_messages_eus.dir/depend
 
